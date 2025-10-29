@@ -670,12 +670,6 @@ function renderSharedPlan(notesText, senderName, selectedDate, selectedTime) {
                 <div class="shared-plan-card-header">
                     <h1>Date Plan Invitation</h1>
                     <p class="shared-plan-subtitle">${nameDisplay} has shared this plan with you!</p>
-                    ${dateDisplay || timeDisplay ? `
-                        <div class="shared-plan-date-time">
-                            ${dateDisplay ? `<span>📅 ${dateDisplay}</span>` : ''}
-                            ${timeDisplay ? `<span>🕐 ${timeDisplay}</span>` : ''}
-                        </div>
-                    ` : ''}
                 </div>
                 
                 <!-- Activities Section -->
@@ -754,19 +748,33 @@ function renderSharedPlan(notesText, senderName, selectedDate, selectedTime) {
                     
                     return `
                         <div class="shared-activity-item">
-                            <div class="shared-activity-number">${index + 1}</div>
-                            <div class="shared-activity-info">
-                                <h4>${displayName}</h4>
-                                <div class="shared-activity-details">
-                                    <span class="shared-location">📍 ${activity.location}</span>
+                            ${activity.image ? `<div class="shared-activity-image"><img src="${activity.image}" alt="${activity.name}" class="shared-activity-img"></div>` : ''}
+                            <div class="shared-activity-content">
+                                <div class="shared-activity-number">${index + 1}</div>
+                                <div class="shared-activity-info">
+                                    <h4>${displayName}</h4>
+                                    <div class="shared-activity-details">
+                                        <span class="shared-location">📍 ${activity.location}</span>
+                                    </div>
+                                    ${description ? `<p class="shared-activity-description">${description}</p>` : ''}
                                 </div>
-                                ${description ? `<p class="shared-activity-description">${description}</p>` : ''}
                             </div>
                         </div>
                     `;
                 }).join('')}
                     </div>
                 </div>
+                
+                <!-- Date & Time Section -->
+                ${dateDisplay || timeDisplay ? `
+                <div class="shared-plan-card-section">
+                    <h3 class="shared-plan-section-title">Date & Time</h3>
+                    <div class="shared-plan-date-time">
+                        ${dateDisplay ? `<div class="shared-date-time-item"><span class="date-time-icon">📅</span><span>${dateDisplay}</span></div>` : ''}
+                        ${timeDisplay ? `<div class="shared-date-time-item"><span class="date-time-icon">🕐</span><span>${timeDisplay}</span></div>` : ''}
+                    </div>
+                </div>
+                ` : ''}
                 
                 <!-- Notes Section -->
                 ${notesText ? `

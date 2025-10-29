@@ -123,7 +123,7 @@ main {
 
 /* Activity Grid */
 .activities-section h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 32px;
     font-weight: 700;
     color: #111827;
@@ -461,7 +461,7 @@ main {
 }
 
 .sidebar h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     font-weight: 600;
     color: #111827;
@@ -595,7 +595,7 @@ main {
 }
 
 .itinerary h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 32px;
     font-weight: 700;
     color: #111827;
@@ -766,7 +766,7 @@ main {
 }
 
 .modal-header h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     font-weight: 600;
     color: #111827;
@@ -1028,16 +1028,27 @@ main {
 
 .shared-plan-date-time {
     display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 12px;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
 }
 
-.shared-plan-date-time span {
-    font-size: 16px;
-    color: #9333ea;
-    font-weight: 600;
+.shared-date-time-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    color: #111827;
+    font-weight: 500;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.date-time-icon {
+    font-size: 20px;
+    flex-shrink: 0;
 }
 
 .shared-plan-card-section {
@@ -1053,7 +1064,7 @@ main {
 }
 
 .shared-plan-section-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: 600;
     color: #111827;
@@ -1072,11 +1083,40 @@ main {
 .shared-activity-item {
     background: #f9fafb;
     border-radius: 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+.shared-activity-image {
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    position: relative;
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shared-activity-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    max-height: 400px;
+}
+
+.shared-activity-content {
     padding: 16px;
     display: flex;
     gap: 12px;
     align-items: start;
-    border: 1px solid #e5e7eb;
 }
 
 .shared-activity-number {
@@ -1098,9 +1138,9 @@ main {
 }
 
 .shared-activity-info h4 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     color: #111827;
     margin-bottom: 8px;
 }
@@ -1512,7 +1552,16 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
     .shared-plan-date-time {
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
+    }
+    
+    .shared-date-time-item {
+        font-size: 16px;
+        padding: 10px;
+    }
+    
+    .date-time-icon {
+        font-size: 18px;
     }
 
     .shared-plan-section-title {
@@ -1520,6 +1569,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     }
 
     .shared-activity-item {
+        padding: 0;
+    }
+    
+    .shared-activity-image {
+        min-height: 160px;
+    }
+    
+    .shared-activity-img {
+        max-height: 250px;
+    }
+    
+    .shared-activity-content {
         padding: 12px;
         gap: 10px;
     }
