@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi Date Planner - Plan Your Perfect Date</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">♥</div>
+                <div class="logo-text">
+                    <h1>Nairobi Date Planner</h1>
+                    <p>Plan unforgettable moments</p>
+                </div>
+            </div>
+            <nav>
+                <a href="#activities">Activities</a>
+                <a href="https://www.thelist.restaurant/" target="_blank" rel="noopener noreferrer">Restaurants</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>Plan Your Perfect Date in Nairobi</h1>
+            <p>Discover romantic spots, exciting activities, and unforgettable experiences in Kenya's vibrant capital.</p>
+        </div>
+
+        <div class="grid-container">
+            <div class="activities-section">
+                <h2>Explore Activities</h2>
+                <p style="margin-bottom: 24px; font-size: 16px; color: #4b5563;">
+                    🍴 Looking for restaurants? <a href="https://www.thelist.restaurant/" target="_blank" rel="noopener noreferrer" style="color: #9333ea; text-decoration: underline;">Check our restaurant directory</a>
+                </p>
+                
+                <!-- Filter Section -->
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <label class="filter-label">Filter by Day:</label>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="day" data-type="all">All Days</button>
+                            <button class="filter-btn" data-filter="day" data-type="weekday">Weekdays</button>
+                            <button class="filter-btn" data-filter="day" data-type="weekend">Weekends</button>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Filter by Time:</label>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="time" data-type="all">All Times</button>
+                            <button class="filter-btn" data-filter="time" data-type="day">☀️ Day</button>
+                            <button class="filter-btn" data-filter="time" data-type="night">⭐ Night</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="categories-container" id="categoriesContainer"></div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Your Date Plan</h2>
+                    <button class="clear-btn" id="clearBtn" style="display: none;">Clear all</button>
+                </div>
+                <div id="selectedActivities">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💫</div>
+                        <p class="empty-state-text">Select activities to build your perfect date itinerary</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Response Section (shown when viewing shared plan) -->
+        <div id="responseSection" style="display: none;" class="response-section">
+            <div class="response-card">
+                <div class="response-header">
+                    <h2>Date Plan Invitation</h2>
+                    <div id="responseStatus" class="response-status"></div>
+                </div>
+                <div class="response-body">
+                    <p id="responseMessage">How do you feel about this date plan?</p>
+                    <div class="response-buttons">
+                        <button class="btn-response btn-yes" onclick="submitResponse('yes')">
+                            <span>✓</span> Yes
+                        </button>
+                        <button class="btn-response btn-maybe" onclick="submitResponse('maybe')">
+                            <span>?</span> Maybe
+                        </button>
+                        <button class="btn-response btn-no" onclick="submitResponse('no')">
+                            <span>✗</span> No
+                        </button>
+                        <button class="btn-response btn-suggest" onclick="suggestAnotherDate()">
+                            <span>💡</span> Suggest Another Date
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="itinerary" style="display: none;">
+            <div class="itinerary">
+                <h2>Your Perfect Date Itinerary</h2>
+                <div id="itineraryContent"></div>
+                
+                <div class="date-picker-section">
+                    <label for="datePicker" class="notes-label">Choose a Date</label>
+                    <input type="date" id="datePicker" class="date-input" min="">
+                </div>
+                
+                <div class="time-picker-section">
+                    <label for="timePicker" class="notes-label">Choose a Time</label>
+                    <input type="time" id="timePicker" class="time-input">
+                </div>
+                
+                <div class="notes-section">
+                    <label for="datePlanNotes" class="notes-label">Additional Notes</label>
+                    <textarea id="datePlanNotes" class="notes-textarea" placeholder="Anything you want to send to the person"></textarea>
+                </div>
+                
+                <div class="share-name-section">
+                    <label for="senderName" class="notes-label">Your Name</label>
+                    <input type="text" id="senderName" class="name-input" placeholder="Enter your name (optional)">
+                </div>
+                
+                <div class="itinerary-actions">
+                    <button class="btn-primary" onclick="shareDatePlan()">Share Date Plan</button>
+                    <button class="btn-secondary">Export Itinerary</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Your Date Plan</h2>
+                <button class="modal-close" onclick="closeShareModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Copy this link to share your date plan:</p>
+                <div class="share-link-container">
+                    <input type="text" id="shareLink" readonly class="share-link-input">
+                    <button class="btn-copy" onclick="copyShareLink()">Copy</button>
+                </div>
+                <p class="share-note">The person you share with will be able to respond with Yes, No, or Maybe!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
