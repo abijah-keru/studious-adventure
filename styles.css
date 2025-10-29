@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     background: linear-gradient(135deg, #f5f3ff 0%, #fdf2f8 50%, #fff7ed 100%);
     min-height: 100vh;
     color: #1f2937;
@@ -51,8 +51,9 @@ header {
 }
 
 .logo-text h1 {
-    font-size: 24px;
-    font-weight: bold;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 32px;
+    font-weight: normal;
     color: #111827;
 }
 
@@ -94,10 +95,12 @@ main {
 }
 
 .hero h1 {
-    font-size: 48px;
-    font-weight: bold;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 56px;
+    font-weight: normal;
     color: #111827;
     margin-bottom: 8px;
+    line-height: 1.2;
 }
 
 .hero p {
@@ -120,8 +123,9 @@ main {
 
 /* Activity Grid */
 .activities-section h2 {
+    font-family: 'Playfair Display', serif;
     font-size: 32px;
-    font-weight: bold;
+    font-weight: 700;
     color: #111827;
     margin-bottom: 24px;
 }
@@ -246,9 +250,10 @@ main {
 }
 
 .category-name {
+    font-family: 'Cormorant Garamond', serif;
     flex: 1;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .dropdown-arrow {
@@ -365,8 +370,9 @@ main {
 }
 
 .activity-card-title {
-    font-size: 24px;
-    font-weight: bold;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
     color: white;
     position: absolute;
     bottom: 8px;
@@ -455,8 +461,9 @@ main {
 }
 
 .sidebar h2 {
+    font-family: 'Playfair Display', serif;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 600;
     color: #111827;
     margin-bottom: 16px;
 }
@@ -588,8 +595,9 @@ main {
 }
 
 .itinerary h2 {
+    font-family: 'Playfair Display', serif;
     font-size: 32px;
-    font-weight: bold;
+    font-weight: 700;
     color: #111827;
     margin-bottom: 24px;
 }
@@ -623,8 +631,9 @@ main {
 }
 
 .itinerary-content h3 {
+    font-family: 'Cormorant Garamond', serif;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 500;
     color: #111827;
     margin-bottom: 8px;
 }
@@ -757,8 +766,9 @@ main {
 }
 
 .modal-header h2 {
+    font-family: 'Playfair Display', serif;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 600;
     color: #111827;
     margin: 0;
 }
@@ -996,10 +1006,12 @@ main {
 }
 
 .shared-plan-card-header h1 {
-    font-size: 40px;
-    font-weight: bold;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 42px;
+    font-weight: normal;
     color: #111827;
     margin-bottom: 8px;
+    line-height: 1.2;
 }
 
 .shared-plan-subtitle {
@@ -1035,7 +1047,8 @@ main {
 }
 
 .shared-plan-section-title {
-    font-size: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
     font-weight: 600;
     color: #111827;
     margin-bottom: 16px;
@@ -1079,8 +1092,9 @@ main {
 }
 
 .shared-activity-info h4 {
-    font-size: 18px;
-    font-weight: 600;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
     color: #111827;
     margin-bottom: 8px;
 }
@@ -1248,6 +1262,319 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     border-color: #9333ea;
     background: white;
     box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    /* Header adjustments */
+    .header-container {
+        padding: 12px 16px;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .logo-text h1 {
+        font-size: 26px;
+    }
+
+    .logo-text p {
+        font-size: 12px;
+    }
+
+    /* Main container */
+    main {
+        padding: 16px;
+    }
+
+    /* Hero section */
+    .hero {
+        margin-bottom: 24px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+        line-height: 1.1;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    /* Activities section */
+    .activities-section h2 {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    /* Filters */
+    .filters-section {
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-buttons {
+        width: 100%;
+    }
+
+    .filter-btn {
+        flex: 1;
+        min-height: 44px;
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    /* Activity cards */
+    .activities-in-category {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .activity-card {
+        width: 100%;
+    }
+
+    .activity-card-image {
+        min-height: 160px;
+    }
+
+    .activity-card-title {
+        font-size: 22px;
+        bottom: 8px;
+        left: 12px;
+        right: 12px;
+    }
+
+    .activity-card-content {
+        padding: 12px;
+    }
+
+    .activity-card-description {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    /* Category dropdowns */
+    .category-dropdown {
+        padding: 12px 16px;
+    }
+
+    .category-dropdown-title {
+        font-size: 18px;
+    }
+
+    /* Sidebar adjustments */
+    .sidebar {
+        position: relative;
+        top: 0;
+        max-height: none;
+        margin-top: 24px;
+    }
+
+    .sidebar h2 {
+        font-size: 20px;
+    }
+
+    /* Buttons - touch targets */
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        padding: 14px 24px;
+        min-height: 44px;
+        font-size: 16px;
+    }
+
+    .btn-response {
+        padding: 14px 20px;
+        min-height: 44px;
+        font-size: 16px;
+        flex: 1;
+    }
+
+    .response-buttons {
+        gap: 12px;
+    }
+
+    .btn-response span {
+        font-size: 18px;
+    }
+
+    /* Itinerary */
+    .itinerary {
+        padding: 20px 16px;
+    }
+
+    .itinerary h2 {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    .itinerary-item {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .itinerary-number {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+
+    /* Input fields */
+    .date-input,
+    .time-input,
+    .name-input,
+    .notes-textarea {
+        padding: 14px 16px;
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .notes-textarea {
+        min-height: 120px;
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 24px 20px;
+        margin: 10px;
+    }
+
+    .modal-header h2 {
+        font-size: 24px;
+    }
+
+    .share-link-input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .modal-actions button {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    /* Shared plan view */
+    .shared-plan-container {
+        padding: 16px;
+    }
+
+    .shared-plan-card {
+        padding: 20px 16px;
+    }
+
+    .shared-plan-card-header h1 {
+        font-size: 28px;
+    }
+
+    .shared-plan-subtitle {
+        font-size: 16px;
+    }
+
+    .shared-plan-date-time {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .shared-plan-section-title {
+        font-size: 18px;
+    }
+
+    .shared-activity-item {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .shared-activity-info h4 {
+        font-size: 16px;
+    }
+
+    .shared-activity-description {
+        font-size: 14px;
+    }
+
+    /* Selected activities in sidebar */
+    .selected-item {
+        padding: 12px;
+    }
+
+    .selected-item-name {
+        font-size: 14px;
+    }
+
+    .selected-item-location {
+        font-size: 12px;
+        margin-left: 28px;
+    }
+
+    /* No results */
+    .no-results {
+        padding: 32px 16px;
+    }
+
+    .no-results p {
+        font-size: 14px;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    main {
+        padding: 12px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .activities-section h2 {
+        font-size: 22px;
+    }
+
+    .activity-card-title {
+        font-size: 20px;
+    }
+
+    .filter-btn {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    .shared-plan-card-header h1 {
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    .shared-plan-card {
+        padding: 16px 12px;
+    }
+
+    .response-buttons {
+        flex-direction: column;
+    }
+
+    .btn-response {
+        width: 100%;
+    }
 }
 
 .name-input::placeholder {

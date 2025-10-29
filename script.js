@@ -804,12 +804,32 @@ function renderSharedPlan(notesText, senderName, selectedDate, selectedTime) {
     // Replace main content
     main.innerHTML = html;
     
-    // Only display response status if there's an explicit response parameter in URL
-    // This ensures users can always see the buttons when first viewing
-    if (responseParam && (responseParam === 'yes' || responseParam === 'maybe' || responseParam === 'no')) {
+    // Check for response in URL or localStorage
+    let savedResponse = responseParam;
+    
+    if (!savedResponse || (savedResponse !== 'yes' && savedResponse !== 'maybe' && savedResponse !== 'no')) {
+        // Check localStorage for saved response
+        const shareParam = urlParams.get('share');
+        if (shareParam) {
+            const responseKey = `datePlanResponse_${shareParam}`;
+            const storedResponse = localStorage.getItem(responseKey);
+            if (storedResponse && (storedResponse === 'yes' || storedResponse === 'maybe' || storedResponse === 'no')) {
+                savedResponse = storedResponse;
+            }
+        }
+    }
+    
+    // Display response if found, otherwise show buttons
+    if (savedResponse && (savedResponse === 'yes' || savedResponse === 'maybe' || savedResponse === 'no')) {
         const nameParam = urlParams.get('name');
         const senderName = nameParam ? decodeURIComponent(nameParam) : '';
-        displayResponseStatus(responseParam, senderName);
+        // Update URL to include response for consistency
+        if (!responseParam) {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('response', savedResponse);
+            window.history.replaceState({}, '', newUrl);
+        }
+        displayResponseStatus(savedResponse, senderName);
     } else {
         // Ensure buttons are visible if no valid response
         setTimeout(() => {
