@@ -3,153 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nairobi Date Planner - Plan Your Perfect Date</title>
+    <meta name="description" content="Plan the perfect date in Nairobi. Discover romantic spots, activities, restaurants, cinema, outdoor adventures, and more—curated for memorable experiences.">
+    <title>Nairobi - Plan Your Perfect Date</title>
+    <!-- Open Graph -->
+    <meta property="og:title" content="Nairobi Date Planner – Plan the perfect date in Nairobi">
+    <meta property="og:description" content="Discover romantic spots, exciting activities, and unforgettable experiences across Nairobi.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nairobi-date-planner.example/">
+    <meta property="og:image" content="images/og-hero.jpg">
+    <meta property="og:image:alt" content="Collage of Nairobi date activities and skyline">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nairobi Date Planner – Plan the perfect date in Nairobi">
+    <meta name="twitter:description" content="Discover romantic spots, exciting activities, and unforgettable experiences across Nairobi.">
+    <meta name="twitter:image" content="images/og-hero.jpg">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#C1666B">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Allura&family=Cormorant+Garamond:wght@300;400;500&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">
+    <link rel="stylesheet" href="listing-master/css/themify-icons.css">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Structured Data: WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Nairobi Date Planner",
+      "url": "https://nairobi-date-planner.example/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://nairobi-date-planner.example/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Nairobi Date Planner",
+      "url": "https://nairobi-date-planner.example/",
+      "logo": "https://nairobi-date-planner.example/images/logo.png"
+    }
+    </script>
+    
+    <!-- Structured Data: Events list placeholder (to be populated as activities are added) -->
+    <script type="application/ld+json" id="events-jsonld">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": []
+    }
+    </script>
 </head>
 <body>
+    <!-- Skip to main content link for keyboard navigation -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
     <header>
         <div class="header-container">
             <div class="logo">
-                <div class="logo-icon">♥</div>
-                <div class="logo-text">
-                    <h1>Nairobi Date Planner</h1>
-                    <p>Plan unforgettable moments</p>
-                </div>
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Nairobi Date Planner logo" class="logo-img" width="48" height="48">
+                </a>
             </div>
-            <nav>
+            <form class="nav-search-form" onsubmit="handleSearch(event)">
+                <label for="searchInput" class="visually-hidden">Search activities</label>
+                <span class="nav-search-icon icon-magnifier" aria-hidden="true"></span>
+                <input type="text" id="searchInput" placeholder="Search activities" class="nav-search-input">
+            </form>
+            <button class="hamburger-menu" id="hamburgerMenu" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="mainNav">
                 <a href="#activities">Activities</a>
-                <a href="https://www.thelist.restaurant/" target="_blank" rel="noopener noreferrer">Restaurants</a>
+                <a href="https://www.thelist.restaurant/categories" target="_blank" rel="noopener noreferrer">Restaurants</a>
+                <button id="installBtn" class="install-app-btn" aria-label="Install Nairobi Dates app">Install App</button>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow">▼</span></a>
+                    <div class="nav-dropdown-menu" id="cinemaDropdown">
+                        <a href="https://centurycinemax.co.ke/" target="_blank" rel="noopener noreferrer">Century Cinemax</a>
+                        <a href="https://mookh.com/store/event/unseen-nairobi-2025" target="_blank" rel="noopener noreferrer">Unseen Nairobi</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow">▼</span></a>
+                    <div class="nav-dropdown-menu" id="skipTownDropdown">
+                        <a href="https://tigoni.life/" target="_blank" rel="noopener noreferrer">Tigoni</a>
+                        <a href="camping.html">Camping</a>
+                    </div>
+                </div>
+                <a href="contact.html">Contact Us</a>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <div class="hero">
-            <h1>Plan Your Perfect Date in Nairobi</h1>
+            <h1>Plan the perfect date in Nairobi</h1>
             <p>Discover romantic spots, exciting activities, and unforgettable experiences in Kenya's vibrant capital.</p>
         </div>
 
-        <div class="grid-container">
-            <div class="activities-section">
-                <h2>Explore Activities</h2>
-                <p style="margin-bottom: 24px; font-size: 16px; color: #4b5563;">
-                    🍴 Looking for restaurants? <a href="https://www.thelist.restaurant/" target="_blank" rel="noopener noreferrer" style="color: #9333ea; text-decoration: underline;">Check our restaurant directory</a>
-                </p>
-                
-                <!-- Filter Section -->
-                <div class="filters-section">
-                    <div class="filter-group">
-                        <label class="filter-label">Filter by Day:</label>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="day" data-type="all">All Days</button>
-                            <button class="filter-btn" data-filter="day" data-type="weekday">Weekdays</button>
-                            <button class="filter-btn" data-filter="day" data-type="weekend">Weekends</button>
+        <div class="activities-section">
+            <!-- Explore Bar: responsive horizontal filter bar (placed above first category) -->
+            <section class="explore-bar" aria-label="Explore filters">
+                <div class="explore-inner">
+                    <div class="explore-pills" role="toolbar" aria-label="Quick filters">
+                        <button type="button" class="pill pill-active" data-filter="all" aria-pressed="true">All</button>
+                        <button type="button" class="pill" data-filter="weekday" aria-pressed="false">Weekdays</button>
+                        <button type="button" class="pill" data-filter="weekend" aria-pressed="false">Weekends</button>
+                        <button type="button" class="pill" data-filter="free" aria-pressed="false">Free</button>
+                        <button type="button" class="pill" data-filter="outdoor" aria-pressed="false">Outdoor</button>
+                        <button type="button" class="pill" data-filter="nearme" aria-pressed="false">Near Me</button>
+                        <button type="button" class="pill pill-more" aria-haspopup="dialog" aria-expanded="false" onclick="openMoreFilters()">More ▼</button>
+                    </div>
+                    <button type="button" class="pill-clear" id="pillClearBtn" onclick="clearExploreFilters()" style="display:none">Clear filters</button>
+                </div>
+            </section>
+
+            <!-- More Filters Overlay -->
+            <div id="moreFiltersOverlay" class="more-filters-overlay" role="dialog" aria-modal="true" aria-labelledby="moreFiltersTitle" style="display:none">
+                <div class="more-filters-modal">
+                    <div class="more-filters-header">
+                        <h2 id="moreFiltersTitle">More Filters</h2>
+                        <button class="more-filters-close" aria-label="Close" onclick="closeMoreFilters()">×</button>
+                    </div>
+                    <div class="more-filters-body">
+                        <button type="button" class="pill pill-block" data-filter="spas">Spas & Wellness</button>
+                        <div class="more-filters-group" role="group" aria-label="Location scope">
+                            <label class="checkbox-row">
+                                <input type="checkbox" id="withinNairobiChk" onchange="setLocationScope('within', this.checked)">
+                                <span>Within Nairobi</span>
+                            </label>
+                            <label class="checkbox-row">
+                                <input type="checkbox" id="outsideNairobiChk" onchange="setLocationScope('outside', this.checked)">
+                                <span>Outside Nairobi</span>
+                            </label>
                         </div>
                     </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Filter by Time:</label>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="time" data-type="all">All Times</button>
-                            <button class="filter-btn" data-filter="time" data-type="day">☀️ Day</button>
-                            <button class="filter-btn" data-filter="time" data-type="night">⭐ Night</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="categories-container" id="categoriesContainer"></div>
-            </div>
-
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <h2>Your Date Plan</h2>
-                    <button class="clear-btn" id="clearBtn" style="display: none;">Clear all</button>
-                </div>
-                <div id="selectedActivities">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">💫</div>
-                        <p class="empty-state-text">Select activities to build your perfect date itinerary</p>
-                    </div>
-                </div>
-            </aside>
-        </div>
-
-        <!-- Response Section (shown when viewing shared plan) -->
-        <div id="responseSection" style="display: none;" class="response-section">
-            <div class="response-card">
-                <div class="response-header">
-                    <h2>Date Plan Invitation</h2>
-                    <div id="responseStatus" class="response-status"></div>
-                </div>
-                <div class="response-body">
-                    <p id="responseMessage">How do you feel about this date plan?</p>
-                    <div class="response-buttons">
-                        <button class="btn-response btn-yes" onclick="submitResponse('yes')">
-                            <span>✓</span> Yes
-                        </button>
-                        <button class="btn-response btn-maybe" onclick="submitResponse('maybe')">
-                            <span>?</span> Maybe
-                        </button>
-                        <button class="btn-response btn-no" onclick="submitResponse('no')">
-                            <span>✗</span> No
-                        </button>
-                        <button class="btn-response btn-suggest" onclick="suggestAnotherDate()">
-                            <span>💡</span> Suggest Another Date
-                        </button>
+                    <div class="more-filters-actions">
+                        <button type="button" class="btn-secondary" onclick="closeMoreFilters()">Done</button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div id="itinerary" style="display: none;">
-            <div class="itinerary">
-                <h2>Your Perfect Date Itinerary</h2>
-                <div id="itineraryContent"></div>
-                
-                <div class="date-picker-section">
-                    <label for="datePicker" class="notes-label">Choose a Date</label>
-                    <input type="date" id="datePicker" class="date-input" min="">
-                </div>
-                
-                <div class="time-picker-section">
-                    <label for="timePicker" class="notes-label">Choose a Time</label>
-                    <input type="time" id="timePicker" class="time-input">
-                </div>
-                
-                <div class="notes-section">
-                    <label for="datePlanNotes" class="notes-label">Additional Notes</label>
-                    <textarea id="datePlanNotes" class="notes-textarea" placeholder="Anything you want to send to the person"></textarea>
-                </div>
-                
-                <div class="share-name-section">
-                    <label for="senderName" class="notes-label">Your Name</label>
-                    <input type="text" id="senderName" class="name-input" placeholder="Enter your name (optional)">
-                </div>
-                
-                <div class="itinerary-actions">
-                    <button class="btn-primary" onclick="shareDatePlan()">Share Date Plan</button>
-                    <button class="btn-secondary">Export Itinerary</button>
-                </div>
-            </div>
+            <div class="categories-list" id="categoriesList"></div>
         </div>
     </main>
 
-    <!-- Share Modal -->
-    <div id="shareModal" class="modal" style="display: none;">
-        <div class="modal-content">
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- View All Modal -->
+    <div id="viewAllModal" class="modal" style="display: none;">
+        <div class="modal-content view-all-modal">
             <div class="modal-header">
-                <h2>Share Your Date Plan</h2>
-                <button class="modal-close" onclick="closeShareModal()">&times;</button>
+                <h2 id="viewAllTitle">View All</h2>
+                <button class="modal-close" onclick="closeViewAllModal()" aria-label="Close modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Copy this link to share your date plan:</p>
-                <div class="share-link-container">
-                    <input type="text" id="shareLink" readonly class="share-link-input">
-                    <button class="btn-copy" onclick="copyShareLink()">Copy</button>
-                </div>
-                <p class="share-note">The person you share with will be able to respond with Yes, No, or Maybe!</p>
+                <div class="view-all-grid" id="viewAllGrid"></div>
             </div>
         </div>
     </div>

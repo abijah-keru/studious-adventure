@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Nairobi Date Planner. Ask questions, suggest activities, or request updates. We’d love to hear from you.">
+    <link rel="canonical" href="https://nairobi-date-planner.com/contact.html">
+    <title>Contact Us - Nairobi Date Planner</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#C1666B">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">
+    <link rel="stylesheet" href="listing-master/css/themify-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Contact page specific styles - header should be red by default */
+        body.contact-page header {
+            background: #C1666B;
+            box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.contact-page header .logo-text h1 {
+            text-shadow: none;
+        }
+
+        body.contact-page header nav > a,
+        body.contact-page header .nav-dropdown-toggle {
+            font-weight: 300;
+            text-shadow: none;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px 48px;
+        }
+
+        .contact-header {
+            margin-bottom: 48px;
+        }
+
+        .contact-header h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: #111827;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+            padding-top: 8px;
+        }
+
+        .contact-header h1::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #C1666B;
+        }
+
+        .contact-header p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            color: #4b5563;
+            font-weight: 300;
+            margin-top: 16px;
+        }
+
+        .contact-form {
+            background: #fff;
+            border-radius: 3px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 3px;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            color: #1f2937;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #C1666B;
+            box-shadow: 0 0 0 3px rgba(193, 102, 107, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        .required-indicator {
+            color: #C1666B;
+            margin-left: 2px;
+        }
+
+        .form-error {
+            color: #C1666B;
+            font-size: 13px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #C1666B;
+        }
+
+        .form-group.error .form-error {
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: #C1666B;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: #8B4049;
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 24px;
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 3px;
+            color: #166534;
+            font-size: 16px;
+            margin-top: 24px;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .thank-you-message.show {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .contact-container {
+                padding: 100px 16px 32px;
+            }
+
+            .contact-header h1 {
+                font-size: 36px;
+            }
+
+            .contact-header p {
+                font-size: 16px;
+            }
+
+            .contact-form {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body class="contact-page">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Nairobi Logo" class="logo-img">
+                </a>
+            </div>
+            <nav>
+                <a href="index.html#activities">Activities</a>
+                <a href="https://www.thelist.restaurant/categories" target="_blank" rel="noopener noreferrer">Restaurants</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow">▼</span></a>
+                    <div class="nav-dropdown-menu" id="cinemaDropdown">
+                        <a href="https://centurycinemax.co.ke/" target="_blank" rel="noopener noreferrer">Century Cinemax</a>
+                        <a href="https://mookh.com/store/event/unseen-nairobi-2025" target="_blank" rel="noopener noreferrer">Unseen Nairobi</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow">▼</span></a>
+                    <div class="nav-dropdown-menu" id="skipTownDropdown">
+                        <a href="https://tigoni.life/" target="_blank" rel="noopener noreferrer">Tigoni</a>
+                        <a href="camping.html">Camping</a>
+                    </div>
+                </div>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="contact-container">
+            <div class="contact-header">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you! Use this form to share feedback, suggest a place or event we should add, or just say hi.</p>
+            </div>
+            
+            <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+                <div class="form-group" id="nameGroup">
+                    <label for="name">
+                        Name <span class="required-indicator">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        placeholder="Your name"
+                        required
+                    >
+                    <div class="form-error">Please enter your name</div>
+                </div>
+
+                <div class="form-group" id="emailGroup">
+                    <label for="email">
+                        Email <span class="required-indicator">*</span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="your.email@example.com"
+                        required
+                    >
+                    <div class="form-error">Please enter a valid email address</div>
+                </div>
+
+                <div class="form-group" id="messageGroup">
+                    <label for="message">
+                        Message <span class="required-indicator">*</span>
+                    </label>
+                    <textarea 
+                        id="message" 
+                        name="message" 
+                        placeholder="Your message here..."
+                        required
+                    ></textarea>
+                    <div class="form-error">Please enter your message</div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Send Message
+                </button>
+            </form>
+
+            <div class="thank-you-message" id="thankYouMessage">
+                Thanks for reaching out! We'll get back to you soon.
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Handle dropdown toggles
+        function toggleCinemaDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('cinemaDropdown').parentElement;
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleSkipTownDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('skipTownDropdown').parentElement;
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const navDropdowns = document.querySelectorAll('.nav-dropdown');
+            
+            navDropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        });
+
+        // Handle header scroll effect - not needed for contact page since header is always red
+        // But keep for consistency if needed in future
+
+        // Form validation and submission
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            
+            // Remove any previous error states
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            let hasErrors = false;
+            
+            // Validate name
+            if (!name) {
+                document.getElementById('nameGroup').classList.add('error');
+                hasErrors = true;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('emailGroup').classList.add('error');
+                hasErrors = true;
+            }
+            
+            // Validate message
+            if (!message) {
+                document.getElementById('messageGroup').classList.add('error');
+                hasErrors = true;
+            }
+            
+            if (hasErrors) {
+                return;
+            }
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // TODO: Replace with Formspree endpoint when ready
+            // For now, simulate form submission
+            setTimeout(() => {
+                // Hide form
+                document.getElementById('contactForm').style.display = 'none';
+                
+                // Show thank you message
+                document.getElementById('thankYouMessage').classList.add('show');
+                
+                // Scroll to thank you message
+                document.getElementById('thankYouMessage').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 500);
+            
+            // When Formspree is connected, use this code instead:
+            /*
+            fetch('YOUR_FORMSPREE_ENDPOINT', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide form
+                document.getElementById('contactForm').style.display = 'none';
+                
+                // Show thank you message
+                document.getElementById('thankYouMessage').classList.add('show');
+                
+                // Scroll to thank you message
+                document.getElementById('thankYouMessage').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again later.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            });
+            */
+        }
+
+        // Real-time validation
+        document.getElementById('name').addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                document.getElementById('nameGroup').classList.add('error');
+            } else {
+                document.getElementById('nameGroup').classList.remove('error');
+            }
+        });
+
+        document.getElementById('email').addEventListener('blur', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!this.value.trim() || !emailRegex.test(this.value)) {
+                document.getElementById('emailGroup').classList.add('error');
+            } else {
+                document.getElementById('emailGroup').classList.remove('error');
+            }
+        });
+
+        document.getElementById('message').addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                document.getElementById('messageGroup').classList.add('error');
+            } else {
+                document.getElementById('messageGroup').classList.remove('error');
+            }
+        });
+    </script>
+</body>
+</html>
+
