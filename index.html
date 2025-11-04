@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics will be loaded conditionally after consent -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Plan the perfect date in Nairobi. Discover romantic spots, activities, restaurants, cinema, outdoor adventures, and more—curated for memorable experiences.">
@@ -20,7 +21,7 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#C1666B">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,7 +78,7 @@
             <form class="nav-search-form" onsubmit="handleSearch(event)">
                 <label for="searchInput" class="visually-hidden">Search activities</label>
                 <span class="nav-search-icon icon-magnifier" aria-hidden="true"></span>
-                <input type="text" id="searchInput" placeholder="Search activities" class="nav-search-input">
+                <input type="text" id="searchInput" name="search" placeholder="Search activities" class="nav-search-input">
             </form>
             <button class="hamburger-menu" id="hamburgerMenu" onclick="toggleMobileMenu()" aria-label="Toggle menu">
                 <span></span>
@@ -89,14 +90,14 @@
                 <a href="https://www.thelist.restaurant/categories" target="_blank" rel="noopener noreferrer">Restaurants</a>
                 <button id="installBtn" class="install-app-btn" aria-label="Install Nairobi Dates app">Install App</button>
                 <div class="nav-dropdown">
-                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow">▼</span></a>
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow"></span></a>
                     <div class="nav-dropdown-menu" id="cinemaDropdown">
                         <a href="https://centurycinemax.co.ke/" target="_blank" rel="noopener noreferrer">Century Cinemax</a>
                         <a href="https://mookh.com/store/event/unseen-nairobi-2025" target="_blank" rel="noopener noreferrer">Unseen Nairobi</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
-                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow">▼</span></a>
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow"></span></a>
                     <div class="nav-dropdown-menu" id="skipTownDropdown">
                         <a href="https://tigoni.life/" target="_blank" rel="noopener noreferrer">Tigoni</a>
                         <a href="camping.html">Camping</a>
@@ -108,60 +109,28 @@
     </header>
 
     <main id="main-content">
-        <div class="hero">
-            <h1>Plan the perfect date in Nairobi</h1>
-            <p>Discover romantic spots, exciting activities, and unforgettable experiences in Kenya's vibrant capital.</p>
-        </div>
-
         <div class="activities-section">
-            <!-- Explore Bar: responsive horizontal filter bar (placed above first category) -->
+            <!-- Explore Bar: Filter controls -->
             <section class="explore-bar" aria-label="Explore filters">
                 <div class="explore-inner">
-                    <div class="explore-pills" role="toolbar" aria-label="Quick filters">
-                        <button type="button" class="pill pill-active" data-filter="all" aria-pressed="true">All</button>
-                        <button type="button" class="pill" data-filter="weekday" aria-pressed="false">Weekdays</button>
-                        <button type="button" class="pill" data-filter="weekend" aria-pressed="false">Weekends</button>
-                        <button type="button" class="pill" data-filter="free" aria-pressed="false">Free</button>
-                        <button type="button" class="pill" data-filter="outdoor" aria-pressed="false">Outdoor</button>
-                        <button type="button" class="pill" data-filter="nearme" aria-pressed="false">Near Me</button>
-                        <button type="button" class="pill pill-more" aria-haspopup="dialog" aria-expanded="false" onclick="openMoreFilters()">More ▼</button>
-                    </div>
-                    <button type="button" class="pill-clear" id="pillClearBtn" onclick="clearExploreFilters()" style="display:none">Clear filters</button>
-                </div>
-            </section>
-
-            <!-- More Filters Overlay -->
-            <div id="moreFiltersOverlay" class="more-filters-overlay" role="dialog" aria-modal="true" aria-labelledby="moreFiltersTitle" style="display:none">
-                <div class="more-filters-modal">
-                    <div class="more-filters-header">
-                        <h2 id="moreFiltersTitle">More Filters</h2>
-                        <button class="more-filters-close" aria-label="Close" onclick="closeMoreFilters()">×</button>
-                    </div>
-                    <div class="more-filters-body">
-                        <button type="button" class="pill pill-block" data-filter="spas">Spas & Wellness</button>
-                        <div class="more-filters-group" role="group" aria-label="Location scope">
-                            <label class="checkbox-row">
-                                <input type="checkbox" id="withinNairobiChk" onchange="setLocationScope('within', this.checked)">
-                                <span>Within Nairobi</span>
-                            </label>
-                            <label class="checkbox-row">
-                                <input type="checkbox" id="outsideNairobiChk" onchange="setLocationScope('outside', this.checked)">
-                                <span>Outside Nairobi</span>
-                            </label>
+                    <button type="button" class="pill" id="nearMeBtn" data-filter="nearme" aria-pressed="false">Near Me</button>
+                    <div class="filter-by-dropdown">
+                        <button type="button" class="filter-by-btn" id="filterByBtn" onclick="toggleCategoryFilter()" aria-expanded="false" aria-haspopup="true">
+                            Filter by <span class="dropdown-arrow"></span>
+                        </button>
+                        <div class="category-filter-menu" id="categoryFilterMenu" role="menu" style="display:none">
+                            <div class="category-filter-list" id="categoryFilterList"></div>
                         </div>
                     </div>
-                    <div class="more-filters-actions">
-                        <button type="button" class="btn-secondary" onclick="closeMoreFilters()">Done</button>
-                    </div>
                 </div>
-            </div>
+            </section>
             <div class="categories-list" id="categoriesList"></div>
         </div>
     </main>
 
     <footer>
         <div class="footer-container">
-            <p>&copy; 2025. All rights reserved.</p>
+            <p>&copy; 2025. All rights reserved. <a href="privacy-settings.html" style="color: #ffffff; text-decoration: none; margin-left: 12px;">Privacy Policy</a></p>
         </div>
     </footer>
 
@@ -178,6 +147,34 @@
         </div>
     </div>
 
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;width:100%;max-width:100%;background:#C1666B;color:white;padding:15px;display:none;justify-content:space-between;align-items:center;z-index:10000;flex-wrap:wrap;gap:15px;box-shadow:0 -2px 8px rgba(0,0,0,0.15);">
+      <span style="flex:1;min-width:200px;font-size:14px;line-height:1.5;">We use cookies to make NairobiDates smooth and fun. You can accept all, decline, or customize your preferences.</span>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <button id="accept-cookies" style="padding:8px 16px;background:white;color:#C1666B;border:none;border-radius:3px;cursor:pointer;font-weight:500;font-size:14px;white-space:nowrap;">Accept All</button>
+        <button id="decline-cookies" style="padding:8px 16px;background:transparent;color:white;border:1px solid white;border-radius:3px;cursor:pointer;font-size:14px;white-space:nowrap;">Decline All</button>
+        <a href="privacy-settings.html" style="color:white;text-decoration:underline;font-size:14px;white-space:nowrap;">Manage</a>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        #cookie-banner {
+          padding: 12px !important;
+          gap: 12px !important;
+        }
+        #cookie-banner span {
+          font-size: 13px !important;
+          min-width: 100% !important;
+          margin-bottom: 8px;
+        }
+        #cookie-banner > div {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    </style>
+
+    <script src="cookie-banner.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

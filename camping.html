@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics will be loaded conditionally after consent -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Discover camping destinations around Nairobi: Bunduz Safari & Camp and more. Find routes, highlights, and tips for your next adventure.">
@@ -9,12 +10,12 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#C1666B">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">
+        <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">     
     <link rel="stylesheet" href="listing-master/css/themify-icons.css">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -295,14 +296,14 @@
                 <a href="index.html#activities">Activities</a>
                 <a href="https://www.thelist.restaurant/categories" target="_blank" rel="noopener noreferrer">Restaurants</a>
                 <div class="nav-dropdown">
-                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow">▼</span></a>
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow"></span></a>
                     <div class="nav-dropdown-menu" id="cinemaDropdown">
                         <a href="https://centurycinemax.co.ke/" target="_blank" rel="noopener noreferrer">Century Cinemax</a>
                         <a href="https://mookh.com/store/event/unseen-nairobi-2025" target="_blank" rel="noopener noreferrer">Unseen Nairobi</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
-                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow">▼</span></a>
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow"></span></a>
                     <div class="nav-dropdown-menu" id="skipTownDropdown">
                         <a href="https://tigoni.life/" target="_blank" rel="noopener noreferrer">Tigoni</a>
                         <a href="camping.html">Camping</a>
@@ -328,10 +329,37 @@
 
     <footer>
         <div class="footer-container">
-            <p>&copy; 2025. All rights reserved.</p>
+            <p>&copy; 2025. All rights reserved. <a href="privacy-settings.html" style="color: #ffffff; text-decoration: none; margin-left: 12px;">Privacy Policy</a></p>
         </div>
     </footer>
 
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;width:100%;max-width:100%;background:#C1666B;color:white;padding:15px;display:none;justify-content:space-between;align-items:center;z-index:10000;flex-wrap:wrap;gap:15px;box-shadow:0 -2px 8px rgba(0,0,0,0.15);">
+      <span style="flex:1;min-width:200px;font-size:14px;line-height:1.5;">We use cookies to make NairobiDates smooth and fun. You can accept all, decline, or customize your preferences.</span>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <button id="accept-cookies" style="padding:8px 16px;background:white;color:#C1666B;border:none;border-radius:3px;cursor:pointer;font-weight:500;font-size:14px;white-space:nowrap;">Accept All</button>
+        <button id="decline-cookies" style="padding:8px 16px;background:transparent;color:white;border:1px solid white;border-radius:3px;cursor:pointer;font-size:14px;white-space:nowrap;">Decline All</button>
+        <a href="privacy-settings.html" style="color:white;text-decoration:underline;font-size:14px;white-space:nowrap;">Manage</a>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        #cookie-banner {
+          padding: 12px !important;
+          gap: 12px !important;
+        }
+        #cookie-banner span {
+          font-size: 13px !important;
+          min-width: 100% !important;
+          margin-bottom: 8px;
+        }
+        #cookie-banner > div {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    </style>
+    <script src="cookie-banner.js"></script>
     <script src="camping.js"></script>
 </body>
 </html>

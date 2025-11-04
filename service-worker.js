@@ -1,11 +1,11 @@
 // Service Worker for Nairobi Date Planner PWA
 const CACHE_NAME = 'nairobi-dates-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/images/logo.png'
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './images/logo.png'
 ];
 
 // Install event - cache essential files

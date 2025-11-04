@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics will be loaded conditionally after consent -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">      
+    <meta name="description" content="Manage your privacy settings and cookie preferences on Nairobi Date Planner.">      
+    <link rel="canonical" href="https://nairobi-date-planner.com/privacy.html"> 
+    <title>Your Privacy Settings - Nairobi Date Planner</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#C1666B">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>        
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">     
+    <link rel="stylesheet" href="listing-master/css/themify-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Privacy page specific styles - header should be red by default */    
+        body.privacy-page header {
+            background: #C1666B;
+            box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.privacy-page header .logo-text h1 {
+            text-shadow: none;
+        }
+
+        body.privacy-page header nav > a,
+        body.privacy-page header .nav-dropdown-toggle {
+            font-weight: 300;
+            text-shadow: none;
+        }
+
+        .privacy-page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px 48px;
+        }
+
+        .privacy-page-header {
+            margin-bottom: 48px;
+        }
+
+        .privacy-page-header h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: #111827;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+            padding-top: 8px;
+        }
+
+        .privacy-page-header h1::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #C1666B;
+        }
+
+        .privacy-settings-content {
+            background: #fff;
+            border-radius: 3px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+                 .privacy-settings-content p {
+             font-family: 'Roboto', sans-serif;
+             font-size: 15px;
+             line-height: 1.7;
+             color: #4b5563;
+             font-weight: 300;
+             margin-bottom: 16px;
+         }
+
+         .privacy-controls {
+             margin-top: 32px;
+             display: flex;
+             flex-direction: column;
+             gap: 20px;
+         }
+
+         .privacy-control-item {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 20px;
+             background: #f9fafb;
+             border-radius: 8px;
+             transition: background 0.2s ease;
+         }
+
+         .privacy-control-item:hover {
+             background: #f3f4f6;
+         }
+
+         .privacy-control-info {
+             flex: 1;
+         }
+
+         .privacy-control-label {
+             font-family: 'Roboto', sans-serif;
+             font-size: 16px;
+             font-weight: 500;
+             color: #111827;
+             margin-bottom: 4px;
+         }
+
+         .privacy-control-description {
+             font-family: 'Roboto', sans-serif;
+             font-size: 14px;
+             color: #6b7280;
+             font-weight: 300;
+         }
+
+         .privacy-toggle {
+             position: relative;
+             display: inline-block;
+             width: 50px;
+             height: 28px;
+             flex-shrink: 0;
+             margin-left: 20px;
+         }
+
+         .privacy-toggle input {
+             opacity: 0;
+             width: 0;
+             height: 0;
+         }
+
+         .privacy-toggle-slider {
+             position: absolute;
+             cursor: pointer;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             background-color: #d1d5db;
+             transition: .3s;
+             border-radius: 28px;
+         }
+
+         .privacy-toggle-slider:before {
+             position: absolute;
+             content: "";
+             height: 20px;
+             width: 20px;
+             left: 4px;
+             bottom: 4px;
+             background-color: white;
+             transition: .3s;
+             border-radius: 50%;
+         }
+
+         .privacy-toggle input:checked + .privacy-toggle-slider {
+             background-color: #C1666B;
+         }
+
+         .privacy-toggle input:checked + .privacy-toggle-slider:before {
+             transform: translateX(22px);
+         }
+
+         .save-privacy-btn {
+             width: 100%;
+             padding: 14px 24px;
+             background: #C1666B;
+             color: #fff;
+             border: none;
+             border-radius: 3px;
+             font-size: 16px;
+             font-weight: 400;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             font-family: 'Roboto', sans-serif;
+             box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
+             margin-top: 24px;
+         }
+
+         .save-privacy-btn:hover {
+             background: #8B4049;
+         }
+
+         .save-privacy-btn:active {
+             transform: translateY(0);
+         }
+
+         @media (max-width: 767px) {
+            .privacy-page-container {
+                padding: 100px 16px 32px;
+            }
+
+            .privacy-settings-content {
+                padding: 24px;
+            }
+
+            .privacy-page-header h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body class="privacy-page">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Nairobi Logo" class="logo-img">
+                </a>
+            </div>
+            <nav>
+                <a href="index.html#activities">Activities</a>
+                <a href="https://www.thelist.restaurant/categories" target="_blank" rel="noopener noreferrer">Restaurants</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow"></span></a>
+                    <div class="nav-dropdown-menu" id="cinemaDropdown">
+                        <a href="https://centurycinemax.co.ke/" target="_blank" rel="noopener noreferrer">Century Cinemax</a>
+                        <a href="https://mookh.com/store/event/unseen-nairobi-2025" target="_blank" rel="noopener noreferrer">Unseen Nairobi</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow"></span></a>       
+                    <div class="nav-dropdown-menu" id="skipTownDropdown">       
+                        <a href="https://tigoni.life/" target="_blank" rel="noopener noreferrer">Tigoni</a>
+                        <a href="camping.html">Camping</a>
+                    </div>
+                </div>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="privacy-page-container">
+            <div class="privacy-page-header">
+                <h1>Your Privacy Settings</h1>
+            </div>
+
+            <div class="privacy-settings-content">
+                <p>At Nairobi Dates, your privacy comes first. You can control how we use cookies and your data.</p>
+                
+                <p><strong>Analytics Cookies:</strong> Help us understand how people use the site. You can turn this off anytime.</p>
+                
+                <p><strong>Location Tracking:</strong> Only used to show experiences near you. You can enable or disable this anytime.</p>
+                
+                <p><strong>Form Tracking:</strong> Helps us ensure your messages reach us safely. You can disable analytics but the form will still work.</p>
+                
+                <p>You can change these preferences at any time by visiting this page. Declining or turning off cookies will not break the site.</p>
+                
+                <div class="privacy-controls">
+                    <div class="privacy-control-item">
+                        <div class="privacy-control-info">
+                            <div class="privacy-control-label">Analytics Cookies</div>
+                            <div class="privacy-control-description">Help us understand how people use the site</div>
+                        </div>
+                        <label class="privacy-toggle">
+                            <input type="checkbox" id="pagePrefAnalytics" />
+                            <span class="privacy-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="privacy-control-item">
+                        <div class="privacy-control-info">
+                            <div class="privacy-control-label">Location Tracking</div>
+                            <div class="privacy-control-description">Only used to show experiences near you</div>
+                        </div>
+                        <label class="privacy-toggle">
+                            <input type="checkbox" id="pagePrefLocation" />
+                            <span class="privacy-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="privacy-control-item">
+                        <div class="privacy-control-info">
+                            <div class="privacy-control-label">Form Tracking</div>
+                            <div class="privacy-control-description">Helps ensure your messages reach us safely</div>
+                        </div>
+                        <label class="privacy-toggle">
+                            <input type="checkbox" id="pagePrefForms" />
+                            <span class="privacy-toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" class="save-privacy-btn" onclick="savePagePrivacyPreferences()">Save Preferences</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025. All rights reserved. <a href="privacy-settings.html" style="color: #ffffff; text-decoration: none; margin-left: 12px;">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script src="cookie-banner.js"></script>
+    <script>
+        // Load current preferences when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const consentData = localStorage.getItem('cookieConsent');
+            let preferences = { analytics: false, location: false, forms: false };
+            
+            if (consentData) {
+                try {
+                    preferences = JSON.parse(consentData);
+                } catch (e) {
+                    // Legacy format - if it's 'all', enable all
+                    if (consentData === 'all') {
+                        preferences = { analytics: true, location: true, forms: true };
+                    }
+                }
+            }
+            
+            document.getElementById('pagePrefAnalytics').checked = preferences.analytics || false;
+            document.getElementById('pagePrefLocation').checked = preferences.location || false;
+            document.getElementById('pagePrefForms').checked = preferences.forms || false;
+        });
+
+        function savePagePrivacyPreferences() {
+            const preferences = {
+                analytics: document.getElementById('pagePrefAnalytics').checked,
+                location: document.getElementById('pagePrefLocation').checked,
+                forms: document.getElementById('pagePrefForms').checked
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('cookieConsent', JSON.stringify(preferences));
+            
+            // Enable/disable features based on preferences
+            if (preferences.analytics) {
+                if (window.enableOptionalFeatures) {
+                    window.enableOptionalFeatures();
+                }
+            } else {
+                // Disable analytics if turned off
+                // Note: We can't fully remove GA once loaded, but we can stop sending events
+                if (window.gtag) {
+                    window.gtag('set', 'allow_google_signals', false);
+                    window.gtag('set', 'allow_ad_personalization_signals', false);
+                }
+            }
+            
+            if (preferences.location) {
+                window.locationConsentGranted = true;
+            } else {
+                window.locationConsentGranted = false;
+                sessionStorage.removeItem('userLocation');
+                // Clear any active Near Me filters if location consent is revoked
+                // Note: activeFilters may not exist on this page, that's ok
+            }
+            
+            // Show confirmation
+            const btn = document.querySelector('.save-privacy-btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Preferences Saved!';
+            btn.style.background = '#10b981';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#C1666B';
+            }, 2000);
+        }
+
+        // Handle dropdown toggles
+        function toggleCinemaDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('cinemaDropdown').parentElement;
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleSkipTownDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('skipTownDropdown').parentElement;
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const navDropdowns = document.querySelectorAll('.nav-dropdown');
+
+            navDropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+         <!-- Cookie Consent Banner -->
+     <div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;width:100%;max-width:100%;background:#C1666B;color:white;padding:15px;display:none;justify-content:space-between;align-items:center;z-index:10000;flex-wrap:wrap;gap:15px;box-shadow:0 -2px 8px rgba(0,0,0,0.15);">
+       <span style="flex:1;min-width:200px;font-size:14px;line-height:1.5;">We use cookies to make NairobiDates smooth and fun. You can accept all, decline, or customize your preferences.</span>
+       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+         <button id="accept-cookies" style="padding:8px 16px;background:white;color:#C1666B;border:none;border-radius:3px;cursor:pointer;font-weight:500;font-size:14px;white-space:nowrap;">Accept All</button>
+         <button id="decline-cookies" style="padding:8px 16px;background:transparent;color:white;border:1px solid white;border-radius:3px;cursor:pointer;font-size:14px;white-space:nowrap;">Decline All</button>
+         <a href="privacy-settings.html" style="color:white;text-decoration:underline;font-size:14px;white-space:nowrap;">Manage</a>
+       </div>
+     </div>
+    <style>
+      @media (max-width: 768px) {
+        #cookie-banner {
+          padding: 12px !important;
+          gap: 12px !important;
+        }
+        #cookie-banner span {
+          font-size: 13px !important;
+          min-width: 100% !important;
+          margin-bottom: 8px;
+        }
+        #cookie-banner > div {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    </style>
+</body>
+</html>

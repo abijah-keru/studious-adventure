@@ -14,7 +14,7 @@ const activities = [
         image: "images/Jazz-After-Dark.webp",
         alt: "Diners seated at a cozy restaurant enjoying live jazz music",
         website: "https://karel.co.ke/reservations/",
-        linkTitle: "Reservations"
+        linkTitle: "Reserve"
     },
     {
         id: 2,
@@ -45,7 +45,7 @@ const activities = [
         image: "images/Sunday-Sessions.webp",
         alt: "Close-up of a violin under soft lighting",
         website: "https://eatout.co.ke/restaurant/bamba/",
-        linkTitle: "Reservations"
+        linkTitle: "Reserve"
     },
     {
         id: 4,
@@ -91,7 +91,7 @@ const activities = [
         image: "images/Saxophone-Fridays.webp",
         alt: "Mahogany-toned background with a saxophone in focus",
         website: "https://eatapp.co/reserve/pax-manor-58-muthaiga-rd",
-        linkTitle: "Reservations"
+        linkTitle: "Reserve"
     },
     // Stand Up Comedy
     {
@@ -101,9 +101,9 @@ const activities = [
         location: "2 Grapes - Wine & Friends",
         latitude: -1.296306007333743,
         longitude: 36.793941921059165,
-        schedule: "Wednesdays, 7 PM (Free)",
+        schedule: "Wednesdays, 7 PM",
         category: "Stand Up Comedy",
-        tags: ["Comedy", "Free", "Entertainment"],
+        tags: ["Comedy", "Entertainment"],
         timeOfDay: "night",
         image: "images/Stand-up-Wednesday.webp",
         alt: "Illustrated poster with people in a restaurant watching a stage performance, with event details visible",
@@ -117,7 +117,7 @@ const activities = [
         location: "Nairobi Laugh Bar",
         latitude: -1.2932647766332508,
         longitude: 36.76187245174493,
-        schedule: "Wednesdays–Saturdays, 7 PM",
+        schedule: "Wednesday, 7pm",
         category: "Stand Up Comedy",
         tags: ["Comedy", "Entertainment", "Nightlife"],
         timeOfDay: "night",
@@ -133,9 +133,9 @@ const activities = [
         location: "254 Beer District",
         latitude: -1.266167826824762,
         longitude: 36.80193810756618,
-        schedule: "Thursdays, 7 PM (Free)",
+        schedule: "Thursdays, 7 PM",
         category: "Stand Up Comedy",
-        tags: ["Comedy", "Free", "Entertainment"],
+        tags: ["Comedy", "Entertainment"],
         timeOfDay: "night",
         image: "images/Punchline-Comedy-Thursday.webp",
         alt: "Sketch-style poster showing people dining and watching a performance, with event timing and RSVP details",
@@ -196,7 +196,6 @@ const activities = [
         name: "Nairobi Sketch Tour",
         description: "We create and curate exciting cultural experiences all over Kenya centering on art. Also engage in private curated tours",
         location: "Various scenic locations (e.g., Ngong Hills)",
-        schedule: "Mon–Fri, 9am–5pm; Sat, 9am–4pm",
         category: "Workshops & Creative Experiences",
         tags: ["Art", "Outdoor", "Cultural", "Sketching", "Tours", "Creative"],
         timeOfDay: "day",
@@ -212,7 +211,7 @@ const activities = [
         location: "Nairobi Art Centre",
         latitude: -1.2671530827753854,
         longitude: 36.77757742399555,
-        schedule: "",
+        schedule: "Mon–Sat, 9am–5pm",
         category: "Workshops & Creative Experiences",
         tags: ["Art", "Workshop", "Creative"],
         timeOfDay: "day",
@@ -313,7 +312,7 @@ const activities = [
         timeOfDay: "day",
         image: "images/Kiambethu-Tea-Farm.jpg",
         alt: "Two people plucking tea leaves on a lush green farm",
-        website: "https://www.kiambethufarm.com/tours",
+        website: "https://activity.reserveport.com/booking/kiambethu_farm",
         linkTitle: "Book Tour"
     },
     {
@@ -535,11 +534,11 @@ const activities = [
     {
         id: 40,
         name: "Bao Box",
-        description: "Enjoy board games while relaxing with food and drinks in a cozy atmosphere.",
+        description: "Enjoy board games, mini golf, karaoke, darts, golf simulator, digital table tennis, pool your leg, while relaxing with food and drinks in a cozy atmosphere.",
         location: "Bao Box",
         latitude: -1.2501856782203402,
         longitude: 36.79009215914497,
-        schedule: "Open daily",
+        schedule: "Mon, 8am–10pm, Tue–Sun, 8am–11pm",
         category: "Fun & Games",
         subcategory: "Board Games & Chill Spots",
         tags: ["fun", "Board Games", "Dining", "Indoor", "Relaxing"],
@@ -556,7 +555,8 @@ let activeFilters = {
     tokens: new Set(), // e.g., 'free', 'outdoor', 'spas'
     nearMe: false,
     userLocation: null, // { latitude: number, longitude: number }
-    locationScope: 'all' // 'all' | 'within' | 'outside'
+    locationScope: 'all', // 'all' | 'within' | 'outside'
+    selectedCategories: new Set() // Selected category names
 };
 
 // Haversine formula to calculate distance between two coordinates (in kilometers)
@@ -720,6 +720,13 @@ function matchesFilters(activity) {
         if (activeFilters.locationScope === 'outside' && within) return false;
     }
 
+    // Category filter
+    if (activeFilters.selectedCategories && activeFilters.selectedCategories.size > 0) {
+        if (!activeFilters.selectedCategories.has(activity.category)) {
+            return false;
+        }
+    }
+
     // Token filters (pill tags)
     if (activeFilters.tokens && activeFilters.tokens.size > 0) {
         for (const token of activeFilters.tokens) {
@@ -768,7 +775,7 @@ function renderActivities() {
         }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
     }
     
-    // Group activities by category
+    // Group activities by category (preserving order - important for Near Me sorting)
     const categories = {};
     filteredActivities.forEach(activity => {
         if (!categories[activity.category]) {
@@ -776,6 +783,17 @@ function renderActivities() {
         }
         categories[activity.category].push(activity);
     });
+    
+    // If Near Me is active, ensure activities within each category are sorted by distance
+    if (activeFilters.nearMe && activeFilters.userLocation) {
+        Object.keys(categories).forEach(category => {
+            categories[category].sort((a, b) => {
+                const distA = a.distance !== undefined && typeof a.distance === 'number' && !isNaN(a.distance) && isFinite(a.distance) ? a.distance : Infinity;
+                const distB = b.distance !== undefined && typeof b.distance === 'number' && !isNaN(b.distance) && isFinite(b.distance) ? b.distance : Infinity;
+                return distA - distB;
+            });
+        });
+    }
     
     // Render by category with horizontal carousels
     let html = '';
@@ -847,12 +865,14 @@ function renderActivities() {
                         <div class="carousel-container" tabindex="0" role="region" aria-label="${category} carousel" data-carousel-id="${carouselId}">
                             <div class="${isStaticGrid ? 'activities-carousel no-scroll' : 'activities-carousel'}" id="${carouselId}">
                                 ${categories[category].map(activity => {
+                                    // Generate unique ID for this description overlay - MUST match between button aria-controls and overlay id
                                     const descId = `desc-${activity.id || category.toLowerCase().replace(/\s+/g, '-')}-${categories[category].indexOf(activity)}`;
                                     return `
                                     <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}">
                                         <div class="activity-card-image" onmouseenter="showDescription(this)" onmouseleave="hideDescription(this)">
                                             ${activity.image ? `<img src="${activity.image}" alt="${activity.alt || activity.name}" class="activity-card-img" width="300" height="240" loading="lazy" decoding="async">` : ''}
                                             <div class="activity-card-overlay"></div>
+                                            ${activeFilters.nearMe && activity.distance !== undefined && typeof activity.distance === 'number' && !isNaN(activity.distance) && isFinite(activity.distance) && activity.distance !== Infinity ? `<div class="activity-card-distance">${activity.distance < 10 ? activity.distance.toFixed(1) : Math.round(activity.distance)} km away</div>` : ''}
                                             <button class="description-toggle-btn" onclick="toggleDescription(this)" aria-expanded="false" aria-controls="${descId}" aria-label="Toggle description for ${activity.name}">
                                                 <span class="visually-hidden">Show description</span>
                                             </button>
@@ -864,7 +884,7 @@ function renderActivities() {
                                             <ul class="activity-card-info">
                                                 <li>
                                                     <span class="icon-location-pin"></span>
-                                                    <p>${activity.location}${activity.distance !== undefined && typeof activity.distance === 'number' && !isNaN(activity.distance) && isFinite(activity.distance) && activity.distance !== Infinity ? ` • ${activity.distance < 10 ? activity.distance.toFixed(1) : Math.round(activity.distance)} km` : ''}</p>
+                                                    <p>${activity.location}</p>
                                                 </li>
                                                 ${activity.schedule ? `
                                                 <li>
@@ -988,13 +1008,47 @@ function trapFocus(modalElement) {
     // Handle Escape key
     const handleEscape = (e) => {
         if (e.key === 'Escape') {
+            // Store reference to previousActiveElement before closing (close functions reset it)
+            const elementToRestore = previousActiveElement;
+            
             // Check if we're inside a modal by looking for the modal container
             const modal = modalElement.closest('.modal, .more-filters-overlay');
             if (modal) {
                 if (modal.id === 'viewAllModal') {
-                    closeViewAllModal();
+                    // Close modal (following same pattern as closeViewAllModal)
+                    modal.style.display = 'none';
+                    modal.removeAttribute('role');
+                    modal.removeAttribute('aria-modal');
+                    modal.removeAttribute('aria-labelledby');
+                    
+                    // Release focus trap
+                    releaseFocusTrap();
+                    
+                    // Restore focus to the element that opened the modal
+                    if (elementToRestore && typeof elementToRestore.focus === 'function') {
+                        setTimeout(() => {
+                            elementToRestore.focus();
+                        }, 0);
+                    }
+                    previousActiveElement = null;
                 } else if (modal.id === 'moreFiltersOverlay') {
-                    closeMoreFilters();
+                    // Close overlay (following same pattern as closeMoreFilters)
+                    const btn = document.querySelector('.pill-more');
+                    modal.style.display = 'none';
+                    if (btn) {
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                    
+                    // Release focus trap
+                    releaseFocusTrap();
+                    
+                    // Restore focus to the element that opened the modal
+                    if (elementToRestore && typeof elementToRestore.focus === 'function') {
+                        setTimeout(() => {
+                            elementToRestore.focus();
+                        }, 0);
+                    }
+                    previousActiveElement = null;
                 }
             } else {
                 // Fallback: check if any modal is currently visible
@@ -1002,9 +1056,40 @@ function trapFocus(modalElement) {
                 const moreFiltersOverlay = document.getElementById('moreFiltersOverlay');
                 
                 if (viewAllModal && viewAllModal.style.display !== 'none' && viewAllModal.style.display !== '') {
-                    closeViewAllModal();
+                    // Close modal (following same pattern as closeViewAllModal)
+                    viewAllModal.style.display = 'none';
+                    viewAllModal.removeAttribute('role');
+                    viewAllModal.removeAttribute('aria-modal');
+                    viewAllModal.removeAttribute('aria-labelledby');
+                    
+                    // Release focus trap
+                    releaseFocusTrap();
+                    
+                    // Restore focus to the element that opened the modal
+                    if (elementToRestore && typeof elementToRestore.focus === 'function') {
+                        setTimeout(() => {
+                            elementToRestore.focus();
+                        }, 0);
+                    }
+                    previousActiveElement = null;
                 } else if (moreFiltersOverlay && moreFiltersOverlay.style.display !== 'none' && moreFiltersOverlay.style.display !== '') {
-                    closeMoreFilters();
+                    // Close overlay (following same pattern as closeMoreFilters)
+                    const btn = document.querySelector('.pill-more');
+                    moreFiltersOverlay.style.display = 'none';
+                    if (btn) {
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                    
+                    // Release focus trap
+                    releaseFocusTrap();
+                    
+                    // Restore focus to the element that opened the modal
+                    if (elementToRestore && typeof elementToRestore.focus === 'function') {
+                        setTimeout(() => {
+                            elementToRestore.focus();
+                        }, 0);
+                    }
+                    previousActiveElement = null;
                 }
             }
         }
@@ -1049,12 +1134,14 @@ function expandCategory(category) {
     // Render activities in grid
     const grid = document.getElementById('viewAllGrid');
     grid.innerHTML = categoryActivities.map((activity, index) => {
+        // Generate unique ID for this description overlay - MUST match between button aria-controls and overlay id
         const descId = `desc-modal-${activity.id || index}`;
         return `
         <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}">
             <div class="activity-card-image" onmouseenter="showDescription(this)" onmouseleave="hideDescription(this)">
                 ${activity.image ? `<img src="${activity.image}" alt="${activity.name}" class="activity-card-img" width="300" height="240" loading="lazy" decoding="async">` : ''}
                 <div class="activity-card-overlay"></div>
+                ${activeFilters.nearMe && activity.distance !== undefined && typeof activity.distance === 'number' && !isNaN(activity.distance) && isFinite(activity.distance) && activity.distance !== Infinity ? `<div class="activity-card-distance">${activity.distance < 10 ? activity.distance.toFixed(1) : Math.round(activity.distance)} km away</div>` : ''}
                 <button class="description-toggle-btn" onclick="toggleDescription(this)" aria-expanded="false" aria-controls="${descId}" aria-label="Toggle description for ${activity.name}">
                     <span class="visually-hidden">Show description</span>
                 </button>
@@ -1066,7 +1153,7 @@ function expandCategory(category) {
                 <ul class="activity-card-info">
                     <li>
                         <span class="icon-location-pin"></span>
-                        <p>${activity.location}${activity.distance !== undefined && typeof activity.distance === 'number' && !isNaN(activity.distance) && isFinite(activity.distance) && activity.distance !== Infinity ? ` • ${activity.distance < 10 ? activity.distance.toFixed(1) : Math.round(activity.distance)} km` : ''}</p>
+                        <p>${activity.location}</p>
                     </li>
                     ${activity.schedule ? `
                     <li>
@@ -1192,12 +1279,22 @@ function updateCarouselArrows(carouselId) {
 function setupCarouselKeyboardNav(container) {
     if (!container) return;
     
+    // Skip if already set up to prevent duplicate listeners
+    if (container.hasAttribute('data-keyboard-nav-setup')) {
+        return;
+    }
+    
     // Skip if this is a static grid (no scrolling)
     const carousel = container.querySelector('.activities-carousel');
     if (!carousel || carousel.classList.contains('no-scroll')) {
         // Remove tabindex if no scroll needed
         container.removeAttribute('tabindex');
         return;
+    }
+    
+    // Ensure tabindex is set for keyboard focus
+    if (!container.hasAttribute('tabindex')) {
+        container.setAttribute('tabindex', '0');
     }
     
     const carouselId = carousel.id;
@@ -1216,22 +1313,26 @@ function setupCarouselKeyboardNav(container) {
         const tag = (e.target.tagName || '').toUpperCase();
         if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
+        // Check scroll capability
         const canScrollLeft = carousel.scrollLeft > 0;
         const canScrollRight = carousel.scrollLeft < (carousel.scrollWidth - carousel.clientWidth - 1);
 
         if (e.key === 'ArrowLeft' && canScrollLeft) {
             e.preventDefault();
+            e.stopPropagation();
             scrollCarousel(carouselId, -1);
         } else if (e.key === 'ArrowRight' && canScrollRight) {
             e.preventDefault();
+            e.stopPropagation();
             scrollCarousel(carouselId, 1);
         }
     };
-
+    
     // Listen on the container so keys work when focus is on arrows or other elements inside
+    // Use capture phase to catch events before they bubble
     container.addEventListener('keydown', handleKeyDown, true);
     
-    // Store handler reference for cleanup if needed (using data attribute)
+    // Mark as set up to prevent duplicate listeners
     container.setAttribute('data-keyboard-nav-setup', 'true');
 }
 
@@ -1696,48 +1797,118 @@ function toggleMobileMenu() {
     const hamburger = document.getElementById('hamburgerMenu');
     
     if (nav && hamburger) {
+        const isOpen = nav.classList.contains('mobile-open');
         nav.classList.toggle('mobile-open');
         hamburger.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (!isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     }
 }
 
-// Close mobile menu when clicking on a link
+// Close mobile menu
+function closeMobileMenu() {
+    const nav = document.getElementById('mainNav');
+    const hamburger = document.getElementById('hamburgerMenu');
+    
+    if (nav && hamburger) {
+        nav.classList.remove('mobile-open');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Also close any open dropdowns when closing mobile menu
+        const navDropdowns = nav.querySelectorAll('.nav-dropdown');
+        navDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
+}
+
+// Close mobile menu when clicking on a link (but not dropdown toggles)
 document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('mainNav');
+    const hamburger = document.getElementById('hamburgerMenu');
+    
     if (nav) {
-        const navLinks = nav.querySelectorAll('a');
+        // Close menu when clicking regular nav links (not dropdown toggles)
+        const navLinks = nav.querySelectorAll('a:not(.nav-dropdown-toggle)');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 if (window.innerWidth < 768) {
-                    nav.classList.remove('mobile-open');
-                    const hamburger = document.getElementById('hamburgerMenu');
-                    if (hamburger) {
-                        hamburger.classList.remove('active');
-                    }
+                    closeMobileMenu();
                 }
             });
+        });
+        
+        // Close menu when clicking dropdown menu links
+        const dropdownLinks = nav.querySelectorAll('.nav-dropdown-menu a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 768) {
+                    closeMobileMenu();
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth < 768) {
+                const isMenuOpen = nav.classList.contains('mobile-open');
+                const isClickInsideNav = nav.contains(event.target);
+                const isClickOnHamburger = hamburger && hamburger.contains(event.target);
+                
+                if (isMenuOpen && !isClickInsideNav && !isClickOnHamburger) {
+                    closeMobileMenu();
+                }
+            }
         });
     }
 });
 
 // Skipping Town dropdown toggle
 function toggleSkipTownDropdown(event) {
+    if (event) {
     event.preventDefault();
     event.stopPropagation();
-    const dropdown = document.getElementById('skipTownDropdown').parentElement;
-    dropdown.classList.toggle('active');
+    }
+    const dropdown = document.getElementById('skipTownDropdown');
+    if (dropdown) {
+        const dropdownParent = dropdown.parentElement;
+        if (dropdownParent) {
+            dropdownParent.classList.toggle('active');
+        }
+    }
 }
 
 // Cinema dropdown toggle
 function toggleCinemaDropdown(event) {
+    if (event) {
     event.preventDefault();
     event.stopPropagation();
-    const dropdown = document.getElementById('cinemaDropdown').parentElement;
-    dropdown.classList.toggle('active');
+    }
+    const dropdown = document.getElementById('cinemaDropdown');
+    if (dropdown) {
+        const dropdownParent = dropdown.parentElement;
+        if (dropdownParent) {
+            dropdownParent.classList.toggle('active');
+        }
+    }
 }
 
-// Close dropdown when clicking outside
+// Close dropdown when clicking outside (but not on mobile menu toggle)
 document.addEventListener('click', function(event) {
+    const hamburger = document.getElementById('hamburgerMenu');
+    const isClickOnHamburger = hamburger && hamburger.contains(event.target);
+    
+    // Don't close dropdowns if clicking hamburger menu
+    if (isClickOnHamburger) {
+        return;
+    }
+    
     const navDropdowns = document.querySelectorAll('.nav-dropdown');
     
     navDropdowns.forEach(dropdown => {
@@ -1838,7 +2009,7 @@ function setupExternalRedirectMessaging() {
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('./service-worker.js')
             .then(function(registration) {
                 console.log('Service Worker registered successfully:', registration.scope);
             })
@@ -1902,7 +2073,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Populate category filter dropdown
+    populateCategoryFilter();
+    
     renderActivities();
+    updateExploreUI();
     setupExternalRedirectMessaging();
     setupActivityViewAnalytics();
     setupActivityClickAnalytics();
@@ -1963,21 +2138,41 @@ function toggleDescription(element) {
     
     if (!imageContainer) return;
     
-    const overlay = imageContainer.querySelector('.activity-card-description-overlay');
+    // Get overlay using the ID from button's aria-controls to ensure exact match
+    let overlay = null;
+    if (button && button.hasAttribute('aria-controls')) {
+        const overlayId = button.getAttribute('aria-controls');
+        overlay = document.getElementById(overlayId);
+    }
+    
+    // Fallback: if overlay not found by ID, try querySelector
+    if (!overlay) {
+        overlay = imageContainer.querySelector('.activity-card-description-overlay');
+    }
+    
     if (!overlay) return;
+    
+    // Verify that button's aria-controls matches overlay's id
+    if (button && button.hasAttribute('aria-controls') && overlay.id !== button.getAttribute('aria-controls')) {
+        console.warn('Description overlay ID mismatch:', { 
+            buttonAriaControls: button.getAttribute('aria-controls'), 
+            overlayId: overlay.id 
+        });
+    }
     
     const isExpanded = overlay.classList.contains('pinned') || overlay.classList.contains('visible');
     
     // Toggle the overlay
-        overlay.classList.toggle('pinned');
-        overlay.classList.toggle('visible');
+    overlay.classList.toggle('pinned');
+    overlay.classList.toggle('visible');
     
-    // Update ARIA attributes
+    // Update ARIA attributes - aria-expanded must be "true" or "false" (string)
     if (button) {
-        button.setAttribute('aria-expanded', (!isExpanded).toString());
+        const newExpandedState = !isExpanded;
+        button.setAttribute('aria-expanded', newExpandedState ? 'true' : 'false');
         const srText = button.querySelector('.visually-hidden');
         if (srText) {
-            srText.textContent = !isExpanded ? 'Hide description' : 'Show description';
+            srText.textContent = newExpandedState ? 'Hide description' : 'Show description';
         }
     }
 }
@@ -2083,71 +2278,104 @@ function clearExploreFilters() {
     activeFilters.nearMe = false;
     activeFilters.userLocation = null;
     activeFilters.search = '';
+    activeFilters.selectedCategories = new Set();
     sessionStorage.removeItem('userLocation');
     const searchInput = document.getElementById('searchInput');
     if (searchInput) searchInput.value = '';
+    updateCategoryCheckboxes();
     updateExploreUI();
     renderActivities();
 }
 
 function updateExploreUI() {
-    // Pills active state
-    document.querySelectorAll('.explore-pills .pill').forEach(p => {
-        const key = p.getAttribute('data-filter');
-        p.classList.remove('pill-active');
-        p.setAttribute('aria-pressed', 'false');
-        if (key === 'all') {
-            if (activeFilters.day === 'all' && (!activeFilters.tokens || activeFilters.tokens.size === 0) && !activeFilters.nearMe) {
-                p.classList.add('pill-active');
-                p.setAttribute('aria-pressed', 'true');
-            }
-        } else if (key === 'weekday' && activeFilters.day === 'weekday') {
-            p.classList.add('pill-active');
-            p.setAttribute('aria-pressed', 'true');
-        } else if (key === 'weekend' && activeFilters.day === 'weekend') {
-            p.classList.add('pill-active');
-            p.setAttribute('aria-pressed', 'true');
-        } else if (activeFilters.tokens && activeFilters.tokens.has(key)) {
-            p.classList.add('pill-active');
-            p.setAttribute('aria-pressed', 'true');
-        } else if (key === 'nearme' && activeFilters.nearMe) {
-            p.classList.add('pill-active');
-            p.setAttribute('aria-pressed', 'true');
+    // Near Me button state
+    const nearMeBtn = document.getElementById('nearMeBtn');
+    if (nearMeBtn) {
+        if (activeFilters.nearMe) {
+            nearMeBtn.classList.add('pill-active');
+            nearMeBtn.setAttribute('aria-pressed', 'true');
+        } else {
+            nearMeBtn.classList.remove('pill-active');
+            nearMeBtn.setAttribute('aria-pressed', 'false');
+        }
+    }
+    
+    // Update filter by button text
+    const filterByBtn = document.getElementById('filterByBtn');
+    if (filterByBtn && activeFilters.selectedCategories && activeFilters.selectedCategories.size > 0) {
+        filterByBtn.innerHTML = `Filter by (${activeFilters.selectedCategories.size}) <span class="dropdown-arrow">▼</span>`;
+    } else if (filterByBtn) {
+        filterByBtn.innerHTML = 'Filter by <span class="dropdown-arrow">▼</span>';
+    }
+    
+    updateCategoryCheckboxes();
+}
+
+function getAllCategories() {
+    const categories = new Set();
+    activities.forEach(activity => {
+        if (activity.category && !activity.hidden) {
+            categories.add(activity.category);
         }
     });
-    // Clear button visibility
-    const clearBtn = document.getElementById('pillClearBtn');
-    if (clearBtn) {
-        const hasFilters = activeFilters.day !== 'all' || (activeFilters.tokens && activeFilters.tokens.size > 0) || activeFilters.nearMe || (activeFilters.search && activeFilters.search.length > 0) || (activeFilters.locationScope && activeFilters.locationScope !== 'all');
-        clearBtn.style.display = hasFilters ? '' : 'none';
+    return Array.from(categories).sort();
+        }
+
+function populateCategoryFilter() {
+    const container = document.getElementById('categoryFilterList');
+    if (!container) return;
+    
+    const categories = getAllCategories();
+    container.innerHTML = categories.map(category => {
+        const escapedCategory = category.replace(/'/g, "\\'");
+        return `
+        <label class="category-filter-item">
+            <input type="checkbox" value="${category.replace(/"/g, '&quot;')}" onchange="toggleCategory('${escapedCategory}', this.checked)">
+            <span>${category}</span>
+        </label>
+    `;
+    }).join('');
+}
+
+function updateCategoryCheckboxes() {
+    const checkboxes = document.querySelectorAll('#categoryFilterList input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = activeFilters.selectedCategories.has(checkbox.value);
+    });
+}
+
+function toggleCategory(category, checked) {
+    if (checked) {
+        activeFilters.selectedCategories.add(category);
+    } else {
+        activeFilters.selectedCategories.delete(category);
+    }
+    updateExploreUI();
+    renderActivities();
     }
 
-    // Sync location scope checkboxes
-    const withinChk = document.getElementById('withinNairobiChk');
-    const outsideChk = document.getElementById('outsideNairobiChk');
-    if (withinChk && outsideChk) {
-        withinChk.checked = activeFilters.locationScope === 'within';
-        outsideChk.checked = activeFilters.locationScope === 'outside';
+function toggleCategoryFilter() {
+    const menu = document.getElementById('categoryFilterMenu');
+    const btn = document.getElementById('filterByBtn');
+    if (!menu || !btn) return;
+    
+    const isOpen = menu.style.display !== 'none';
+    menu.style.display = isOpen ? 'none' : 'block';
+    btn.setAttribute('aria-expanded', !isOpen);
+    
+    if (!isOpen) {
+        // Populate checkboxes and then sync with saved state
+        populateCategoryFilter();
+        // Update checkboxes to reflect current selected categories
+        updateCategoryCheckboxes();
     }
 }
 
-// Pill click handling (delegated)
+// Near Me button click handling
 document.addEventListener('click', function(event) {
-    const pill = event.target && event.target.closest && event.target.closest('.pill');
+    const pill = event.target && event.target.closest && event.target.closest('#nearMeBtn');
     if (!pill) return;
-    const key = pill.getAttribute('data-filter');
-    if (!key) return;
     
-    if (key === 'all') {
-        activeFilters.day = 'all';
-        activeFilters.tokens = new Set();
-        activeFilters.nearMe = false;
-        activeFilters.userLocation = null;
-    } else if (key === 'weekday') {
-        activeFilters.day = activeFilters.day === 'weekday' ? 'all' : 'weekday';
-    } else if (key === 'weekend') {
-        activeFilters.day = activeFilters.day === 'weekend' ? 'all' : 'weekend';
-    } else if (key === 'nearme') {
         if (activeFilters.nearMe) {
             // Toggle off: clear location sorting
             activeFilters.nearMe = false;
@@ -2157,20 +2385,26 @@ document.addEventListener('click', function(event) {
         } else {
             // Toggle on: request location
             handleNearMe();
-        }
-    } else {
-        // Toggle token
-        const set = activeFilters.tokens || new Set();
-        if (set.has(key)) set.delete(key); else set.add(key);
-        activeFilters.tokens = set;
     }
     updateExploreUI();
     renderActivities();
 }, true);
 
+// Close category filter menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('categoryFilterMenu');
+    const btn = document.getElementById('filterByBtn');
+    if (!menu || !btn) return;
+    
+    if (!menu.contains(event.target) && !btn.contains(event.target) && menu.style.display !== 'none') {
+        menu.style.display = 'none';
+        btn.setAttribute('aria-expanded', 'false');
+    }
+}, true);
+
 // Set loading state on Near Me pill
 function setNearMeLoading(isLoading) {
-    const pill = document.querySelector('.explore-pills .pill[data-filter="nearme"]');
+    const pill = document.getElementById('nearMeBtn');
     if (!pill) return;
     if (isLoading) {
         if (!pill.dataset.label) pill.dataset.label = pill.textContent.trim();
@@ -2202,6 +2436,19 @@ function setLocationScope(scope, checked) {
 }
 
 function handleNearMe() {
+    // Check for location consent first
+    if (!window.hasConsentFor || !window.hasConsentFor('location')) {
+        showLocationError('Please enable Location Tracking in your privacy settings to use the "Near Me" feature.');
+        setNearMeLoading(false);
+        // Optionally redirect to privacy settings
+        setTimeout(() => {
+            if (confirm('Location tracking is required for "Near Me" features. Would you like to update your privacy settings?')) {
+                window.location.href = 'privacy-settings.html';
+            }
+        }, 100);
+        return;
+    }
+    
     // Show loading state
     setNearMeLoading(true);
     // Check if we have stored location in session

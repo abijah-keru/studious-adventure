@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics will be loaded conditionally after consent -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">      
+    <meta name="description" content="Manage your privacy settings and cookie preferences on Nairobi Date Planner.">      
+    <link rel="canonical" href="https://nairobi-date-planner.com/privacy.html"> 
+    <title>Your Privacy Settings - Nairobi Date Planner</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#C1666B">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>        
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">     
+    <link rel="stylesheet" href="listing-master/css/themify-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Privacy page specific styles - header should be red by default */    
+        body.privacy-page header {
+            background: #C1666B;
+            box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.privacy-page header .logo-text h1 {
+            text-shadow: none;
+        }
+
+        body.privacy-page header nav > a,
+        body.privacy-page header .nav-dropdown-toggle {
+            font-weight: 300;
+            text-shadow: none;
+        }
+
+        .privacy-page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px 48px;
+        }
+
+        .privacy-page-header {
+            margin-bottom: 48px;
+        }
+
+        .privacy-page-header h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: #111827;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+            padding-top: 8px;
+        }
+
+        .privacy-page-header h1::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #C1666B;
+        }
+
+        .privacy-settings-content {
+            background: #fff;
+            border-radius: 3px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .privacy-settings-content p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4b5563;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .save-privacy-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: #C1666B;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
+            margin-top: 24px;
+        }
+
+        .save-privacy-btn:hover {
+            background: #8B4049;
+        }
+
+        .save-privacy-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 767px) {
+            .privacy-page-container {
+                padding: 100px 16px 32px;
+            }
+
+            .privacy-settings-content {
+                padding: 24px;
+            }
+
+            .privacy-page-header h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body class="privacy-page">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Nairobi Logo" class="logo-img">
+                </a>
+            </div>
+            <nav>
+                <a href="index.html#activities">Activities</a>
+                <a href="https://www.thelist.restaurant/categories" target="_blank" rel="noopener noreferrer">Restaurants</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleCinemaDropdown(event)">Cinema <span class="dropdown-arrow">▼</span></a>
+                    <div class="nav-dropdown-menu" id="cinemaDropdown">
+                        <a href="https://centurycinemax.co.ke/" target="_blank" rel="noopener noreferrer">Century Cinemax</a>
+                        <a href="https://mookh.com/store/event/unseen-nairobi-2025" target="_blank" rel="noopener noreferrer">Unseen Nairobi</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle" onclick="toggleSkipTownDropdown(event)">Skip Town <span class="dropdown-arrow">▼</span></a>       
+                    <div class="nav-dropdown-menu" id="skipTownDropdown">       
+                        <a href="https://tigoni.life/" target="_blank" rel="noopener noreferrer">Tigoni</a>
+                        <a href="camping.html">Camping</a>
+                    </div>
+                </div>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="privacy-page-container">
+            <div class="privacy-page-header">
+                <h1>Your Privacy Settings</h1>
+            </div>
+
+            <div class="privacy-settings-content">
+                <p>At Nairobi Dates, your privacy comes first. You can control how we use cookies and your data.</p>
+                
+                <p><strong>Analytics Cookies:</strong> Help us understand how people use the site. You can turn this off anytime.</p>
+                
+                <p><strong>Location Tracking:</strong> Only used to show experiences near you. You can enable or disable this anytime.</p>
+                
+                <p><strong>Form Tracking:</strong> Helps us ensure your messages reach us safely. You can disable analytics but the form will still work.</p>
+                
+                <p>You can change these preferences at any time by visiting this page. Declining or turning off cookies will not break the site.</p>
+                
+                <div class="privacy-controls">
+                    <div class="privacy-control-item">
+                        <div class="privacy-control-info">
+                            <div class="privacy-control-label">Analytics Cookies</div>
+                            <div class="privacy-control-description">Help us understand how people use the site</div>
+                        </div>
+                        <label class="privacy-toggle">
+                            <input type="checkbox" id="pagePrefAnalytics" />
+                            <span class="privacy-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="privacy-control-item">
+                        <div class="privacy-control-info">
+                            <div class="privacy-control-label">Location Tracking</div>
+                            <div class="privacy-control-description">Only used to show experiences near you</div>
+                        </div>
+                        <label class="privacy-toggle">
+                            <input type="checkbox" id="pagePrefLocation" />
+                            <span class="privacy-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="privacy-control-item">
+                        <div class="privacy-control-info">
+                            <div class="privacy-control-label">Form Tracking</div>
+                            <div class="privacy-control-description">Helps ensure your messages reach us safely</div>
+                        </div>
+                        <label class="privacy-toggle">
+                            <input type="checkbox" id="pagePrefForms" />
+                            <span class="privacy-toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" class="save-privacy-btn" onclick="savePagePrivacyPreferences()">Save Preferences</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025. All rights reserved.</p>
+            <p style="margin-top: 8px;"><a href="privacy-settings.html" style="color: #737882; text-decoration: none; font-size: 14px; transition: color 0.3s ease;" onmouseover="this.style.color='#C1666B'" onmouseout="this.style.color='#737882'">Privacy Settings</a></p>
+        </div>
+    </footer>
+
+    <script src="cookie-banner.js"></script>
+    <script>
+        // Load current preferences when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const consent = CookieConsent ? CookieConsent.getConsent() : null;
+            
+            if (consent) {
+                document.getElementById('pagePrefAnalytics').checked = consent.analytics || consent.acceptedAll || false;
+                document.getElementById('pagePrefLocation').checked = consent.location || consent.acceptedAll || false;
+                document.getElementById('pagePrefForms').checked = consent.forms || consent.acceptedAll || false;
+            }
+        });
+
+        function savePagePrivacyPreferences() {
+            if (!window.CookieConsent) {
+                alert('Privacy system not loaded. Please refresh the page.');
+                return;
+            }
+
+            const preferences = {
+                analytics: document.getElementById('pagePrefAnalytics').checked,
+                location: document.getElementById('pagePrefLocation').checked,
+                forms: document.getElementById('pagePrefForms').checked
+            };
+            
+            CookieConsent.savePreferences(preferences);
+            
+            // Show confirmation
+            const btn = document.querySelector('.save-privacy-btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Preferences Saved!';
+            btn.style.background = '#10b981';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#C1666B';
+            }, 2000);
+        }
+
+        // Handle dropdown toggles
+        function toggleCinemaDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('cinemaDropdown').parentElement;
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleSkipTownDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('skipTownDropdown').parentElement;
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const navDropdowns = document.querySelectorAll('.nav-dropdown');
+
+            navDropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
