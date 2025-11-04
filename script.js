@@ -1200,7 +1200,41 @@ function releaseFocusTrap() {
 
 function expandCategory(category) {
     const filteredActivities = activities.filter(matchesFilters);
-    const categoryActivities = filteredActivities.filter(a => a.category === category);
+    
+    // Handle "Happening This Month" special case - it's a merged view, not a real category
+    let categoryActivities = [];
+    if (category === 'Happening This Month') {
+        // Get all activities that match "Happening This Month" criteria
+        categoryActivities = filteredActivities.filter(activity => {
+            return activity.category === 'Orchestras & Musicals' ||
+                   activity.category === 'Theatre' ||
+                   activity.name === 'Nairobi Sketch Tour' ||
+                   activity.name === 'The Comedy Criminals';
+        });
+        
+        // Sort in the same order as the merged view
+        const happeningThisMonthOrder = [
+            'Pulchra Musica',
+            'Nairobi Orchestra',
+            'The Comedy Criminals',
+            'Braeburn Theater',
+            'Kenya National Theatre',
+            'Nairobi Sketch Tour'
+        ];
+        
+        categoryActivities.sort((a, b) => {
+            const aIndex = happeningThisMonthOrder.indexOf(a.name);
+            const bIndex = happeningThisMonthOrder.indexOf(b.name);
+            if (aIndex !== -1 && bIndex !== -1) {
+                return aIndex - bIndex;
+            }
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+            return 0;
+        });
+    } else {
+        categoryActivities = filteredActivities.filter(a => a.category === category);
+    }
     
     if (categoryActivities.length === 0) return;
     

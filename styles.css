@@ -727,7 +727,7 @@ main {
 
 .category-filter-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     padding: 10px 12px;
     cursor: pointer;
@@ -737,6 +737,7 @@ main {
     color: #111827;
     font-weight: 400;
     line-height: 1.4;
+    min-width: 0;
 }
 
 .category-filter-item:hover {
@@ -757,6 +758,9 @@ main {
     user-select: none;
     color: #111827;
     font-size: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
 }
 
 .explore-pills {
@@ -2858,39 +2862,52 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     .filter-by-dropdown {
         width: auto;
         flex: 0 0 auto;
+        max-width: calc(100vw - 120px);
+        box-sizing: border-box;
     }
     
     .filter-by-btn {
         width: auto;
+        max-width: calc(100vw - 120px);
         justify-content: center;
         min-height: 44px;
         padding: 10px 12px;
         font-size: 14px;
+        box-sizing: border-box;
     }
     
     .category-filter-menu {
-        width: 100%;
-        max-width: 100%;
-        left: 0;
-        right: 0;
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
         max-height: 60vh;
         padding: 12px;
+        box-sizing: border-box;
     }
     
     .category-filter-item {
         padding: 12px 14px;
         font-size: 15px;
         gap: 12px;
+        align-items: flex-start;
+        min-width: 0;
     }
     
     .category-filter-item input[type="checkbox"] {
         width: 20px;
         height: 20px;
+        flex-shrink: 0;
+        margin-top: 2px;
     }
     
     .category-filter-item span {
         font-size: 15px;
         color: #111827;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        min-width: 0;
     }
 
     .logo-icon {
