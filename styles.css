@@ -1472,6 +1472,11 @@ main {
     object-position: center 20%;
 }
 
+/* Adjust The Comedy Criminals image to show more of top */
+.activity-card-img[src*="The-Comedy-Criminals"] {
+    object-position: center 0%;
+}
+
 /* Remove overlay completely - keep images clean */
 .activity-card-overlay {
     display: none !important;

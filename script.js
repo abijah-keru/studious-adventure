@@ -47,36 +47,36 @@ const activities = [
         website: "https://eatout.co.ke/restaurant/bamba/",
         linkTitle: "Reserve"
     },
-    {
-        id: 4,
-        name: "Nairobi Orchestra",
-        description: "Classical orchestral performances featuring local and international repertoire.",
-        location: "Sabis International School, Runda",
-        latitude: -1.2077902877071145,
-        longitude: 36.830101476868464,
-        schedule: "Ongoing Shows in November",
-        category: "Orchestras & Musicals",
-        tags: ["Classical", "Orchestra", "Live Music"],
-        image: "images/Nairobi-Orchestra.webp",
-        alt: "Poster announcing upcoming Nairobi Orchestra performance with event details",
-        website: "https://kenyabuzz.com/events/event/nairobi-orchestra-reverie-odyssey",
-        linkTitle: "Buy Ticket"
-    },
-    {
-        id: 5,
-        name: "Pulchra Musica",
-        description: "Classical music shows featuring talented local musicians.",
-        location: "Holy Cross Hall, Lavington",
-        latitude: -1.284326951068929,
-        longitude: 36.7610829503172,
-        schedule: "Ongoing Shows in November",
-        category: "Orchestras & Musicals",
-        tags: ["Classical", "Live Music", "Performance"],
-        image: "images/Pulchra-Musica.webp",
-        alt: "Promotional poster showing concert dates for Pulchra Musica",
-        website: "https://docs.google.com/forms/d/e/1FAIpQLSc5OldJFVpJ27MlKKoau8DhrzDQ04TsD-2R9Was-GZn45z4Yw/viewform",
-        linkTitle: "Buy Tickets"
-    },
+          {
+          id: 4,
+          name: "Nairobi Orchestra",
+          description: "Classical orchestral performances featuring local and international repertoire.",
+          location: "Sabis International School, Runda",
+          latitude: -1.2077902877071145,
+          longitude: 36.830101476868464,
+          schedule: "Sat Nov 15, 6:30 PM & Sun Nov 16, 3:00 PM",
+          category: "Orchestras & Musicals",
+          tags: ["Classical", "Orchestra", "Live Music"],
+          image: "images/Nairobi-Orchestra.webp",
+          alt: "Poster announcing upcoming Nairobi Orchestra performance with event details",
+          website: "https://kenyabuzz.com/events/event/nairobi-orchestra-reverie-odyssey",
+          linkTitle: "Buy Ticket"
+      },
+      {
+          id: 5,
+          name: "Pulchra Musica",
+          description: "Classical music shows featuring talented local musicians.",
+          location: "Holy Cross Hall, Lavington",
+          latitude: -1.284326951068929,
+          longitude: 36.7610829503172,
+          schedule: "Sat Nov 8, 7:00 PM & Sun Nov 9, 3:00 PM",
+          category: "Orchestras & Musicals",
+          tags: ["Classical", "Live Music", "Performance"],
+          image: "images/Pulchra-Musica.webp",
+          alt: "Promotional poster showing concert dates for Pulchra Musica",
+          website: "https://docs.google.com/forms/d/e/1FAIpQLSc5OldJFVpJ27MlKKoau8DhrzDQ04TsD-2R9Was-GZn45z4Yw/viewform",
+          linkTitle: "Buy Tickets"
+      },
     {
         id: 18,
         name: "Saxophone Fridays",
@@ -126,6 +126,22 @@ const activities = [
         website: "https://standupcollective.co.ke/shows",
         linkTitle: "View More Upcoming Shows"
     },
+          {
+          id: 28,
+          name: "The Comedy Criminals",
+          description: "Get ready for an unforgettable night of laughter as The Comedy Criminals take over the stage! Featuring the outrageously funny Jack Nanjero and the ever-entertaining Amadeus, Rock, Tim this show promises a high-energy mix of sharp wit, hilarious storytelling, and pure comedic brilliance.",
+          location: "Nairobi Laugh Bar",
+          latitude: -1.2932647766332508,
+          longitude: 36.76187245174493,
+          schedule: "Nov 15, 7:30 PM",
+          category: "Stand Up Comedy",
+          tags: ["Comedy", "Entertainment", "Nightlife"],
+          timeOfDay: "night",
+          image: "images/The-Comedy-Criminals.jpg",
+          alt: "Poster for The Comedy Criminals show featuring Jack Nanjero, Amadeus, Rock, and Tim",
+          website: "https://standupcollective.co.ke/buytickets?event=THE%20COMEDY%20CRIMINALS%20",
+          linkTitle: "Buy Ticket"
+      },
     {
         id: 7,
         name: "Sets in the City",
@@ -142,21 +158,21 @@ const activities = [
         website: "https://www.instagram.com/punchlinecomedyclubnairobi/",
         linkTitle: "View More Upcoming Shows"
     },
-    {
-        id: 9,
-        name: "Braeburn Theater",
-        description: "Step into the Forest of Arden for a night of laughter, disguise, and love! Braeburn High School proudly presents As You Like It — A Musical Adaptation by Shaina Taub & Laurie Woolery of Shakespeare's timeless comedy brought to life by our talented students.",
-        location: "Braeburn Theater",
-        latitude: -1.2891353762889035,
-        longitude: 36.75571346708775,
-        schedule: "November Shows",
-        category: "Theatre",
-        tags: ["Theatre", "Performance", "Arts"],
-        image: "images/Braeburn-Theatre.webp",
-        alt: "Poster for Braeburn High School's theatre production",
-        website: "https://www.theatres.braeburn.com/",
-        linkTitle: "Buy Tickets"
-    },
+          {
+          id: 9,
+          name: "Braeburn Theater",
+          description: "Step into the Forest of Arden for a night of laughter, disguise, and love! Braeburn High School proudly presents As You Like It — A Musical Adaptation by Shaina Taub & Laurie Woolery of Shakespeare's timeless comedy brought to life by our talented students.",
+          location: "Braeburn Theater",
+          latitude: -1.2891353762889035,
+          longitude: 36.75571346708775,
+          schedule: "Nov 5 - Nov 30",
+          category: "Theatre",
+          tags: ["Theatre", "Performance", "Arts"],
+          image: "images/Braeburn-Theatre.webp",
+          alt: "Poster for Braeburn High School's theatre production",
+          website: "https://www.theatres.braeburn.com/",
+          linkTitle: "Buy Tickets"
+      },
     {
         id: 10,
         name: "Kenya National Theatre",
@@ -191,19 +207,20 @@ const activities = [
         website: "https://enanka.co.ke/art/potteryandclay-experience/",
         linkTitle: "Book Class"
     },
-    {
-        id: 27,
-        name: "Nairobi Sketch Tour",
-        description: "We create and curate exciting cultural experiences all over Kenya centering on art. Also engage in private curated tours",
-        location: "Various scenic locations (e.g., Ngong Hills)",
-        category: "Workshops & Creative Experiences",
-        tags: ["Art", "Outdoor", "Cultural", "Sketching", "Tours", "Creative"],
-        timeOfDay: "day",
-        image: "images/Nairobi-Sketch-Tour.webp",
-        alt: "Artistic landscape view",
-        website: "https://nairobisketchtour.hustlesasa.shop/",
-        linkTitle: "Buy Tickets"
-    },
+          {
+          id: 27,
+          name: "Nairobi Sketch Tour",
+          description: "We create and curate exciting cultural experiences all over Kenya centering on art. Also engage in private curated tours",
+          location: "Various scenic locations (e.g., Ngong Hills)",
+          category: "Workshops & Creative Experiences",
+          tags: ["Art", "Outdoor", "Cultural", "Sketching", "Tours", "Creative"],
+          timeOfDay: "day",
+          image: "images/Nairobi-Sketch-Tour.webp",
+          alt: "Artistic landscape view",
+          website: "https://nairobisketchtour.hustlesasa.shop/",
+          linkTitle: "Buy Tickets",
+          hidden: true // Hidden from site, only shows in "Happening This Month"
+      },
     {
         id: 14,
         name: "Art Class",
@@ -375,6 +392,22 @@ const activities = [
         alt: "Interior view showing historical relics and artifacts"
     },
     // Fun & Games
+    // Optical Illusion & Interactive Experiences
+    {
+        id: 41,
+        name: "Museum of Illusions",
+        description: "Explore mind-bending optical illusions and interactive exhibits that challenge your perception.",
+        location: "Museum of Illusions, Nairobi",
+        latitude: -1.2678528696988007,
+        longitude: 36.81758243400931,
+        schedule: "Mon–Thu, 10am–8pm; Fri–Sun, 10am–10pm",
+        category: "Fun & Games",
+        subcategory: "Optical Illusion & Interactive Experiences",
+        tags: ["fun", "Museum", "Illusions", "Interactive", "Indoor", "Educational"],
+        timeOfDay: "day",
+        image: "images/Museum-Of-Illusions.webp",
+        alt: "Illusion table setup showing a head appearing on a plate"
+    },
     // Virtual Reality & Tech
     {
         id: 29,
@@ -406,22 +439,6 @@ const activities = [
         alt: "Person firing a paintball gun at an outdoor range",
         hidden: true
     },
-    // Optical Illusion & Interactive Experiences
-    {
-        id: 41,
-        name: "Museum of Illusions",
-        description: "Explore mind-bending optical illusions and interactive exhibits that challenge your perception.",
-        location: "Museum of Illusions, Nairobi",
-        latitude: -1.2678528696988007,
-        longitude: 36.81758243400931,
-        schedule: "Mon–Thu, 10am–8pm; Fri–Sun, 10am–10pm",
-        category: "Fun & Games",
-        subcategory: "Optical Illusion & Interactive Experiences",
-        tags: ["fun", "Museum", "Illusions", "Interactive", "Indoor", "Educational"],
-        timeOfDay: "day",
-        image: "images/Museum-Of-Illusions.webp",
-        alt: "Illusion table setup showing a head appearing on a plate"
-    },
     // Go-Karting
     {
         id: 35,
@@ -437,6 +454,22 @@ const activities = [
         timeOfDay: "day",
         image: "images/Redhill-Karting.webp",
         alt: "Go-kart track with racers on the course"
+    },
+    // Ice Skating & Trampoline Parks
+    {
+        id: 39,
+        name: "Jump by the Flying Fox",
+        description: "Adventure activities including racing zipline, airbag jump, giant swing, climbing wall, and abseiling.",
+        location: "The Hub Karen",
+        latitude: -1.320317234836205,
+        longitude: 36.7042858475026,
+        schedule: "Open daily",
+        category: "Fun & Games",
+        subcategory: "Ice Skating & Trampoline Parks",
+        tags: ["fun", "Zipline", "Climbing", "Adventure", "Outdoor", "Active"],
+        timeOfDay: "day",
+        image: "images/Jump-Nairobi.webp",
+        alt: "Event poster with photo of a person mid-jump"
     },
     // Mini Golf, Bowling & Indoor Play
     {
@@ -500,7 +533,7 @@ const activities = [
         image: "images/Panari-Ice-Skating.jpg",
         alt: "Indoor ice skating rink"
     },
-    {
+              {
         id: 38,
         name: "Ozone Trampoline Park",
         description: "Bounce, jump, and play on trampolines in a safe and fun environment.",
@@ -514,21 +547,6 @@ const activities = [
         timeOfDay: "day",
         image: "images/Ozone.jpg",
         alt: "Large indoor trampoline arena"
-    },
-    {
-        id: 39,
-        name: "Jump by the Flying Fox",
-        description: "Adventure activities including racing zipline, airbag jump, giant swing, climbing wall, and abseiling.",
-        location: "The Hub Karen",
-        latitude: -1.320317234836205,
-        longitude: 36.7042858475026,
-        schedule: "Open daily",
-        category: "Fun & Games",
-        subcategory: "Ice Skating & Trampoline Parks",
-        tags: ["fun", "Zipline", "Climbing", "Adventure", "Outdoor", "Active"],
-        timeOfDay: "day",
-        image: "images/Jump-Nairobi.webp",
-        alt: "Event poster with photo of a person mid-jump"
     },
     // Board Games & Chill Spots
     {
@@ -554,6 +572,7 @@ let activeFilters = {
     search: '', // Search term
     tokens: new Set(), // e.g., 'free', 'outdoor', 'spas'
     nearMe: false,
+    happeningThisMonth: false,
     userLocation: null, // { latitude: number, longitude: number }
     locationScope: 'all', // 'all' | 'within' | 'outside'
     selectedCategories: new Set() // Selected category names
@@ -720,8 +739,32 @@ function matchesFilters(activity) {
         if (activeFilters.locationScope === 'outside' && within) return false;
     }
 
-    // Category filter
+    // Hide activities marked as hidden (unless "Happening This Month" is active)
+    if (!activeFilters.happeningThisMonth && activity.hidden === true) {
+        return false;
+    }
+
+    // Happening This Month filter
+    let isHappeningThisMonth = false;
+    if (activeFilters.happeningThisMonth) {
+        // Check if activity matches "Happening This Month" criteria
+        if (activity.category === 'Orchestras & Musicals' ||
+            activity.category === 'Theatre' ||
+            activity.name === 'Nairobi Sketch Tour' ||
+            activity.name === 'The Comedy Criminals') {
+            isHappeningThisMonth = true;
+        }
+        
+        // If "Happening This Month" is active, only show activities that match
+        if (!isHappeningThisMonth) {
+            return false;
+        }
+    }
+
+    // Category filter - apply only if categories are selected
     if (activeFilters.selectedCategories && activeFilters.selectedCategories.size > 0) {
+        // If "Happening This Month" is also active, check if the activity's category is selected
+        // Otherwise, just check normally
         if (!activeFilters.selectedCategories.has(activity.category)) {
             return false;
         }
@@ -775,14 +818,48 @@ function renderActivities() {
         }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
     }
     
-    // Group activities by category (preserving order - important for Near Me sorting)
-    const categories = {};
-    filteredActivities.forEach(activity => {
-        if (!categories[activity.category]) {
-            categories[activity.category] = [];
-        }
-        categories[activity.category].push(activity);
-    });
+    // If "Happening This Month" is active, show all activities in a single merged category
+    let categories = {};
+    let categoryNames = [];
+    
+    if (activeFilters.happeningThisMonth) {
+        // Merge all activities into a single "Happening This Month" category
+        // Order: Pulchra Musica, Nairobi Orchestra, The Comedy Criminals, Theatre shows, Nairobi Sketch Tour
+        const happeningThisMonthOrder = [
+            'Pulchra Musica',
+            'Nairobi Orchestra',
+            'The Comedy Criminals',
+            'Braeburn Theater',
+            'Kenya National Theatre',
+            'Nairobi Sketch Tour'
+        ];
+        
+        filteredActivities.sort((a, b) => {
+            const aIndex = happeningThisMonthOrder.indexOf(a.name);
+            const bIndex = happeningThisMonthOrder.indexOf(b.name);
+            // If both are in the order list, sort by their position
+            if (aIndex !== -1 && bIndex !== -1) {
+                return aIndex - bIndex;
+            }
+            // If only one is in the order list, prioritize it
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+            // If neither is in the order list, maintain original order
+            return 0;
+        });
+        
+        categories['Happening This Month'] = filteredActivities;
+        categoryNames = ['Happening This Month'];
+    } else {
+        // Group activities by category (preserving order - important for Near Me sorting)
+        filteredActivities.forEach(activity => {
+            if (!categories[activity.category]) {
+                categories[activity.category] = [];
+            }
+            categories[activity.category].push(activity);
+        });
+        categoryNames = Object.keys(categories);
+    }
     
     // If Near Me is active, ensure activities within each category are sorted by distance
     if (activeFilters.nearMe && activeFilters.userLocation) {
@@ -797,35 +874,37 @@ function renderActivities() {
     
     // Render by category with horizontal carousels
     let html = '';
-    let categoryNames = Object.keys(categories);
     
-    // Sort categories in this order:
-    // 1) Workshops & Creative Experiences
-    // 2) Orchestras & Musicals
-    // 3) Outdoor & Adventure
-    // 4) Theatre
-    // then others, and Cultural Heritage Sites last
-    const preferredOrder = ['Workshops & Creative Experiences', 'Orchestras & Musicals', 'Outdoor & Adventure', 'Theatre'];
-    categoryNames = categoryNames.sort((a, b) => {
-        // Always put Cultural Heritage Sites last
-        const aIsHeritage = a === 'Cultural Heritage Sites';
-        const bIsHeritage = b === 'Cultural Heritage Sites';
-        if (aIsHeritage && !bIsHeritage) return 1;
-        if (bIsHeritage && !aIsHeritage) return -1;
+    // Sort categories (only if not "Happening This Month" mode)
+    if (!activeFilters.happeningThisMonth) {
+        // Sort categories in this order:
+        // 1) Workshops & Creative Experiences
+        // 2) Orchestras & Musicals
+        // 3) Outdoor & Adventure
+        // 4) Theatre
+        // then others, and Cultural Heritage Sites last
+        const preferredOrder = ['Workshops & Creative Experiences', 'Orchestras & Musicals', 'Outdoor & Adventure', 'Theatre'];
+        categoryNames = categoryNames.sort((a, b) => {
+            // Always put Cultural Heritage Sites last
+            const aIsHeritage = a === 'Cultural Heritage Sites';
+            const bIsHeritage = b === 'Cultural Heritage Sites';
+            if (aIsHeritage && !bIsHeritage) return 1;
+            if (bIsHeritage && !aIsHeritage) return -1;
 
-        // Then enforce preferred order
-        const aIndex = preferredOrder.indexOf(a);
-        const bIndex = preferredOrder.indexOf(b);
-        const aPreferred = aIndex !== -1;
-        const bPreferred = bIndex !== -1;
+            // Then enforce preferred order
+            const aIndex = preferredOrder.indexOf(a);
+            const bIndex = preferredOrder.indexOf(b);
+            const aPreferred = aIndex !== -1;
+            const bPreferred = bIndex !== -1;
 
-        if (aPreferred && bPreferred) return aIndex - bIndex;
-        if (aPreferred && !bPreferred) return -1;
-        if (!aPreferred && bPreferred) return 1;
+            if (aPreferred && bPreferred) return aIndex - bIndex;
+            if (aPreferred && !bPreferred) return -1;
+            if (!aPreferred && bPreferred) return 1;
 
-        // Otherwise, keep original relative order
-        return 0;
-    });
+            // Otherwise, keep original relative order
+            return 0;
+        });
+    }
     
     if (categoryNames.length === 0) {
         html = `
@@ -1424,13 +1503,17 @@ function getBulletPoints(activity) {
     if (name === 'giggles & tickles' || location.includes('levels')) {
         return ['Restaurant', 'Free entry'];
     }
-    // Sets in the City (Beer District)
-    if (name === 'sets in the city' || location.includes('beer district')) {
-        return ['Restaurant & bar', 'Free entry'];
-    }
+          // Sets in the City (Beer District)
+      if (name === 'sets in the city' || location.includes('beer district')) {
+          return ['Restaurant & bar', 'Free entry'];
+      }
+      // Braeburn Theater
+      if (name === 'braeburn theater' || location.includes('braeburn')) {
+          return ['Multiple Shows'];
+      }
 
-    return [];
-}
+      return [];
+  }
 
 
 // Deprecated Date Planner feature: keep placeholder to avoid reference errors
@@ -2276,6 +2359,7 @@ function clearExploreFilters() {
     activeFilters.time = 'all';
     activeFilters.tokens = new Set();
     activeFilters.nearMe = false;
+    activeFilters.happeningThisMonth = false;
     activeFilters.userLocation = null;
     activeFilters.search = '';
     activeFilters.selectedCategories = new Set();
@@ -2297,6 +2381,18 @@ function updateExploreUI() {
         } else {
             nearMeBtn.classList.remove('pill-active');
             nearMeBtn.setAttribute('aria-pressed', 'false');
+        }
+    }
+    
+    // Happening This Month button state
+    const happeningThisMonthBtn = document.getElementById('happeningThisMonthBtn');
+    if (happeningThisMonthBtn) {
+        if (activeFilters.happeningThisMonth) {
+            happeningThisMonthBtn.classList.add('pill-active');
+            happeningThisMonthBtn.setAttribute('aria-pressed', 'true');
+        } else {
+            happeningThisMonthBtn.classList.remove('pill-active');
+            happeningThisMonthBtn.setAttribute('aria-pressed', 'false');
         }
     }
     
@@ -2371,24 +2467,39 @@ function toggleCategoryFilter() {
     }
 }
 
-// Near Me button click handling
-document.addEventListener('click', function(event) {
-    const pill = event.target && event.target.closest && event.target.closest('#nearMeBtn');
-    if (!pill) return;
-    
-        if (activeFilters.nearMe) {
-            // Toggle off: clear location sorting
-            activeFilters.nearMe = false;
-            activeFilters.userLocation = null;
-            sessionStorage.removeItem('userLocation');
-            setNearMeLoading(false);
-        } else {
-            // Toggle on: request location
-            handleNearMe();
-    }
-    updateExploreUI();
-    renderActivities();
-}, true);
+  // Near Me button click handling
+  document.addEventListener('click', function(event) {
+      const pill = event.target && event.target.closest && event.target.closest('#nearMeBtn');
+      if (!pill) return;
+      
+          if (activeFilters.nearMe) {
+              // Toggle off: clear location sorting
+              activeFilters.nearMe = false;
+              activeFilters.userLocation = null;
+              sessionStorage.removeItem('userLocation');
+              setNearMeLoading(false);
+          } else {
+              // Toggle on: request location
+              handleNearMe();
+      }
+      updateExploreUI();
+      renderActivities();
+  }, true);
+  
+  // Happening This Month button click handling
+  document.addEventListener('click', function(event) {
+      const pill = event.target && event.target.closest && event.target.closest('#happeningThisMonthBtn');
+      if (!pill) return;
+      
+      event.preventDefault();
+      event.stopPropagation();
+      
+      // Toggle the filter
+      activeFilters.happeningThisMonth = !activeFilters.happeningThisMonth;
+      
+      updateExploreUI();
+      renderActivities();
+  }, true);
 
 // Close category filter menu when clicking outside
 document.addEventListener('click', function(event) {

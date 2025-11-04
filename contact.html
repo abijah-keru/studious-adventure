@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
-        <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">     
+    <link rel="stylesheet" href="listing-master/css/simple-line-icons.css">
     <link rel="stylesheet" href="listing-master/css/themify-icons.css">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -342,45 +342,45 @@
         // Handle header scroll effect - not needed for contact page since header is always red
         // But keep for consistency if needed in future
 
-                // Form validation and submission
+        // Form validation and submission
         function handleContactSubmit(event) {
             // Remove any previous error states
             document.querySelectorAll('.form-group').forEach(group => {
                 group.classList.remove('error');
             });
-
+            
             // Get form values
             const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();        
-            const message = document.getElementById('message').value.trim();    
-
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
             let hasErrors = false;
-
+            
             // Validate name
             if (!name) {
-                document.getElementById('nameGroup').classList.add('error');    
+                document.getElementById('nameGroup').classList.add('error');
                 hasErrors = true;
             }
-
+            
             // Validate email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email || !emailRegex.test(email)) {
-                document.getElementById('emailGroup').classList.add('error');   
+                document.getElementById('emailGroup').classList.add('error');
                 hasErrors = true;
             }
-
+            
             // Validate message
             if (!message) {
                 document.getElementById('messageGroup').classList.add('error');
                 hasErrors = true;
             }
-
+            
             // If there are validation errors, prevent form submission
             if (hasErrors) {
                 event.preventDefault();
                 return;
             }
-
+            
             // If validation passes, allow form to submit naturally to Formspree
             // Disable submit button to prevent double submission
             const submitBtn = document.getElementById('submitBtn');
