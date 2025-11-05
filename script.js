@@ -2152,6 +2152,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
+// Check if app is already installed and hide button if so
+window.addEventListener('appinstalled', () => {
+    const installBtn = document.getElementById('installBtn');
+    if (installBtn) {
+        installBtn.style.display = 'none';
+    }
+    deferredPrompt = null;
+});
+
 // Handle install button click
 function handleInstallClick() {
     if (!deferredPrompt) {
@@ -2207,8 +2216,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const installBtn = document.getElementById('installBtn');
     if (installBtn) {
         installBtn.addEventListener('click', handleInstallClick);
-        // Hide button initially (will show when beforeinstallprompt fires)
-        installBtn.style.display = 'none';
+        // Check if app is already installed (standalone mode)
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+            installBtn.style.display = 'none';
+        }
+        // Button will be shown/hidden based on beforeinstallprompt event
+        // If beforeinstallprompt doesn't fire after a delay, it means install isn't available
+        // Keep it visible by default (CSS handles this)
     }
     
     // Handle header scroll effect
