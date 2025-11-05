@@ -2154,27 +2154,40 @@ const INSTALL_DISMISS_KEY = 'pwaInstallDismissed';
 const DISMISS_DURATION_DAYS = 7;
 
 // Check if install prompt was dismissed within the last 7 days
+// TEMPORARILY DISABLED FOR TESTING - Always return false so prompt shows every time
 function isInstallDismissed() {
-    const dismissedTimestamp = localStorage.getItem(INSTALL_DISMISS_KEY);
-    if (!dismissedTimestamp) {
-        return false;
-    }
+    // For testing: always return false so prompt shows every time
+    return false;
     
-    const dismissedDate = new Date(parseInt(dismissedTimestamp, 10));
-    const now = new Date();
-    const daysSinceDismiss = (now - dismissedDate) / (1000 * 60 * 60 * 24);
-    
-    return daysSinceDismiss < DISMISS_DURATION_DAYS;
+    // Original code (disabled for testing):
+    // const dismissedTimestamp = localStorage.getItem(INSTALL_DISMISS_KEY);
+    // if (!dismissedTimestamp) {
+    //     return false;
+    // }
+    // 
+    // const dismissedDate = new Date(parseInt(dismissedTimestamp, 10));
+    // const now = new Date();
+    // const daysSinceDismiss = (now - dismissedDate) / (1000 * 60 * 60 * 24);
+    // 
+    // return daysSinceDismiss < DISMISS_DURATION_DAYS;
 }
 
 // Dismiss install prompt for 7 days
+// TEMPORARILY DISABLED FOR TESTING - Only hides for current session
 function dismissInstallPrompt() {
-    const timestamp = Date.now();
-    localStorage.setItem(INSTALL_DISMISS_KEY, timestamp.toString());
+    // For testing: only hide for current session, don't save to localStorage
     const container = document.getElementById('installBtnContainer');
     if (container) {
         container.classList.remove('install-prompt-visible');
     }
+    
+    // Original code (disabled for testing):
+    // const timestamp = Date.now();
+    // localStorage.setItem(INSTALL_DISMISS_KEY, timestamp.toString());
+    // const container = document.getElementById('installBtnContainer');
+    // if (container) {
+    //     container.classList.remove('install-prompt-visible');
+    // }
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -2275,11 +2288,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Check if install was dismissed and hide if still within 7 days
-    if (isInstallDismissed()) {
-        if (installBtnContainer) {
-            installBtnContainer.classList.remove('install-prompt-visible');
-        }
-    }
+    // TEMPORARILY DISABLED FOR TESTING - Prompt will show every time
+    // if (isInstallDismissed()) {
+    //     if (installBtnContainer) {
+    //         installBtnContainer.classList.remove('install-prompt-visible');
+    //     }
+    // }
     
     // Handle header scroll effect
     const header = document.querySelector('header');
