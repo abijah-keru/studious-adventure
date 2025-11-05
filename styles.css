@@ -525,6 +525,8 @@ nav > a:last-child {
     gap: 8px;
     position: relative;
     flex-shrink: 0;
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Install App Button */
@@ -595,6 +597,14 @@ nav > a:last-child {
 @media (max-width: 768px) {
     .install-app-container {
         gap: 6px;
+    }
+    
+    /* Ensure container is visible when shown via JavaScript */
+    #installBtnContainer.install-prompt-visible,
+    #installBtnContainer[style*="flex"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     .install-app-btn {
@@ -2884,7 +2894,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     }
     
     /* Ensure logo and install button work well together on mobile */
-    .logo + .install-app-btn {
+    .logo + .install-app-container {
         margin-left: 0;
     }
     

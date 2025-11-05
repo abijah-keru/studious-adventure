@@ -2174,6 +2174,7 @@ function dismissInstallPrompt() {
     const container = document.getElementById('installBtnContainer');
     if (container) {
         container.style.display = 'none';
+        container.classList.remove('install-prompt-visible');
     }
 }
 
@@ -2186,6 +2187,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
         const container = document.getElementById('installBtnContainer');
         if (container) {
             container.style.display = 'flex';
+            container.style.visibility = 'visible';
+            container.style.opacity = '1';
+            container.classList.add('install-prompt-visible');
         }
     }
 });
@@ -2195,6 +2199,7 @@ window.addEventListener('appinstalled', () => {
     const container = document.getElementById('installBtnContainer');
     if (container) {
         container.style.display = 'none';
+        container.classList.remove('install-prompt-visible');
     }
     deferredPrompt = null;
 });
@@ -2218,6 +2223,7 @@ function handleInstallClick() {
         const container = document.getElementById('installBtnContainer');
         if (container) {
             container.style.display = 'none';
+            container.classList.remove('install-prompt-visible');
         }
     });
 }
