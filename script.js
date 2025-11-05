@@ -2108,9 +2108,17 @@ function showRedirect(message, redirectUrl) {
         // Small delay before redirect to allow fade-out
         setTimeout(() => {
             if (redirectUrl) {
-                const win = window.open(redirectUrl, '_blank', 'noopener');
-                if (!win) {
-                    trackEvent('external_click_failed', { reason: 'popup_blocked', url: redirectUrl });
+                // Use location.href for iOS compatibility (window.open can be blocked)
+                // For target="_blank" links, try window.open first, fallback to location.href
+                try {
+                    const win = window.open(redirectUrl, '_blank', 'noopener,noreferrer');
+                    if (!win || win.closed || typeof win.closed === 'undefined') {
+                        // Popup blocked or failed, use direct navigation
+                        window.location.href = redirectUrl;
+                    }
+                } catch (e) {
+                    // Fallback to direct navigation
+                    window.location.href = redirectUrl;
                 }
             }
         }, 300);
@@ -2123,11 +2131,27 @@ function setupExternalRedirectMessaging() {
         const anchor = event.target && event.target.closest && event.target.closest('a[href]');
         if (!anchor) return;
         const href = anchor.getAttribute('href') || '';
+        
+        // Check if link has target="_blank" - allow it to open directly on mobile
+        const hasTargetBlank = anchor.getAttribute('target') === '_blank';
+        
         if (href.includes('thelist.restaurant')) {
+            // For iOS, if target="_blank", try direct navigation first
+            if (hasTargetBlank && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                // Don't prevent default, let the browser handle it
+                trackEvent('external_click', { label: 'thelist', url: anchor.href });
+                return;
+            }
             event.preventDefault();
             trackEvent('external_click', { label: 'thelist', url: anchor.href });
             showRedirect("We're redirecting you to The List's official website...", anchor.href);
         } else if (href.includes('tigoni.life')) {
+            // For iOS, if target="_blank", try direct navigation first
+            if (hasTargetBlank && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                // Don't prevent default, let the browser handle it
+                trackEvent('external_click', { label: 'tigoni', url: anchor.href });
+                return;
+            }
             event.preventDefault();
             trackEvent('external_click', { label: 'tigoni', url: anchor.href });
             showRedirect("We're redirecting you to Tigoni Life's official website...", anchor.href);
@@ -2194,13 +2218,48 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
+    console.log('beforeinstallprompt event fired');
+    
     // Only show if not dismissed within last 7 days
     if (!isInstallDismissed()) {
         const container = document.getElementById('installBtnContainer');
         if (container) {
+            console.log('Showing install button');
             container.classList.add('install-prompt-visible');
+        } else {
+            console.error('Install button container not found');
         }
+    } else {
+        console.log('Install prompt was dismissed');
     }
+});
+
+// Debug: Log if beforeinstallprompt never fires
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const container = document.getElementById('installBtnContainer');
+        if (container && !container.classList.contains('install-prompt-visible')) {
+            const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
+            const isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            
+            console.log('=== Install Prompt Debug ===');
+            console.log('Platform:', isIOS ? 'iOS' : isAndroid ? 'Android' : 'Other');
+            console.log('Is app installed?', isInstalled);
+            console.log('Service worker support:', 'serviceWorker' in navigator);
+            console.log('User agent:', navigator.userAgent);
+            
+            if (isIOS) {
+                console.warn('NOTE: iOS Safari does NOT support beforeinstallprompt event.');
+                console.warn('iOS users must manually add to home screen via Share → Add to Home Screen');
+            } else if (isAndroid && !isInstalled) {
+                console.warn('Android: beforeinstallprompt may not have fired. Check:');
+                console.warn('1. Is site served over HTTPS?');
+                console.warn('2. Are manifest.json icons valid?');
+                console.warn('3. Is service worker registered?');
+            }
+        }
+    }, 2000);
 });
 
 // Check if app is already installed and hide button if so
