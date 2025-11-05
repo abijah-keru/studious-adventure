@@ -2151,7 +2151,51 @@ if ('serviceWorker' in navigator) {
 // PWA Install Prompt
 let deferredPrompt;
 const INSTALL_DISMISS_KEY = 'pwaInstallDismissed';
+const IOS_INSTALL_DISMISS_KEY = 'iosInstallDismissed';
 const DISMISS_DURATION_DAYS = 7;
+
+// Platform Detection
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+function isStandaloneMode() {
+    return window.matchMedia('(display-mode: standalone)').matches || 
+           window.navigator.standalone === true;
+}
+
+function shouldShowIOSInstall() {
+    return isIOS() && !isStandaloneMode() && !isIOSInstallDismissed();
+}
+
+function shouldShowAndroidInstall() {
+    return !isIOS() && !isStandaloneMode();
+}
+
+// Check if iOS install prompt was dismissed within the last 7 days
+function isIOSInstallDismissed() {
+    const dismissedTimestamp = localStorage.getItem(IOS_INSTALL_DISMISS_KEY);
+    if (!dismissedTimestamp) {
+        return false;
+    }
+    
+    const dismissedDate = new Date(parseInt(dismissedTimestamp, 10));
+    const now = new Date();
+    const daysSinceDismiss = (now - dismissedDate) / (1000 * 60 * 60 * 24);
+    
+    return daysSinceDismiss < DISMISS_DURATION_DAYS;
+}
+
+// Dismiss iOS install prompt for 7 days
+function dismissIOSInstall() {
+    const timestamp = Date.now();
+    localStorage.setItem(IOS_INSTALL_DISMISS_KEY, timestamp.toString());
+    const banner = document.getElementById('iosInstallBanner');
+    if (banner) {
+        banner.classList.remove('ios-install-visible');
+    }
+}
 
 // Check if install prompt was dismissed within the last 7 days
 function isInstallDismissed() {
@@ -2173,7 +2217,6 @@ function dismissInstallPrompt() {
     localStorage.setItem(INSTALL_DISMISS_KEY, timestamp.toString());
     const container = document.getElementById('installBtnContainer');
     if (container) {
-        container.style.display = 'none';
         container.classList.remove('install-prompt-visible');
     }
 }
@@ -2182,13 +2225,21 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Only show if not dismissed within last 7 days
-    if (!isInstallDismissed()) {
+    // Only show Android/Chrome install button if:
+    // 1. Not iOS (iOS has its own banner)
+    // 2. Not dismissed within last 7 days
+    // 3. Not in standalone mode
+    if (shouldShowAndroidInstall() && !isInstallDismissed()) {
         const container = document.getElementById('installBtnContainer');
+        const iosBanner = document.getElementById('iosInstallBanner');
+        
+        // Hide iOS banner if it exists
+        if (iosBanner) {
+            iosBanner.classList.remove('ios-install-visible');
+        }
+        
+        // Show Android install button
         if (container) {
-            container.style.display = 'flex';
-            container.style.visibility = 'visible';
-            container.style.opacity = '1';
             container.classList.add('install-prompt-visible');
         }
     }
@@ -2197,9 +2248,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 // Check if app is already installed and hide button if so
 window.addEventListener('appinstalled', () => {
     const container = document.getElementById('installBtnContainer');
+    const iosBanner = document.getElementById('iosInstallBanner');
+    
     if (container) {
-        container.style.display = 'none';
         container.classList.remove('install-prompt-visible');
+    }
+    if (iosBanner) {
+        iosBanner.classList.remove('ios-install-visible');
     }
     deferredPrompt = null;
 });
@@ -2222,7 +2277,6 @@ function handleInstallClick() {
         
         const container = document.getElementById('installBtnContainer');
         if (container) {
-            container.style.display = 'none';
             container.classList.remove('install-prompt-visible');
         }
     });
@@ -2260,6 +2314,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const installBtn = document.getElementById('installBtn');
     const installBtnDismiss = document.getElementById('installBtnDismiss');
     const installBtnContainer = document.getElementById('installBtnContainer');
+    const iosInstallBanner = document.getElementById('iosInstallBanner');
+    const iosInstallDismiss = document.getElementById('iosInstallDismiss');
     
     if (installBtn) {
         installBtn.addEventListener('click', handleInstallClick);
@@ -2273,17 +2329,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Check if app is already installed (standalone mode)
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-        if (installBtnContainer) {
-            installBtnContainer.style.display = 'none';
-        }
+    // Setup iOS install banner dismiss button
+    if (iosInstallDismiss) {
+        iosInstallDismiss.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dismissIOSInstall();
+        });
     }
     
-    // Check if install was dismissed and hide if still within 7 days
-    if (isInstallDismissed()) {
+    // Hide both if app is already installed (standalone mode)
+    if (isStandaloneMode()) {
         if (installBtnContainer) {
-            installBtnContainer.style.display = 'none';
+            installBtnContainer.classList.remove('install-prompt-visible');
+        }
+        if (iosInstallBanner) {
+            iosInstallBanner.classList.remove('ios-install-visible');
+        }
+    } else {
+        // Show appropriate install prompt based on platform
+        if (shouldShowIOSInstall()) {
+            // Show iOS banner, hide Android button
+            if (iosInstallBanner) {
+                iosInstallBanner.classList.add('ios-install-visible');
+            }
+            if (installBtnContainer) {
+                installBtnContainer.classList.remove('install-prompt-visible');
+            }
+        } else if (shouldShowAndroidInstall()) {
+            // Check if Android install was dismissed
+            if (!isInstallDismissed()) {
+                // beforeinstallprompt will handle showing it
+                // Don't show it here, wait for the event
+            } else {
+                // Already dismissed, hide it
+                if (installBtnContainer) {
+                    installBtnContainer.classList.remove('install-prompt-visible');
+                }
+            }
+            // Hide iOS banner if it exists
+            if (iosInstallBanner) {
+                iosInstallBanner.classList.remove('ios-install-visible');
+            }
+        } else {
+            // Hide both if conditions not met
+            if (installBtnContainer) {
+                installBtnContainer.classList.remove('install-prompt-visible');
+            }
+            if (iosInstallBanner) {
+                iosInstallBanner.classList.remove('ios-install-visible');
+            }
         }
     }
     

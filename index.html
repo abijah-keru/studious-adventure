@@ -75,9 +75,17 @@
                     <img src="images/logo.png" alt="Nairobi Date Planner logo" class="logo-img" width="48" height="48">
                 </a>
             </div>
-            <div id="installBtnContainer" class="install-app-container" style="display: none;">
+            <!-- Android/Chrome/Edge Install Button -->
+            <div id="installBtnContainer" class="install-app-container">
                 <button id="installBtn" class="install-app-btn" aria-label="Install Nairobi Dates app">Install App</button>
                 <button id="installBtnDismiss" class="install-app-dismiss" aria-label="Dismiss install prompt" title="Dismiss for 7 days">×</button>
+            </div>
+            <!-- iOS Safari Install Banner -->
+            <div id="iosInstallBanner" class="ios-install-banner">
+                <div class="ios-install-content">
+                    <span class="ios-install-text">Install NairobiDates on your iPhone: tap Share → Add to Home Screen</span>
+                    <button id="iosInstallDismiss" class="ios-install-dismiss" aria-label="Dismiss install instructions" title="Dismiss for 7 days">×</button>
+                </div>
             </div>
             <form class="nav-search-form" onsubmit="handleSearch(event)">
                 <label for="searchInput" class="visually-hidden">Search activities</label>
