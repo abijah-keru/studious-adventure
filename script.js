@@ -739,34 +739,36 @@ function matchesFilters(activity) {
         if (activeFilters.locationScope === 'outside' && within) return false;
     }
 
-    // Hide activities marked as hidden (unless "This Month" is active)
-    if (!activeFilters.happeningThisMonth && activity.hidden === true) {
-        return false;
-    }
-
-    // This Month filter
-    let isHappeningThisMonth = false;
-    if (activeFilters.happeningThisMonth) {
-        // Check if activity matches "This Month" criteria
-        if (activity.category === 'Orchestras & Musicals' ||
-            activity.category === 'Theatre' ||
-            activity.name === 'Nairobi Sketch Tour' ||
-            activity.name === 'The Comedy Criminals') {
-            isHappeningThisMonth = true;
-        }
-        
-        // If "This Month" is active, only show activities that match
-        if (!isHappeningThisMonth) {
-            return false;
-        }
-    }
-
     // Category filter - apply only if categories are selected
+    // If categories are selected, show all activities in those categories (even if "This Month" is active)
     if (activeFilters.selectedCategories && activeFilters.selectedCategories.size > 0) {
-        // If "This Month" is also active, check if the activity's category is selected
-        // Otherwise, just check normally
+        // Show all activities in selected categories, including hidden ones
         if (!activeFilters.selectedCategories.has(activity.category)) {
             return false;
+        }
+        // Don't hide activities in selected categories, even if they're marked as hidden
+    } else {
+        // Hide activities marked as hidden (unless "This Month" is active)
+        if (!activeFilters.happeningThisMonth && activity.hidden === true) {
+            return false;
+        }
+        
+        // Only apply "This Month" filter if no categories are selected
+        // This Month filter
+        let isHappeningThisMonth = false;
+        if (activeFilters.happeningThisMonth) {
+            // Check if activity matches "This Month" criteria
+            if (activity.category === 'Orchestras & Musicals' ||
+                activity.category === 'Theatre' ||
+                activity.name === 'Nairobi Sketch Tour' ||
+                activity.name === 'The Comedy Criminals') {
+                isHappeningThisMonth = true;
+            }
+            
+            // If "This Month" is active and no categories selected, only show activities that match
+            if (!isHappeningThisMonth) {
+                return false;
+            }
         }
     }
 
@@ -818,11 +820,12 @@ function renderActivities() {
         }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
     }
     
-    // If "This Month" is active, show all activities in a single merged category
+    // If "This Month" is active AND no categories are selected, show all activities in a single merged category
+    // If categories are selected, show them normally even if "This Month" is active
     let categories = {};
     let categoryNames = [];
     
-    if (activeFilters.happeningThisMonth) {
+    if (activeFilters.happeningThisMonth && (!activeFilters.selectedCategories || activeFilters.selectedCategories.size === 0)) {
         // Merge all activities into a single "This Month" category
         // Order: Pulchra Musica, Nairobi Orchestra, The Comedy Criminals, Theatre shows, Nairobi Sketch Tour
         const happeningThisMonthOrder = [

@@ -1,5 +1,7 @@
-// Service Worker for Nairobi Date Planner PWA
+// Service Worker for Nairobi Dates PWA (auto-update enabled)
+
 const CACHE_NAME = 'nairobi-dates-v1';
+
 const urlsToCache = [
   './',
   './index.html',
@@ -8,51 +10,25 @@ const urlsToCache = [
   './images/logo.png'
 ];
 
-// Install event - cache essential files
+// 💡 Install: cache essentials + skip waiting so new version activates quickly
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing.');
+  console.log('Service Worker installing...');
+  self.skipWaiting(); // Immediately activate new SW
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Opened cache');
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
-// Fetch event - serve from cache, fallback to network
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        // Clone the request
-        const fetchRequest = event.request.clone();
-        return fetch(fetchRequest).then((response) => {
-          // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-          // Clone the response
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-          return response;
-        });
-      })
-  );
-});
-
-// Activate event - clean up old caches
+// 💡 Activate: take control of open pages immediately
 self.addEventListener('activate', (event) => {
+  console.log('Service Worker activating...');
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
             console.log('Deleting old cache:', cacheName);
@@ -60,7 +36,25 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    })
+      await self.clients.claim(); // Start controlling all clients immediately
+    })()
   );
 });
 
+// 💡 Fetch: try network first, then fallback to cache (always fetch latest)
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
+        }
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
+  );
+});
