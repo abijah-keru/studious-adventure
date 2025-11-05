@@ -2125,36 +2125,19 @@ function showRedirect(message, redirectUrl) {
     }, 1500);
 }
 
-// Intercept external links for messaging
+// Track external link clicks (no redirect message overlay)
 function setupExternalRedirectMessaging() {
     document.addEventListener('click', function(event) {
         const anchor = event.target && event.target.closest && event.target.closest('a[href]');
         if (!anchor) return;
         const href = anchor.getAttribute('href') || '';
         
-        // Check if link has target="_blank" - allow it to open directly on mobile
-        const hasTargetBlank = anchor.getAttribute('target') === '_blank';
-        
         if (href.includes('thelist.restaurant')) {
-            // For iOS, if target="_blank", try direct navigation first
-            if (hasTargetBlank && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                // Don't prevent default, let the browser handle it
-                trackEvent('external_click', { label: 'thelist', url: anchor.href });
-                return;
-            }
-            event.preventDefault();
             trackEvent('external_click', { label: 'thelist', url: anchor.href });
-            showRedirect("We're redirecting you to The List's official website...", anchor.href);
+            // Let the browser handle the navigation naturally
         } else if (href.includes('tigoni.life')) {
-            // For iOS, if target="_blank", try direct navigation first
-            if (hasTargetBlank && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                // Don't prevent default, let the browser handle it
-                trackEvent('external_click', { label: 'tigoni', url: anchor.href });
-                return;
-            }
-            event.preventDefault();
             trackEvent('external_click', { label: 'tigoni', url: anchor.href });
-            showRedirect("We're redirecting you to Tigoni Life's official website...", anchor.href);
+            // Let the browser handle the navigation naturally
         }
     }, true);
 }
@@ -2178,40 +2161,27 @@ const INSTALL_DISMISS_KEY = 'pwaInstallDismissed';
 const DISMISS_DURATION_DAYS = 7;
 
 // Check if install prompt was dismissed within the last 7 days
-// TEMPORARILY DISABLED FOR TESTING - Always return false so prompt shows every time
 function isInstallDismissed() {
-    // For testing: always return false so prompt shows every time
-    return false;
+    const dismissedTimestamp = localStorage.getItem(INSTALL_DISMISS_KEY);
+    if (!dismissedTimestamp) {
+        return false;
+    }
     
-    // Original code (disabled for testing):
-    // const dismissedTimestamp = localStorage.getItem(INSTALL_DISMISS_KEY);
-    // if (!dismissedTimestamp) {
-    //     return false;
-    // }
-    // 
-    // const dismissedDate = new Date(parseInt(dismissedTimestamp, 10));
-    // const now = new Date();
-    // const daysSinceDismiss = (now - dismissedDate) / (1000 * 60 * 60 * 24);
-    // 
-    // return daysSinceDismiss < DISMISS_DURATION_DAYS;
+    const dismissedDate = new Date(parseInt(dismissedTimestamp, 10));
+    const now = new Date();
+    const daysSinceDismiss = (now - dismissedDate) / (1000 * 60 * 60 * 24);
+    
+    return daysSinceDismiss < DISMISS_DURATION_DAYS;
 }
 
 // Dismiss install prompt for 7 days
-// TEMPORARILY DISABLED FOR TESTING - Only hides for current session
 function dismissInstallPrompt() {
-    // For testing: only hide for current session, don't save to localStorage
+    const timestamp = Date.now();
+    localStorage.setItem(INSTALL_DISMISS_KEY, timestamp.toString());
     const container = document.getElementById('installBtnContainer');
     if (container) {
         container.classList.remove('install-prompt-visible');
     }
-    
-    // Original code (disabled for testing):
-    // const timestamp = Date.now();
-    // localStorage.setItem(INSTALL_DISMISS_KEY, timestamp.toString());
-    // const container = document.getElementById('installBtnContainer');
-    // if (container) {
-    //     container.classList.remove('install-prompt-visible');
-    // }
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -2347,12 +2317,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Check if install was dismissed and hide if still within 7 days
-    // TEMPORARILY DISABLED FOR TESTING - Prompt will show every time
-    // if (isInstallDismissed()) {
-    //     if (installBtnContainer) {
-    //         installBtnContainer.classList.remove('install-prompt-visible');
-    //     }
-    // }
+    if (isInstallDismissed()) {
+        if (installBtnContainer) {
+            installBtnContainer.classList.remove('install-prompt-visible');
+        }
+    }
     
     // Handle header scroll effect
     const header = document.querySelector('header');
@@ -2471,7 +2440,8 @@ function handleSearch(event) {
         searchInput.value = '';
         
         trackEvent('search_redirect_external', { provider: 'thelist', query: searchTerm });
-        showRedirect("We're redirecting you to The List's official website...", 'https://www.thelist.restaurant/categories');
+        // Redirect directly without overlay message
+        window.location.href = 'https://www.thelist.restaurant/categories';
         return;
     }
     
