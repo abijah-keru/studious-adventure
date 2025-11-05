@@ -3236,11 +3236,15 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
     .carousel-container {
         gap: 8px;
-        padding-top: 36px;
+        padding-top: 4px;
         width: 100%;
         max-width: 100%;
         overflow-x: visible;
         box-sizing: border-box;
+    }
+    
+    .category-header {
+        margin-bottom: 4px;
     }
     
     /* Hide carousel arrows on mobile - use touch scroll instead */
