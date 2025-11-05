@@ -598,71 +598,6 @@ nav > a:last-child {
     outline-offset: 2px;
 }
 
-/* iOS Install Banner */
-.ios-install-banner {
-    display: none;
-    align-items: center;
-    gap: 8px;
-    position: relative;
-    flex-shrink: 0;
-    background: #C1666B;
-    border: 1px solid #C1666B;
-    border-radius: 4px;
-    padding: 10px 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.ios-install-banner.ios-install-visible {
-    display: flex;
-}
-
-.ios-install-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-}
-
-.ios-install-text {
-    color: #fff;
-    font-size: 13px;
-    font-weight: 400;
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.4;
-    flex: 1;
-}
-
-.ios-install-dismiss {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 1;
-    cursor: pointer;
-    padding: 4px 8px;
-    margin: 0;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    opacity: 0.8;
-    flex-shrink: 0;
-}
-
-.ios-install-dismiss:hover {
-    background: rgba(255, 255, 255, 0.2);
-    opacity: 1;
-}
-
-.ios-install-dismiss:focus {
-    outline: 2px solid #ffffff;
-    outline-offset: 2px;
-}
-
 @media (max-width: 768px) {
     .install-app-container {
         gap: 6px;
@@ -686,25 +621,6 @@ nav > a:last-child {
         height: 24px;
         font-size: 20px;
         padding: 2px 6px;
-    }
-    
-    /* iOS Install Banner Mobile */
-    .ios-install-banner {
-        padding: 10px 12px;
-    }
-    
-    .ios-install-banner.ios-install-visible {
-        display: flex !important;
-    }
-    
-    .ios-install-text {
-        font-size: 12px;
-    }
-    
-    .ios-install-dismiss {
-        width: 22px;
-        height: 22px;
-        font-size: 18px;
     }
     
     /* Hide install button in nav on mobile */
