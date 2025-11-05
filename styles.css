@@ -1205,7 +1205,7 @@ main {
 .category-header {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     gap: 8px;
 }
 
@@ -1288,7 +1288,7 @@ main {
 /* Horizontal Carousel */
 .carousel-container {
     position: relative;
-    padding-top: 50px;
+    padding-top: 8px;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
