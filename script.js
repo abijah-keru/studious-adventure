@@ -219,7 +219,7 @@ const activities = [
           alt: "Artistic landscape view",
           website: "https://nairobisketchtour.hustlesasa.shop/",
           linkTitle: "Buy Tickets",
-          hidden: true // Hidden from site, only shows in "Happening This Month"
+          hidden: true // Hidden from site, only shows in "This Month"
       },
     {
         id: 14,
@@ -739,15 +739,15 @@ function matchesFilters(activity) {
         if (activeFilters.locationScope === 'outside' && within) return false;
     }
 
-    // Hide activities marked as hidden (unless "Happening This Month" is active)
+    // Hide activities marked as hidden (unless "This Month" is active)
     if (!activeFilters.happeningThisMonth && activity.hidden === true) {
         return false;
     }
 
-    // Happening This Month filter
+    // This Month filter
     let isHappeningThisMonth = false;
     if (activeFilters.happeningThisMonth) {
-        // Check if activity matches "Happening This Month" criteria
+        // Check if activity matches "This Month" criteria
         if (activity.category === 'Orchestras & Musicals' ||
             activity.category === 'Theatre' ||
             activity.name === 'Nairobi Sketch Tour' ||
@@ -755,7 +755,7 @@ function matchesFilters(activity) {
             isHappeningThisMonth = true;
         }
         
-        // If "Happening This Month" is active, only show activities that match
+        // If "This Month" is active, only show activities that match
         if (!isHappeningThisMonth) {
             return false;
         }
@@ -763,7 +763,7 @@ function matchesFilters(activity) {
 
     // Category filter - apply only if categories are selected
     if (activeFilters.selectedCategories && activeFilters.selectedCategories.size > 0) {
-        // If "Happening This Month" is also active, check if the activity's category is selected
+        // If "This Month" is also active, check if the activity's category is selected
         // Otherwise, just check normally
         if (!activeFilters.selectedCategories.has(activity.category)) {
             return false;
@@ -818,12 +818,12 @@ function renderActivities() {
         }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
     }
     
-    // If "Happening This Month" is active, show all activities in a single merged category
+    // If "This Month" is active, show all activities in a single merged category
     let categories = {};
     let categoryNames = [];
     
     if (activeFilters.happeningThisMonth) {
-        // Merge all activities into a single "Happening This Month" category
+        // Merge all activities into a single "This Month" category
         // Order: Pulchra Musica, Nairobi Orchestra, The Comedy Criminals, Theatre shows, Nairobi Sketch Tour
         const happeningThisMonthOrder = [
             'Pulchra Musica',
@@ -848,8 +848,8 @@ function renderActivities() {
             return 0;
         });
         
-        categories['Happening This Month'] = filteredActivities;
-        categoryNames = ['Happening This Month'];
+        categories['This Month'] = filteredActivities;
+        categoryNames = ['This Month'];
     } else {
         // Group activities by category (preserving order - important for Near Me sorting)
         filteredActivities.forEach(activity => {
@@ -875,7 +875,7 @@ function renderActivities() {
     // Render by category with horizontal carousels
     let html = '';
     
-    // Sort categories (only if not "Happening This Month" mode)
+    // Sort categories (only if not "This Month" mode)
     if (!activeFilters.happeningThisMonth) {
         // Sort categories in this order:
         // 1) Workshops & Creative Experiences
@@ -1201,10 +1201,10 @@ function releaseFocusTrap() {
 function expandCategory(category) {
     const filteredActivities = activities.filter(matchesFilters);
     
-    // Handle "Happening This Month" special case - it's a merged view, not a real category
+    // Handle "This Month" special case - it's a merged view, not a real category
     let categoryActivities = [];
-    if (category === 'Happening This Month') {
-        // Get all activities that match "Happening This Month" criteria
+    if (category === 'This Month') {
+        // Get all activities that match "This Month" criteria
         categoryActivities = filteredActivities.filter(activity => {
             return activity.category === 'Orchestras & Musicals' ||
                    activity.category === 'Theatre' ||
@@ -2418,7 +2418,7 @@ function updateExploreUI() {
         }
     }
     
-    // Happening This Month button state
+    // This Month button state
     const happeningThisMonthBtn = document.getElementById('happeningThisMonthBtn');
     if (happeningThisMonthBtn) {
         if (activeFilters.happeningThisMonth) {
@@ -2512,15 +2512,21 @@ function toggleCategoryFilter() {
               activeFilters.userLocation = null;
               sessionStorage.removeItem('userLocation');
               setNearMeLoading(false);
+              // Immediately remove active state
+              pill.classList.remove('pill-active');
+              pill.setAttribute('aria-pressed', 'false');
           } else {
               // Toggle on: request location
+              // Immediately add active state
+              pill.classList.add('pill-active');
+              pill.setAttribute('aria-pressed', 'true');
               handleNearMe();
       }
       updateExploreUI();
       renderActivities();
   }, true);
   
-  // Happening This Month button click handling
+  // This Month button click handling
   document.addEventListener('click', function(event) {
       const pill = event.target && event.target.closest && event.target.closest('#happeningThisMonthBtn');
       if (!pill) return;
@@ -2530,6 +2536,15 @@ function toggleCategoryFilter() {
       
       // Toggle the filter
       activeFilters.happeningThisMonth = !activeFilters.happeningThisMonth;
+      
+      // Immediately update visual state
+      if (activeFilters.happeningThisMonth) {
+          pill.classList.add('pill-active');
+          pill.setAttribute('aria-pressed', 'true');
+      } else {
+          pill.classList.remove('pill-active');
+          pill.setAttribute('aria-pressed', 'false');
+      }
       
       updateExploreUI();
       renderActivities();

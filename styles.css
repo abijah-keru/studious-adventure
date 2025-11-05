@@ -788,6 +788,7 @@ main {
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Near Me loading state */
@@ -833,9 +834,15 @@ main {
 }
 
 .pill-active {
-    background: #C1666B;
-    color: #ffffff;
-    border-color: #C1666B;
+    background: #C1666B !important;
+    color: #ffffff !important;
+    border-color: #C1666B !important;
+}
+
+/* Override :active state when pill is active */
+.pill-active:active {
+    background: #C1666B !important;
+    color: #ffffff !important;
 }
 
 .pill-clear {
@@ -2836,6 +2843,21 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         padding: 8px 12px;
         font-size: 13px;
         flex-shrink: 0;
+    }
+    
+    /* Ensure active state is immediately visible on mobile */
+    .pill-active {
+        background: #C1666B !important;
+        color: #ffffff !important;
+        border-color: #C1666B !important;
+    }
+    
+    /* Override :active state on mobile when pill is active */
+    .pill-active:active,
+    .pill-active:focus {
+        background: #C1666B !important;
+        color: #ffffff !important;
+        border-color: #C1666B !important;
     }
     
     .pill-clear {
