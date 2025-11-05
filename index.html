@@ -75,7 +75,10 @@
                     <img src="images/logo.png" alt="Nairobi Date Planner logo" class="logo-img" width="48" height="48">
                 </a>
             </div>
-            <button id="installBtn" class="install-app-btn" aria-label="Install Nairobi Dates app">Install App</button>
+            <div id="installBtnContainer" class="install-app-container" style="display: none;">
+                <button id="installBtn" class="install-app-btn" aria-label="Install Nairobi Dates app">Install App</button>
+                <button id="installBtnDismiss" class="install-app-dismiss" aria-label="Dismiss install prompt" title="Dismiss for 7 days">×</button>
+            </div>
             <form class="nav-search-form" onsubmit="handleSearch(event)">
                 <label for="searchInput" class="visually-hidden">Search activities</label>
                 <span class="nav-search-icon icon-magnifier" aria-hidden="true"></span>

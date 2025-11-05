@@ -267,7 +267,8 @@ const activities = [
         image: "images/Coffee-Lab.webp",
         alt: "Image of a person holding a coffee tasting rate card with class details in the background",
         website: "https://www.coffeelabnairobi.com/pages/coffee-cupping",
-        linkTitle: "Book Experience"
+        linkTitle: "Book Experience",
+        hidden: true
     },
     // Outdoor & Adventure
     {
@@ -739,20 +740,18 @@ function matchesFilters(activity) {
         if (activeFilters.locationScope === 'outside' && within) return false;
     }
 
+    // Always hide activities marked as hidden (regardless of filters)
+    if (activity.hidden === true) {
+        return false;
+    }
+    
     // Category filter - apply only if categories are selected
     // If categories are selected, show all activities in those categories (even if "This Month" is active)
     if (activeFilters.selectedCategories && activeFilters.selectedCategories.size > 0) {
-        // Show all activities in selected categories, including hidden ones
         if (!activeFilters.selectedCategories.has(activity.category)) {
             return false;
         }
-        // Don't hide activities in selected categories, even if they're marked as hidden
     } else {
-        // Hide activities marked as hidden (unless "This Month" is active)
-        if (!activeFilters.happeningThisMonth && activity.hidden === true) {
-            return false;
-        }
-        
         // Only apply "This Month" filter if no categories are selected
         // This Month filter
         let isHappeningThisMonth = false;
@@ -881,12 +880,22 @@ function renderActivities() {
     // Sort categories (only if not "This Month" mode)
     if (!activeFilters.happeningThisMonth) {
         // Sort categories in this order:
-        // 1) Workshops & Creative Experiences
-        // 2) Orchestras & Musicals
-        // 3) Outdoor & Adventure
-        // 4) Theatre
-        // then others, and Cultural Heritage Sites last
-        const preferredOrder = ['Workshops & Creative Experiences', 'Orchestras & Musicals', 'Outdoor & Adventure', 'Theatre'];
+        // 1) Orchestras & Musicals
+        // 2) Theatre
+        // 3) Live Music & Performances
+        // 4) Stand Up Comedy
+        // 5) Fun & Games
+        // 6) Workshops & Creative Experiences
+        // 7) Cultural Heritage Sites (last)
+        const preferredOrder = [
+            'Orchestras & Musicals',
+            'Theatre',
+            'Live Music & Performances',
+            'Stand Up Comedy',
+            'Fun & Games',
+            'Workshops & Creative Experiences',
+            'Cultural Heritage Sites'
+        ];
         categoryNames = categoryNames.sort((a, b) => {
             // Always put Cultural Heritage Sites last
             const aIsHeritage = a === 'Cultural Heritage Sites';
@@ -904,7 +913,7 @@ function renderActivities() {
             if (aPreferred && !bPreferred) return -1;
             if (!aPreferred && bPreferred) return 1;
 
-            // Otherwise, keep original relative order
+            // For categories not in preferred order, maintain original relative order
             return 0;
         });
     }
@@ -2141,22 +2150,51 @@ if ('serviceWorker' in navigator) {
 
 // PWA Install Prompt
 let deferredPrompt;
+const INSTALL_DISMISS_KEY = 'pwaInstallDismissed';
+const DISMISS_DURATION_DAYS = 7;
+
+// Check if install prompt was dismissed within the last 7 days
+function isInstallDismissed() {
+    const dismissedTimestamp = localStorage.getItem(INSTALL_DISMISS_KEY);
+    if (!dismissedTimestamp) {
+        return false;
+    }
+    
+    const dismissedDate = new Date(parseInt(dismissedTimestamp, 10));
+    const now = new Date();
+    const daysSinceDismiss = (now - dismissedDate) / (1000 * 60 * 60 * 24);
+    
+    return daysSinceDismiss < DISMISS_DURATION_DAYS;
+}
+
+// Dismiss install prompt for 7 days
+function dismissInstallPrompt() {
+    const timestamp = Date.now();
+    localStorage.setItem(INSTALL_DISMISS_KEY, timestamp.toString());
+    const container = document.getElementById('installBtnContainer');
+    if (container) {
+        container.style.display = 'none';
+    }
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    // Show install button if it exists
-    const installBtn = document.getElementById('installBtn');
-    if (installBtn) {
-        installBtn.style.display = 'block';
+    
+    // Only show if not dismissed within last 7 days
+    if (!isInstallDismissed()) {
+        const container = document.getElementById('installBtnContainer');
+        if (container) {
+            container.style.display = 'flex';
+        }
     }
 });
 
 // Check if app is already installed and hide button if so
 window.addEventListener('appinstalled', () => {
-    const installBtn = document.getElementById('installBtn');
-    if (installBtn) {
-        installBtn.style.display = 'none';
+    const container = document.getElementById('installBtnContainer');
+    if (container) {
+        container.style.display = 'none';
     }
     deferredPrompt = null;
 });
@@ -2177,9 +2215,9 @@ function handleInstallClick() {
         }
         deferredPrompt = null;
         
-        const installBtn = document.getElementById('installBtn');
-        if (installBtn) {
-            installBtn.style.display = 'none';
+        const container = document.getElementById('installBtnContainer');
+        if (container) {
+            container.style.display = 'none';
         }
     });
 }
@@ -2214,15 +2252,33 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup install button if it exists
     const installBtn = document.getElementById('installBtn');
+    const installBtnDismiss = document.getElementById('installBtnDismiss');
+    const installBtnContainer = document.getElementById('installBtnContainer');
+    
     if (installBtn) {
         installBtn.addEventListener('click', handleInstallClick);
-        // Check if app is already installed (standalone mode)
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-            installBtn.style.display = 'none';
+    }
+    
+    if (installBtnDismiss) {
+        installBtnDismiss.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dismissInstallPrompt();
+        });
+    }
+    
+    // Check if app is already installed (standalone mode)
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        if (installBtnContainer) {
+            installBtnContainer.style.display = 'none';
         }
-        // Button will be shown/hidden based on beforeinstallprompt event
-        // If beforeinstallprompt doesn't fire after a delay, it means install isn't available
-        // Keep it visible by default (CSS handles this)
+    }
+    
+    // Check if install was dismissed and hide if still within 7 days
+    if (isInstallDismissed()) {
+        if (installBtnContainer) {
+            installBtnContainer.style.display = 'none';
+        }
     }
     
     // Handle header scroll effect

@@ -518,30 +518,42 @@ nav > a:last-child {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Install App Button Container */
+.install-app-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    flex-shrink: 0;
+}
+
 /* Install App Button */
 .install-app-btn {
-    display: block; /* Show by default - will be hidden by JS if install not available */
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    display: block;
+    background: #C1666B;
+    border: 1px solid #C1666B;
     color: #fff;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 4px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: none;
     font-family: 'Roboto', sans-serif;
     white-space: nowrap;
     flex-shrink: 0;
     visibility: visible;
     opacity: 1;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .install-app-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.6);
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    background: #A8555A;
+    border-color: #A8555A;
+    box-shadow: 0 2px 8px rgba(193, 102, 107, 0.3);
 }
 
 .install-app-btn:focus {
@@ -549,10 +561,53 @@ nav > a:last-child {
     outline-offset: 2px;
 }
 
+/* Dismiss Button */
+.install-app-dismiss {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin: 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+}
+
+.install-app-dismiss:hover {
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+.install-app-dismiss:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
 @media (max-width: 768px) {
+    .install-app-container {
+        gap: 6px;
+    }
+    
     .install-app-btn {
-        padding: 8px 12px;
+        padding: 10px 16px;
         font-size: 13px;
+        min-width: 100px;
+    }
+    
+    .install-app-dismiss {
+        width: 24px;
+        height: 24px;
+        font-size: 20px;
+        padding: 2px 6px;
     }
     
     /* Hide install button in nav on mobile */
