@@ -154,7 +154,7 @@ header.scrolled .nav-dropdown-toggle {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.7);
+    color: #C1666B;
     font-size: 12px;
     pointer-events: none;
 }
@@ -163,11 +163,11 @@ header.scrolled .nav-dropdown-toggle {
     width: 100%;
     padding: 8px 14px 8px 34px;
     border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.85);
     outline: none;
-    background: rgba(255, 255, 255, 0.15);
+    background: #ffffff;
     backdrop-filter: blur(10px);
-    color: #ffffff;
+    color: #8B4049;
     font-size: 13px;
     transition: all 0.3s ease;
     -webkit-user-select: text;
@@ -177,12 +177,13 @@ header.scrolled .nav-dropdown-toggle {
 }
 
 .nav-search-input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(139, 64, 73, 0.6);
 }
 
 .nav-search-input:focus {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
 }
 
 header.scrolled .nav-search-input {
@@ -196,7 +197,7 @@ header.scrolled .nav-search-input::placeholder {
 }
 
 header.scrolled .nav-search-icon {
-    color: #9ca3af;
+    color: #C1666B;
 }
 
 .logo {
@@ -658,10 +659,51 @@ nav > a:last-child {
 main {
     max-width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 120px 0 0;
     width: 100%;
     overflow-x: hidden;
     box-sizing: border-box;
+}
+
+.intro-hero {
+    position: relative;
+    margin: 0;
+    padding: 32px 5vw 16px;
+    width: 100%;
+    background: #C1666B;
+    color: #ffffff;
+}
+
+.intro-hero__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.intro-hero h1 {
+    font-size: 64px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    margin: 0 0 28px;
+}
+
+.intro-hero__inner > p {
+    font-size: 26px;
+    max-width: 860px;
+    margin: 0 0 24px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.intro-hero .intro-content {
+    max-width: 860px;
+    margin: 0;
+}
+
+.intro-hero .intro-content p {
+    font-size: 22px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .hero {
@@ -682,11 +724,29 @@ main {
     .hero {
         min-height: 300px;
     }
+
+    .intro-hero {
+        padding: 36px 28px 24px;
+        margin: 0;
+    }
+
+    .intro-hero h1 {
+        font-size: 58px;
+    }
+
+    .intro-hero__inner > p {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .intro-hero .intro-content p {
+        font-size: 20px;
+    }
 }
 
 .activities-section {
-    padding: 48px 24px;
-    padding-top: 80px;
+    padding: 20px 24px;
+    padding-top: 8px;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -698,6 +758,24 @@ main {
 @media (max-width: 768px) {
     .categories-list > .category-section:first-child {
         margin-top: 24px;
+    }
+
+    .intro-hero {
+        padding: 32px 20px 20px;
+        margin: 0;
+    }
+
+    .intro-hero h1 {
+        font-size: 44px;
+    }
+
+    .intro-hero__inner > p {
+        font-size: 22px;
+        margin-bottom: 22px;
+    }
+
+    .intro-hero .intro-content p {
+        font-size: 20px;
     }
 }
 
@@ -3038,7 +3116,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
     /* Main container */
     main {
-        padding: 16px;
+        padding: 120px 16px 16px;
     }
 
     /* Hero section */
@@ -3523,7 +3601,25 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 /* Extra small devices */
 @media (max-width: 480px) {
     main {
-        padding: 12px;
+        padding: 120px 12px 12px;
+    }
+
+    .intro-hero {
+        padding: 28px 16px 16px;
+        margin: 0;
+    }
+
+    .intro-hero h1 {
+        font-size: 36px;
+    }
+
+    .intro-hero__inner > p {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .intro-hero .intro-content p {
+        font-size: 18px;
     }
 
     .hero {

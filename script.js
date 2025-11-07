@@ -17,20 +17,33 @@ const activities = [
         linkTitle: "Reserve"
     },
     {
-        id: 2,
+        id: 47,
         name: "Măm Măm Vietnamese Westlands",
-        description: "Experience live music performances while enjoying Vietnamese cuisine.",
-        location: "Mwanzi Market",
-        latitude: -1.2548348522702397,
-        longitude: 36.799984124193045,
-        schedule: "Fridays from 7:00pm",
+        description: "Restaurant • Free entry with upbeat live sets and Vietnamese favorites every Saturday night.",
+        location: "Măm Măm Vietnamese Westlands",
+        latitude: -1.254972969716889,
+        longitude: 36.80032128782664,
+        schedule: "Saturdays, from 7pm.",
         category: "Weekly Live Music",
-        tags: ["Live Music", "Dining", "Entertainment"],
+        tags: ["Live Music", "Dining", "Restaurant"],
         timeOfDay: "night",
         image: "images/Maam-Maam.jpg",
-        alt: "Smiling musician holding an instrument during a live performance",
-        phone: "0791214597",
-        hidden: true
+        alt: "Friends enjoying live music at Măm Măm Vietnamese restaurant in Westlands",
+        phone: "0791214597"
+    },
+    {
+        id: 46,
+        name: "Sax & Violins",
+        description: "Experience an enchanting evening of live music featuring saxophone and violin performances in a vibrant atmosphere.",
+        location: "Nairobi Street Kitchen",
+        latitude: -1.265315769461578,
+        longitude: 36.80419213768535,
+        schedule: "Wednesdays, 7pm",
+        category: "Weekly Live Music",
+        tags: ["Saxophone", "Violin", "Live Music", "Wednesday", "Nightlife"],
+        timeOfDay: "night",
+        image: "images/sax-and-violins.jpg",
+        alt: "Sax & Violins live music performance at Nairobi Street Kitchen featuring saxophone and violin"
     },
     {
         id: 3,
@@ -47,20 +60,6 @@ const activities = [
         alt: "Close-up of a violin under soft lighting",
         website: "https://eatout.co.ke/restaurant/bamba/",
         linkTitle: "Reserve"
-    },
-    {
-        id: 46,
-        name: "Sax & Violins",
-        description: "Experience an enchanting evening of live music featuring saxophone and violin performances in a vibrant atmosphere.",
-        location: "Nairobi Street Kitchen",
-        latitude: -1.265315769461578,
-        longitude: 36.80419213768535,
-        schedule: "Wednesdays, 7pm",
-        category: "Weekly Live Music",
-        tags: ["Saxophone", "Violin", "Live Music", "Wednesday", "Nightlife"],
-        timeOfDay: "night",
-        image: "images/sax-and-violins.jpg",
-        alt: "Sax & Violins live music performance at Nairobi Street Kitchen featuring saxophone and violin"
     },
           {
           id: 4,
@@ -91,6 +90,21 @@ const activities = [
         image: "images/Paint-Run.jpg",
         alt: "Paint The Run event with colorful paint splashes",
         website: "https://tickets.painttherun.com/tickets/paint-the-run-2025/purchase/",
+        linkTitle: "Buy Tickets"
+    },
+    {
+        id: 48,
+        name: "Bare Sessions Season 2 Finale",
+        description: "Bare returns with a powerful finale showcasing raw storytelling and soulful music under the stars.",
+        location: "National Museum of Kenya, Amphitheatre",
+        latitude: -1.2737054702885615,
+        longitude: 36.81498289482472,
+        schedule: "Fri Nov 29, 7:00 PM",
+        category: "Events This Month",
+        tags: ["Live Music", "Storytelling", "Event"],
+        image: "images/Bare.jpg",
+        alt: "Bare Sessions performers on stage at the National Museum amphitheatre",
+        website: "https://kenyabuzz.com/events/event/bare-sessions-season-2-finale",
         linkTitle: "Buy Tickets"
     },
       {
@@ -124,7 +138,7 @@ const activities = [
         website: "https://eatapp.co/reserve/pax-manor-58-muthaiga-rd",
         linkTitle: "Reserve"
     },
-    // Stand Up Comedy
+    // Weekly Comedy
     {
         id: 6,
         name: "Winedown Wednesday",
@@ -133,7 +147,7 @@ const activities = [
         latitude: -1.296306007333743,
         longitude: 36.793941921059165,
         schedule: "Wednesdays, 7 PM",
-        category: "Stand Up Comedy",
+        category: "Weekly Comedy",
         tags: ["Comedy", "Entertainment"],
         timeOfDay: "night",
         image: "images/Stand-up-Wednesday.webp",
@@ -149,7 +163,7 @@ const activities = [
         latitude: -1.2932647766332508,
         longitude: 36.76187245174493,
         schedule: "Wednesday, 7pm",
-        category: "Stand Up Comedy",
+        category: "Weekly Comedy",
         tags: ["Comedy", "Entertainment", "Nightlife"],
         timeOfDay: "night",
         image: "images/Nairobi-Laugh-Bar.webp",
@@ -181,7 +195,7 @@ const activities = [
         latitude: -1.266167826824762,
         longitude: 36.80193810756618,
         schedule: "Thursdays, 7 PM",
-        category: "Stand Up Comedy",
+        category: "Weekly Comedy",
         tags: ["Comedy", "Entertainment"],
         timeOfDay: "night",
         image: "images/Punchline-Comedy-Thursday.webp",
@@ -206,17 +220,17 @@ const activities = [
       },
     {
         id: 10,
-        name: "Kenya National Theatre",
+        name: "Romeo and Juliet",
         description: "Premier venue for stage productions, plays, and cultural performances.",
         location: "Kenya Cultural Centre",
         latitude: -1.277520744372908,
         longitude: 36.81817363547025,
-        schedule: "November Shows",
+        schedule: "Fri Nov 15, 2025",
         category: "Events This Month",
         tags: ["Theatre", "Cultural", "Performance"],
-        image: "images/Kenya-National-Theatre.webp",
+        image: "images/Kenya-National-Theatre.jpg.png",
         alt: "Audience seated in the Kenya National Theatre facing the stage",
-        website: "https://theatreke.com/",
+        website: "https://theatreke.com/events/68b8917f94fc8b8553a32a05",
         linkTitle: "Buy Tickets",
         specialButton: true
     },
@@ -861,7 +875,7 @@ function renderActivities() {
     // 2) Orchestras & Musicals
     // 3) Theatre
         // 4) Weekly Live Music
-    // 5) Stand Up Comedy
+    // 5) Weekly Comedy
     // 6) Fun & Games
     // 7) Workshops & Creative Experiences
     // 8) Cultural Heritage Sites (last)
@@ -870,7 +884,7 @@ function renderActivities() {
         'Orchestras & Musicals',
         'Theatre',
         'Weekly Live Music',
-        'Stand Up Comedy',
+        'Weekly Comedy',
         'Fun & Games',
         'Workshops & Creative Experiences',
         'Cultural Heritage Sites'
@@ -1455,7 +1469,7 @@ function getCategoryIcon(category) {
     const icons = {
         'Weekly Live Music': '♪',
         'Orchestras & Musicals': '♪',
-        'Stand Up Comedy': '★',
+        'Weekly Comedy': '★',
         'Theatre': '🎭',
         'Workshops & Creative Experiences': '◆',
         'Outdoor & Adventure': '▲',
