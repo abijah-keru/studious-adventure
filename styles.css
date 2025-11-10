@@ -1605,11 +1605,6 @@ main {
     max-width: 100%;
 }
 
-/* Adjust Pulchra Musica image to show more of bottom */
-.activity-card-img[src*="Pulchra-Musica"] {
-    object-position: center 35%;
-}
-
 /* Adjust Winedown Wednesday and Sets in the City images to show more of bottom */
 .activity-card-img[src*="Stand-up-Wednesday"] {
     object-position: center bottom;

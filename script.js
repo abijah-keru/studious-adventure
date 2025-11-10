@@ -93,6 +93,54 @@ const activities = [
         linkTitle: "Buy Tickets"
     },
     {
+        id: 9,
+        name: "Beauty & the Beast",
+        description: "Braeburn High School presents Shakespeare's legendary romance Romeo & Juliet with live music and ensemble performances.",
+        location: "Braeburn Theatre",
+        latitude: -1.2891353762889035,
+        longitude: 36.75571346708775,
+        schedule: "Fri 21 & 28 (7pm) • Sat 22 & 29 (5pm) • Sun 23 & 30 (3pm)",
+        category: "Events This Month",
+        tags: ["Theatre", "Performance", "Arts"],
+        price: "1000 KSh",
+        image: "images/Braeburn-Theatre.jpg",
+        alt: "Braeburn Theatre production of Romeo & Juliet with cast on stage",
+        website: "https://www.theatres.braeburn.com/",
+        linkTitle: "Buy Tickets"
+    },
+    {
+        id: 10,
+        name: "Romeo & Juliet",
+        description: "Premier venue for stage productions, plays, and cultural performances.",
+        location: "Kenya Cultural Centre",
+        latitude: -1.277520744372908,
+        longitude: 36.81817363547025,
+        schedule: "Fri Nov 15, 2025",
+        category: "Events This Month",
+        tags: ["Theatre", "Cultural", "Performance"],
+        image: "images/Kenya-National-Theatre.jpg.png",
+        alt: "Audience seated in the Kenya National Theatre facing the stage",
+        website: "https://theatreke.com/events/68b8917f94fc8b8553a32a05",
+        linkTitle: "Buy Tickets",
+        specialButton: true
+    },
+          {
+          id: 28,
+          name: "The Comedy Criminals",
+          description: "Get ready for an unforgettable night of laughter as The Comedy Criminals take over the stage! Featuring the outrageously funny Jack Nanjero and the ever-entertaining Amadeus, Rock, Tim this show promises a high-energy mix of sharp wit, hilarious storytelling, and pure comedic brilliance.",
+          location: "Nairobi Laugh Bar",
+          latitude: -1.2932647766332508,
+          longitude: 36.76187245174493,
+          schedule: "Nov 15, 7:30 PM",
+          category: "Events This Month",
+          tags: ["Comedy", "Entertainment", "Nightlife"],
+          timeOfDay: "night",
+          image: "images/The-Comedy-Criminals.jpg",
+          alt: "Poster for The Comedy Criminals show featuring Jack Nanjero, Amadeus, Rock, and Tim",
+          website: "https://standupcollective.co.ke/buytickets?event=THE%20COMEDY%20CRIMINALS%20",
+          linkTitle: "Buy Ticket"
+      },
+    {
         id: 48,
         name: "Bare Sessions Season 2 Finale",
         description: "Bare returns with a powerful finale showcasing raw storytelling and soulful music under the stars.",
@@ -107,21 +155,6 @@ const activities = [
         website: "https://kenyabuzz.com/events/event/bare-sessions-season-2-finale",
         linkTitle: "Buy Tickets"
     },
-      {
-          id: 5,
-          name: "Pulchra Musica",
-          description: "Classical music shows featuring talented local musicians.",
-          location: "Holy Cross Hall, Lavington",
-          latitude: -1.284326951068929,
-          longitude: 36.7610829503172,
-          schedule: "Sat Nov 8, 7:00 PM & Sun Nov 9, 3:00 PM",
-          category: "Events This Month",
-          tags: ["Classical", "Live Music", "Performance"],
-          image: "images/Pulchra-Musica.webp",
-          alt: "Promotional poster showing concert dates for Pulchra Musica",
-          website: "https://docs.google.com/forms/d/e/1FAIpQLSc5OldJFVpJ27MlKKoau8DhrzDQ04TsD-2R9Was-GZn45z4Yw/viewform",
-          linkTitle: "Buy Tickets"
-      },
     {
         id: 18,
         name: "Saxophone Fridays",
@@ -171,22 +204,22 @@ const activities = [
         website: "https://standupcollective.co.ke/shows",
         linkTitle: "View More Upcoming Shows"
     },
-          {
-          id: 28,
-          name: "The Comedy Criminals",
-          description: "Get ready for an unforgettable night of laughter as The Comedy Criminals take over the stage! Featuring the outrageously funny Jack Nanjero and the ever-entertaining Amadeus, Rock, Tim this show promises a high-energy mix of sharp wit, hilarious storytelling, and pure comedic brilliance.",
-          location: "Nairobi Laugh Bar",
-          latitude: -1.2932647766332508,
-          longitude: 36.76187245174493,
-          schedule: "Nov 15, 7:30 PM",
-          category: "Events This Month",
-          tags: ["Comedy", "Entertainment", "Nightlife"],
-          timeOfDay: "night",
-          image: "images/The-Comedy-Criminals.jpg",
-          alt: "Poster for The Comedy Criminals show featuring Jack Nanjero, Amadeus, Rock, and Tim",
-          website: "https://standupcollective.co.ke/buytickets?event=THE%20COMEDY%20CRIMINALS%20",
-          linkTitle: "Buy Ticket"
-      },
+    {
+        id: 49,
+        name: "Thursday Night Live",
+        description: "High-energy stand-up and improv with Nairobi's top comics and surprise guest hosts every Thursday night.",
+        location: "Nairobi Laugh Bar",
+        latitude: -1.2932647766332508,
+        longitude: 36.76187245174493,
+        schedule: "Thursdays, 7pm",
+        category: "Weekly Comedy",
+        tags: ["Comedy", "Entertainment", "Nightlife"],
+        timeOfDay: "night",
+        image: "images/Thursday-Night-Live.jpg",
+        alt: "Poster for Thursday Night Live at Nairobi Laugh Bar",
+        website: "https://standupcollective.co.ke/shows",
+        linkTitle: "View More Upcoming Shows"
+    },
     {
         id: 7,
         name: "Sets in the City",
@@ -202,37 +235,6 @@ const activities = [
         alt: "Sketch-style poster showing people dining and watching a performance, with event timing and RSVP details",
         website: "https://www.instagram.com/punchlinecomedyclubnairobi/",
         linkTitle: "View More Upcoming Shows"
-    },
-          {
-          id: 9,
-          name: "Braeburn Theater",
-          description: "Step into the Forest of Arden for a night of laughter, disguise, and love! Braeburn High School proudly presents As You Like It — A Musical Adaptation by Shaina Taub & Laurie Woolery of Shakespeare's timeless comedy brought to life by our talented students.",
-          location: "Braeburn Theater",
-          latitude: -1.2891353762889035,
-          longitude: 36.75571346708775,
-          schedule: "Nov 5 - Nov 30",
-          category: "Events This Month",
-          tags: ["Theatre", "Performance", "Arts"],
-          image: "images/Braeburn-Theatre.webp",
-          alt: "Poster for Braeburn High School's theatre production",
-          website: "https://www.theatres.braeburn.com/",
-          linkTitle: "Buy Tickets"
-      },
-    {
-        id: 10,
-        name: "Romeo and Juliet",
-        description: "Premier venue for stage productions, plays, and cultural performances.",
-        location: "Kenya Cultural Centre",
-        latitude: -1.277520744372908,
-        longitude: 36.81817363547025,
-        schedule: "Fri Nov 15, 2025",
-        category: "Events This Month",
-        tags: ["Theatre", "Cultural", "Performance"],
-        image: "images/Kenya-National-Theatre.jpg.png",
-        alt: "Audience seated in the Kenya National Theatre facing the stage",
-        website: "https://theatreke.com/events/68b8917f94fc8b8553a32a05",
-        linkTitle: "Buy Tickets",
-        specialButton: true
     },
     // Workshops & Creative Experiences
     // Pottery
@@ -642,8 +644,6 @@ const withinNairobiNames = new Set([
     'Art class',
     'Nairobi Sketch Tour',
     'Nairobi Orchestra',
-    'Paltra Musica',
-    'Pulchra Musica',
     'Cinema in Nature',
     'Braban Theatre',
     'Braeburn Theater',
@@ -1509,6 +1509,9 @@ function getBulletPoints(activity) {
     if (name === 'giggles & tickles' || location.includes('levels')) {
         return ['Restaurant', 'Free entry'];
     }
+    if (name === 'thursday night live') {
+        return ['Restaurant', 'Free entry'];
+    }
           // Sets in the City (Beer District)
       if (name === 'sets in the city' || location.includes('beer district')) {
           return ['Restaurant & bar', 'Free entry'];
@@ -1517,9 +1520,14 @@ function getBulletPoints(activity) {
       if (name === 'sax & violins' || name === 'sax and violins' || location.includes('nairobi street kitchen')) {
           return ['Restaurant', 'Free entry'];
       }
-      // Braeburn Theater
-      if (name === 'braeburn theater' || location.includes('braeburn')) {
-          return ['Multiple Shows'];
+    // Braeburn Theatre
+    if (
+        name === 'beauty & the beast' ||
+        name === 'braeburn theatre' ||
+        name === 'braeburn theater' ||
+        location.includes('braeburn')
+    ) {
+        return ['1000 KSh'];
       }
 
       return [];
