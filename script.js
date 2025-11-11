@@ -693,35 +693,7 @@ function escapeAttribute(value) {
         .replace(/\r?\n/g, ' ');
 }
 
-const MONTH_NAME_TO_INDEX = {
-    january: 0,
-    jan: 0,
-    february: 1,
-    feb: 1,
-    march: 2,
-    mar: 2,
-    april: 3,
-    apr: 3,
-    may: 4,
-    june: 5,
-    jun: 5,
-    july: 6,
-    jul: 6,
-    august: 7,
-    aug: 7,
-    september: 8,
-    sep: 8,
-    sept: 8,
-    october: 9,
-    oct: 9,
-    november: 10,
-    nov: 10,
-    december: 11,
-    dec: 11
-};
-
-const DEFAULT_EVENT_DURATION_MINUTES = 120;
-const SHARE_BASE_URL = 'https://nairobidates.co.ke/events';
+const SHARE_BASE_URL = 'https://nairobidates.co.ke';
 
 const activitySlugIndex = new Map();
 let deepLinkListenersAttached = false;
@@ -797,6 +769,12 @@ function initializeActivitySlugs() {
         }
     });
     activities.forEach(activity => getActivitySlug(activity));
+}
+
+function buildActivityLink(slug, activityId, name) {
+    const cleanBase = SHARE_BASE_URL.replace(/\/$/, '');
+    const targetSlug = slug || (activityId ? `activity-${activityId}` : (slugify(name || '') || 'event'));
+    return `${cleanBase}/?event=${encodeURIComponent(targetSlug)}`;
 }
 
 initializeActivitySlugs();
@@ -880,7 +858,7 @@ const initialDeepLinkSlug = getDeepLinkSlugFromUrl();
 if (initialDeepLinkSlug) {
     const initialActivity = activitySlugIndex.get(initialDeepLinkSlug);
     if (initialActivity) {
-        const initialShareUrl = buildActivityShareUrl(initialDeepLinkSlug, initialActivity.id != null ? String(initialActivity.id) : '', initialActivity.name || '');
+        const initialShareUrl = buildActivityLink(initialDeepLinkSlug, initialActivity.id != null ? String(initialActivity.id) : '', initialActivity.name || '');
         updateMetaForActivity(initialActivity, initialShareUrl);
     }
 }
@@ -895,11 +873,17 @@ function escapeForSelector(value) {
 
 function getDeepLinkSlugFromUrl(url) {
     try {
-        const currentUrl = url ? new URL(url, window.location.origin) : new URL(window.location.href);
-        const pathMatch = currentUrl.pathname.match(/\/events\/([^/]+)/i);
-        if (pathMatch && pathMatch[1]) {
-            return decodeURIComponent(pathMatch[1]);
+    const currentUrl = url ? new URL(url, window.location.origin) : new URL(window.location.href);
+    const querySlug = currentUrl.searchParams.get('event') || currentUrl.searchParams.get('slug');
+    if (querySlug) {
+        return decodeURIComponent(querySlug);
+    }
+    if (currentUrl.hash) {
+        const hashMatch = currentUrl.hash.match(/events\/([^/]+)/i);
+        if (hashMatch && hashMatch[1]) {
+            return decodeURIComponent(hashMatch[1]);
         }
+    }
         return null;
     } catch (e) {
         return null;
@@ -936,7 +920,7 @@ function focusActivityBySlug(slug, attempt = 0) {
 
     const activity = activitySlugIndex.get(slug);
     if (activity) {
-        const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
+        const shareUrl = buildActivityLink(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
         updateMetaForActivity(activity, shareUrl);
     }
 }
@@ -949,123 +933,6 @@ function handleDeepLinkNavigation() {
     }
     focusActivityBySlug(slug);
 }
-function getCalendarInfo(activity) {
-    if (!activity) return null;
-    const parsed = parseActivityDateTime(activity);
-    if (!parsed || !parsed.start || Number.isNaN(parsed.start.getTime())) return null;
-
-    const now = new Date();
-    if (parsed.start.getMonth() !== now.getMonth() || parsed.start.getFullYear() !== now.getFullYear()) {
-        return null;
-    }
-
-    const end = parsed.end && !Number.isNaN(parsed.end.getTime())
-        ? parsed.end
-        : new Date(parsed.start.getTime() + DEFAULT_EVENT_DURATION_MINUTES * 60 * 1000);
-
-    const slug = getActivitySlug(activity);
-    const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
-    const descriptionParts = [];
-
-    if (activity.description) {
-        descriptionParts.push(activity.description);
-    }
-    if (shareUrl) {
-        descriptionParts.push(`View more: ${shareUrl}`);
-    } else if (activity.website) {
-        descriptionParts.push(`View more: ${activity.website}`);
-    }
-
-    const fullDescription = descriptionParts.join('\n\n');
-    const trimmedDescription = fullDescription.length > 1000 ? `${fullDescription.slice(0, 997)}…` : fullDescription;
-
-    return {
-        start: parsed.start,
-        end,
-        title: activity.name || 'Nairobi Dates Event',
-        location: activity.location || 'Nairobi, Kenya',
-        description: trimmedDescription,
-        encodedDescription: encodeURIComponent(trimmedDescription),
-        shareUrl: shareUrl || activity.website || '',
-        activityId: activity.id != null ? String(activity.id) : '',
-        category: activity.category || ''
-    };
-}
-
-function parseActivityDateTime(activity) {
-    if (!activity) return null;
-
-    if (activity.calendarStart) {
-        const start = new Date(activity.calendarStart);
-        const end = activity.calendarEnd ? new Date(activity.calendarEnd) : null;
-        if (!Number.isNaN(start.getTime())) {
-            return { start, end };
-        }
-    }
-
-    return parseScheduleString(activity.schedule);
-}
-
-function parseScheduleString(schedule) {
-    if (!schedule || typeof schedule !== 'string') return null;
-
-    const datePattern = /\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)?\.?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sept|Sep|October|Oct|November|Nov|December|Dec)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s*(\d{4}))?/i;
-    const dateMatch = schedule.match(datePattern);
-    if (!dateMatch) return null;
-
-    const monthName = dateMatch[1].toLowerCase();
-    const monthIndex = MONTH_NAME_TO_INDEX[monthName];
-    if (monthIndex == null) return null;
-
-    const day = parseInt(dateMatch[2], 10);
-    if (Number.isNaN(day) || day < 1 || day > 31) return null;
-
-    let year = dateMatch[3] ? parseInt(dateMatch[3], 10) : new Date().getFullYear();
-    if (Number.isNaN(year)) {
-        year = new Date().getFullYear();
-    }
-
-    let hours = 18;
-    let minutes = 0;
-
-    const timePatternWithMeridian = /\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b/i;
-    const meridianMatch = schedule.match(timePatternWithMeridian);
-    if (meridianMatch) {
-        hours = parseInt(meridianMatch[1], 10);
-        minutes = meridianMatch[2] ? parseInt(meridianMatch[2], 10) : 0;
-        const meridian = meridianMatch[3].toLowerCase();
-        if (meridian === 'pm' && hours < 12) {
-            hours += 12;
-        } else if (meridian === 'am' && hours === 12) {
-            hours = 0;
-        }
-    } else {
-        const timePattern24 = /\b(0?\d|1\d|2[0-3]):([0-5]\d)\b/;
-        const time24Match = schedule.match(timePattern24);
-        if (time24Match) {
-            hours = parseInt(time24Match[1], 10);
-            minutes = parseInt(time24Match[2], 10);
-        }
-    }
-
-    const start = new Date(year, monthIndex, day, hours, minutes, 0, 0);
-    if (Number.isNaN(start.getTime())) {
-        return null;
-    }
-
-    let end = null;
-    const durationPattern = /\b(\d+)\s*(?:hour|hr|hrs|hours)\b/i;
-    const durationMatch = schedule.match(durationPattern);
-    if (durationMatch) {
-        const durationHours = parseInt(durationMatch[1], 10);
-        if (!Number.isNaN(durationHours) && durationHours > 0) {
-            end = new Date(start.getTime() + durationHours * 60 * 60 * 1000);
-        }
-    }
-
-    return { start, end };
-}
-
 function isWithinNairobi(activity) {
     const name = (activity.name || '').trim();
     if (withinNairobiNames.has(name)) return true;
@@ -1342,30 +1209,8 @@ function renderActivities() {
                                     const descId = `desc-${activity.id || categorySlug}-${index}`;
                                     const cardId = slug ? `activity-${slug}` : (activity.id != null ? `activity-${activity.id}` : `activity-${categorySlug}-${index}`);
                                     const activityIdAttr = activity.id != null ? activity.id : '';
-                                    const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
-                                    const calendarInfo = getCalendarInfo(activity);
-                                    const calendarAttributes = calendarInfo ? `
-                                            data-calendar-start="${escapeAttribute(calendarInfo.start.toISOString())}"
-                                            data-calendar-end="${escapeAttribute(calendarInfo.end.toISOString())}"
-                                            data-calendar-title="${escapeAttribute(calendarInfo.title)}"
-                                            data-calendar-location="${escapeAttribute(calendarInfo.location)}"
-                                            data-calendar-description="${escapeAttribute(calendarInfo.encodedDescription)}"
-                                            data-calendar-url="${escapeAttribute(calendarInfo.shareUrl)}"
-                                            data-calendar-activity-id="${escapeAttribute(calendarInfo.activityId)}"
-                                        ` : '';
                                     return `
                                     <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}" id="${escapeAttribute(cardId)}" data-activity-id="${escapeAttribute(activityIdAttr)}" data-activity-slug="${escapeAttribute(slug)}" data-title="${escapeAttribute(activity.name || '')}">
-                                        <button type="button"
-                                            class="activity-share-btn"
-                                            onclick="shareActivity(event)"
-                                            aria-label="Share ${escapeAttribute(activity.name || '')}"
-                                            data-activity-id="${escapeAttribute(activityIdAttr)}"
-                                            data-activity-name="${escapeAttribute(activity.name || '')}"
-                                            data-activity-url="${escapeAttribute(shareUrl)}"
-                                            data-activity-slug="${escapeAttribute(slug)}">
-                                            <span class="icon-share" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Share ${escapeAttribute(activity.name || '')}</span>
-                                        </button>
                                         <div class="activity-card-image" onmouseenter="showDescription(this)" onmouseleave="hideDescription(this)">
                                             ${activity.image ? `<img src="${activity.image}" alt="${activity.alt || activity.name}" class="activity-card-img" width="300" height="240" loading="lazy" decoding="async">` : ''}
                                             <div class="activity-card-overlay"></div>
@@ -1400,18 +1245,6 @@ function renderActivities() {
                                             <a href="${activity.website}" target="_blank" rel="noopener noreferrer" class="activity-special-button">${activity.linkTitle || 'Visit Website'}</a>
                                             ` : ''}
                                             ${!activity.website ? `<div class="activity-button-spacer"></div>` : ''}
-                                            ${calendarInfo ? `
-                                            <div class="activity-calendar"${calendarAttributes}>
-                                                <button type="button" class="activity-calendar-btn" onclick="toggleCalendarMenu(event)" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="icon-calendar" aria-hidden="true"></span>
-                                                    <span>Add to Calendar</span>
-                                                </button>
-                                                <div class="activity-calendar-menu" role="menu" hidden>
-                                                    <button type="button" class="activity-calendar-option" onclick="openGoogleCalendar(event)" role="menuitem">Google Calendar</button>
-                                                    <button type="button" class="activity-calendar-option" onclick="downloadCalendarICS(event)" role="menuitem">Download .ics</button>
-                                                </div>
-                                            </div>
-                                            ` : ''}
                                         </div>
                                     </div>
                                 `;
@@ -1441,7 +1274,6 @@ function renderActivities() {
         html += '<div class="new-activities-note"><em>New activities added regularly...</em></div>';
     }
     
-    closeCalendarMenu();
     container.innerHTML = html;
     
     // Initialize carousel arrows and keyboard navigation after rendering
@@ -1645,7 +1477,6 @@ function expandCategory(category) {
     
     // Render activities in grid
     const grid = document.getElementById('viewAllGrid');
-    closeCalendarMenu();
     grid.innerHTML = categoryActivities.map((activity, index) => {
         // Generate unique ID for this description overlay - MUST match between button aria-controls and overlay id
         const descId = `desc-modal-${activity.id || index}`;
@@ -1653,30 +1484,8 @@ function expandCategory(category) {
         const slug = getActivitySlug(activity);
         const cardId = slug ? `activity-${slug}` : (activity.id != null ? `activity-${activity.id}` : `activity-${modalCategorySlug}-${index}`);
         const activityIdAttr = activity.id != null ? activity.id : '';
-        const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
-        const calendarInfo = getCalendarInfo(activity);
-        const calendarAttributes = calendarInfo ? `
-            data-calendar-start="${escapeAttribute(calendarInfo.start.toISOString())}"
-            data-calendar-end="${escapeAttribute(calendarInfo.end.toISOString())}"
-            data-calendar-title="${escapeAttribute(calendarInfo.title)}"
-            data-calendar-location="${escapeAttribute(calendarInfo.location)}"
-            data-calendar-description="${escapeAttribute(calendarInfo.encodedDescription)}"
-            data-calendar-url="${escapeAttribute(calendarInfo.shareUrl)}"
-            data-calendar-activity-id="${escapeAttribute(calendarInfo.activityId)}"
-        ` : '';
         return `
         <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}" id="${escapeAttribute(cardId)}" data-activity-id="${escapeAttribute(activityIdAttr)}" data-activity-slug="${escapeAttribute(slug)}" data-title="${escapeAttribute(activity.name || '')}">
-            <button type="button"
-                class="activity-share-btn"
-                onclick="shareActivity(event)"
-                aria-label="Share ${escapeAttribute(activity.name || '')}"
-                data-activity-id="${escapeAttribute(activityIdAttr)}"
-                data-activity-name="${escapeAttribute(activity.name || '')}"
-                data-activity-url="${escapeAttribute(shareUrl)}"
-                data-activity-slug="${escapeAttribute(slug)}">
-                <span class="icon-share" aria-hidden="true"></span>
-                <span class="visually-hidden">Share ${escapeAttribute(activity.name || '')}</span>
-            </button>
             <div class="activity-card-image" onmouseenter="showDescription(this)" onmouseleave="hideDescription(this)">
                 ${activity.image ? `<img src="${activity.image}" alt="${activity.name}" class="activity-card-img" width="300" height="240" loading="lazy" decoding="async">` : ''}
                 <div class="activity-card-overlay"></div>
@@ -1711,18 +1520,6 @@ function expandCategory(category) {
                 <a href="${activity.website}" target="_blank" rel="noopener noreferrer" class="activity-special-button">${activity.linkTitle || 'Visit Website'}</a>
                 ` : ''}
                 ${!activity.website ? `<div class="activity-button-spacer"></div>` : ''}
-                ${calendarInfo ? `
-                <div class="activity-calendar"${calendarAttributes}>
-                    <button type="button" class="activity-calendar-btn" onclick="toggleCalendarMenu(event)" aria-haspopup="true" aria-expanded="false">
-                        <span class="icon-calendar" aria-hidden="true"></span>
-                        <span>Add to Calendar</span>
-                    </button>
-                    <div class="activity-calendar-menu" role="menu" hidden>
-                        <button type="button" class="activity-calendar-option" onclick="openGoogleCalendar(event)" role="menuitem">Google Calendar</button>
-                        <button type="button" class="activity-calendar-option" onclick="downloadCalendarICS(event)" role="menuitem">Download .ics</button>
-                    </div>
-                </div>
-                ` : ''}
             </div>
         </div>
     `;
@@ -1750,7 +1547,6 @@ function closeViewAllModal() {
     
     // Release focus trap
     releaseFocusTrap();
-    closeCalendarMenu();
     
     // Remove ARIA attributes
     modal.removeAttribute('role');
@@ -3342,296 +3138,4 @@ function setupCategoryArrowAnalytics() {
     });
 }
 
-function shareActivity(event) {
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    const button = event && event.currentTarget
-        ? event.currentTarget
-        : (event && event.target && event.target.closest ? event.target.closest('.activity-share-btn') : null);
-
-    if (!button) return;
-
-    const name = button.dataset.activityName || 'Nairobi Dates Activity';
-    const activityId = button.dataset.activityId || '';
-    const slug = button.dataset.activitySlug || '';
-    const datasetUrl = button.dataset.activityUrl || '';
-    const shareUrl = datasetUrl || buildActivityShareUrl(slug, activityId, name);
-    const shareText = name;
-
-    const sharePayload = {
-        title: name,
-        text: shareText,
-        url: shareUrl
-    };
-
-    if (navigator.share && typeof navigator.share === 'function') {
-        navigator.share(sharePayload)
-            .then(() => {
-                trackEvent('activity_share_success', { id: activityId, title: name });
-            })
-            .catch(error => {
-                if (error && error.name === 'AbortError') {
-                    trackEvent('activity_share_cancelled', { id: activityId, title: name });
-                    return;
-                }
-                trackEvent('activity_share_error', {
-                    id: activityId,
-                    title: name,
-                    message: error && error.message ? error.message : String(error || 'unknown')
-                });
-                fallbackCopy(shareUrl, name, activityId);
-            });
-    } else {
-        fallbackCopy(shareUrl, name, activityId);
-    }
-}
-
-function fallbackCopy(shareUrl, name, activityId) {
-    const copyPayload = `${name}\n${shareUrl}`;
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-        navigator.clipboard.writeText(copyPayload).then(() => {
-            showShareToast('Link copied to clipboard');
-            trackEvent('activity_share_copy_success', { id: activityId, title: name });
-        }).catch(() => {
-            promptShareLink(shareUrl, name, activityId);
-        });
-    } else {
-        promptShareLink(shareUrl, name, activityId);
-    }
-}
-
-function promptShareLink(shareUrl, name, activityId) {
-    window.prompt('Copy and share this link:', shareUrl);
-    trackEvent('activity_share_copy_prompt', { id: activityId, title: name });
-}
-
-function buildActivityShareUrl(slug, activityId, name) {
-    const base = SHARE_BASE_URL.replace(/\/$/, '');
-    if (slug) return `${base}/${slug}`;
-    if (activityId) return `${base}/activity-${activityId}`;
-    const fallback = slugify(name || '') || 'event';
-    return `${base}/${fallback}`;
-}
-
-function showShareToast(message) {
-    let toast = document.getElementById('shareToast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'shareToast';
-        toast.setAttribute('role', 'status');
-        toast.style.cssText = 'position: fixed; bottom: 24px; right: 24px; background: #059669; color: #fff; padding: 12px 20px; border-radius: 999px; box-shadow: 0 4px 18px rgba(5, 150, 105, 0.4); font-size: 14px; line-height: 1.4; z-index: 10002; display: none; max-width: 90%;';
-        document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.style.display = 'inline-block';
-
-    if (showShareToast._timer) {
-        clearTimeout(showShareToast._timer);
-    }
-    showShareToast._timer = setTimeout(() => {
-        toast.style.display = 'none';
-        showShareToast._timer = null;
-    }, 3000);
-}
-
-let openCalendarMenuContainer = null;
-
-function toggleCalendarMenu(event) {
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    const button = event?.currentTarget || event?.target;
-    if (!button) return;
-
-    const container = button.closest('.activity-calendar');
-    if (!container) return;
-
-    if (openCalendarMenuContainer && openCalendarMenuContainer !== container) {
-        closeCalendarMenu(openCalendarMenuContainer);
-    }
-
-    const menu = container.querySelector('.activity-calendar-menu');
-    if (!menu) return;
-
-    const isOpen = !container.classList.contains('open');
-    if (isOpen) {
-        container.classList.add('open');
-        menu.hidden = false;
-        button.setAttribute('aria-expanded', 'true');
-        openCalendarMenuContainer = container;
-        setTimeout(() => {
-            document.addEventListener('click', calendarMenuDocumentHandler);
-            document.addEventListener('keydown', calendarMenuKeydownHandler);
-        }, 0);
-    } else {
-        closeCalendarMenu(container);
-    }
-}
-
-function closeCalendarMenu(container) {
-    const target = container || openCalendarMenuContainer;
-    if (!target) return;
-
-    const menu = target.querySelector('.activity-calendar-menu');
-    const button = target.querySelector('.activity-calendar-btn');
-
-    target.classList.remove('open');
-    if (menu) menu.hidden = true;
-    if (button) button.setAttribute('aria-expanded', 'false');
-
-    if (openCalendarMenuContainer === target) {
-        openCalendarMenuContainer = null;
-        document.removeEventListener('click', calendarMenuDocumentHandler);
-        document.removeEventListener('keydown', calendarMenuKeydownHandler);
-    }
-}
-
-function calendarMenuDocumentHandler(event) {
-    if (!openCalendarMenuContainer) return;
-    if (openCalendarMenuContainer.contains(event.target)) return;
-    closeCalendarMenu(openCalendarMenuContainer);
-}
-
-function calendarMenuKeydownHandler(event) {
-    if (event.key === 'Escape' && openCalendarMenuContainer) {
-        closeCalendarMenu(openCalendarMenuContainer);
-    }
-}
-
-function getCalendarDetailsFromContainer(container) {
-    if (!container) return null;
-    const dataset = container.dataset || {};
-    if (!dataset.calendarStart || !dataset.calendarEnd || !dataset.calendarTitle) return null;
-
-    let description = '';
-    if (dataset.calendarDescription) {
-        try {
-            description = decodeURIComponent(dataset.calendarDescription);
-        } catch (error) {
-            description = dataset.calendarDescription;
-        }
-    }
-
-    return {
-        start: dataset.calendarStart,
-        end: dataset.calendarEnd,
-        title: dataset.calendarTitle,
-        location: dataset.calendarLocation || '',
-        description,
-        url: dataset.calendarUrl || '',
-        activityId: dataset.calendarActivityId || ''
-    };
-}
-
-function downloadCalendarICS(event) {
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    const button = event?.currentTarget;
-    const container = button?.closest('.activity-calendar');
-    const details = getCalendarDetailsFromContainer(container);
-    if (!details) return;
-
-    const icsContent = createCalendarICSContent(details);
-    const blob = new Blob([icsContent], { type: 'text/calendar' });
-    const fileName = `${slugifyForFilename(details.title)}.ics`;
-
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setTimeout(() => URL.revokeObjectURL(link.href), 100);
-
-    showShareToast('Calendar event ready to import');
-    trackEvent('activity_calendar_ics', { id: details.activityId, title: details.title });
-    closeCalendarMenu(container);
-}
-
-function openGoogleCalendar(event) {
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    const button = event?.currentTarget;
-    const container = button?.closest('.activity-calendar');
-    const details = getCalendarDetailsFromContainer(container);
-    if (!details) return;
-
-    const googleUrl = buildGoogleCalendarUrl(details);
-    window.open(googleUrl, '_blank', 'noopener');
-    trackEvent('activity_calendar_google', { id: details.activityId, title: details.title });
-    closeCalendarMenu(container);
-}
-
-function buildGoogleCalendarUrl(details) {
-    const start = formatGoogleCalendarDate(details.start);
-    const end = formatGoogleCalendarDate(details.end);
-    const params = new URLSearchParams({
-        action: 'TEMPLATE',
-        text: details.title || 'Nairobi Dates Event',
-        dates: `${start}/${end}`,
-        details: details.description || '',
-        location: details.location || ''
-    });
-    return `https://www.google.com/calendar/render?${params.toString()}`;
-}
-
-function formatGoogleCalendarDate(input) {
-    const date = new Date(input);
-    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-}
-
-function createCalendarICSContent(details) {
-    const now = new Date();
-    const dtStamp = formatICSDate(now);
-    const dtStart = formatICSDate(new Date(details.start));
-    const dtEnd = formatICSDate(new Date(details.end));
-    const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@nairobi-dates`;
-
-    const descriptionLines = [];
-    if (details.description) descriptionLines.push(details.description);
-    if (details.url && (!details.description || !details.description.includes(details.url))) {
-        descriptionLines.push(`More info: ${details.url}`);
-    }
-    const description = descriptionLines.join('\n\n');
-
-    return [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Nairobi Dates Planner//EN',
-        'CALSCALE:GREGORIAN',
-        'METHOD:PUBLISH',
-        'BEGIN:VEVENT',
-        `UID:${uid}`,
-        `DTSTAMP:${dtStamp}`,
-        `DTSTART:${dtStart}`,
-        `DTEND:${dtEnd}`,
-        `SUMMARY:${escapeICS(details.title)}`,
-        `LOCATION:${escapeICS(details.location)}`,
-        `DESCRIPTION:${escapeICS(description)}`,
-        details.url ? `URL:${escapeICS(details.url)}` : '',
-        'END:VEVENT',
-        'END:VCALENDAR'
-    ].filter(Boolean).join('\r\n');
-}
-
-function formatICSDate(date) {
-    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-}
-
-function escapeICS(value) {
-    return (value || '').replace(/\\/g, '\\\\').replace(/,/g, '\\,').replace(/;/g, '\\;').replace(/\r?\n/g, '\\n');
-}
-
-function slugifyForFilename(value) {
-    return (value || 'event').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'event';
-}
 
