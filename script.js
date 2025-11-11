@@ -721,7 +721,234 @@ const MONTH_NAME_TO_INDEX = {
 };
 
 const DEFAULT_EVENT_DURATION_MINUTES = 120;
+const SHARE_BASE_URL = 'https://nairobidates.co.ke/events';
 
+const activitySlugIndex = new Map();
+let deepLinkListenersAttached = false;
+
+const defaultMetaState = (() => {
+    if (typeof document === 'undefined') {
+        return {};
+    }
+    return {
+        title: document.title,
+        ogTitle: getMetaContent('property', 'og:title'),
+        ogDescription: getMetaContent('property', 'og:description'),
+        ogImage: getMetaContent('property', 'og:image'),
+        ogUrl: getMetaContent('property', 'og:url'),
+        twitterTitle: getMetaContent('name', 'twitter:title'),
+        twitterDescription: getMetaContent('name', 'twitter:description'),
+        twitterImage: getMetaContent('name', 'twitter:image'),
+        canonical: (document.querySelector('link[rel="canonical"]') || {}).href || ''
+    };
+})();
+
+function slugify(value) {
+    return (value || '')
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .replace(/-{2,}/g, '-');
+}
+
+function getActivitySlug(activity) {
+    if (!activity) return '';
+
+    if (typeof activity.slug === 'string' && activity.slug.trim()) {
+        const canonical = slugify(activity.slug.trim());
+        if (canonical) {
+            activitySlugIndex.set(canonical, activity);
+            return canonical;
+        }
+    }
+
+    if (activity.__slug) {
+        activitySlugIndex.set(activity.__slug, activity);
+        return activity.__slug;
+    }
+
+    let base = slugify(activity.name || '');
+    if (!base && activity.id != null) {
+        base = `activity-${activity.id}`;
+    }
+    if (!base) {
+        base = `event-${Math.random().toString(36).slice(2, 8)}`;
+    }
+
+    let slug = base;
+    let counter = 2;
+    while (activitySlugIndex.has(slug) && activitySlugIndex.get(slug) !== activity) {
+        slug = `${base}-${counter++}`;
+    }
+
+    activity.__slug = slug;
+    activitySlugIndex.set(slug, activity);
+    return slug;
+}
+
+function initializeActivitySlugs() {
+    activitySlugIndex.clear();
+    activities.forEach(activity => {
+        if (activity) {
+            if (activity.__slug) delete activity.__slug;
+        }
+    });
+    activities.forEach(activity => getActivitySlug(activity));
+}
+
+initializeActivitySlugs();
+
+function getMetaContent(attribute, value) {
+    if (typeof document === 'undefined') return '';
+    const meta = document.head.querySelector(`meta[${attribute}="${value}"]`);
+    return meta ? meta.getAttribute('content') || '' : '';
+}
+
+function setMetaContent(attribute, value, content) {
+    if (typeof document === 'undefined') return;
+    let meta = document.head.querySelector(`meta[${attribute}="${value}"]`);
+    if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute(attribute, value);
+        document.head.appendChild(meta);
+    }
+    if (typeof content === 'string') {
+        meta.setAttribute('content', content);
+    }
+}
+
+function buildAbsoluteUrl(path) {
+    if (!path) return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    try {
+        return new URL(path, window.location.origin).href;
+    } catch (e) {
+        return path;
+    }
+}
+
+function updateMetaForActivity(activity, shareUrl) {
+    if (typeof document === 'undefined' || !activity) return;
+
+    const title = activity.name ? `${activity.name} | Nairobi Dates` : defaultMetaState.title;
+    document.title = title || defaultMetaState.title;
+
+    const eventTitle = activity.name || defaultMetaState.ogTitle || '';
+    const absoluteImage = buildAbsoluteUrl(activity.image || defaultMetaState.ogImage || '');
+    const description = '';
+    const finalShareUrl = shareUrl || defaultMetaState.ogUrl || window.location.href;
+
+    setMetaContent('property', 'og:title', eventTitle);
+    setMetaContent('name', 'twitter:title', eventTitle);
+    setMetaContent('property', 'og:description', description);
+    setMetaContent('name', 'twitter:description', description);
+    if (absoluteImage) {
+        setMetaContent('property', 'og:image', absoluteImage);
+        setMetaContent('name', 'twitter:image', absoluteImage);
+    }
+    setMetaContent('property', 'og:url', finalShareUrl);
+
+    const canonicalLink = document.querySelector('link[rel="canonical"]') || (() => {
+        const link = document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        document.head.appendChild(link);
+        return link;
+    })();
+    canonicalLink.setAttribute('href', finalShareUrl);
+}
+
+function resetMetaToDefault() {
+    if (typeof document === 'undefined') return;
+    document.title = defaultMetaState.title || document.title;
+    if (defaultMetaState.ogTitle) setMetaContent('property', 'og:title', defaultMetaState.ogTitle);
+    if (defaultMetaState.twitterTitle) setMetaContent('name', 'twitter:title', defaultMetaState.twitterTitle);
+    if (defaultMetaState.ogDescription !== undefined) setMetaContent('property', 'og:description', defaultMetaState.ogDescription);
+    if (defaultMetaState.twitterDescription !== undefined) setMetaContent('name', 'twitter:description', defaultMetaState.twitterDescription);
+    if (defaultMetaState.ogImage) setMetaContent('property', 'og:image', defaultMetaState.ogImage);
+    if (defaultMetaState.twitterImage) setMetaContent('name', 'twitter:image', defaultMetaState.twitterImage);
+    if (defaultMetaState.ogUrl) setMetaContent('property', 'og:url', defaultMetaState.ogUrl);
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink && defaultMetaState.canonical) {
+        canonicalLink.setAttribute('href', defaultMetaState.canonical);
+    }
+}
+
+const initialDeepLinkSlug = getDeepLinkSlugFromUrl();
+if (initialDeepLinkSlug) {
+    const initialActivity = activitySlugIndex.get(initialDeepLinkSlug);
+    if (initialActivity) {
+        const initialShareUrl = buildActivityShareUrl(initialDeepLinkSlug, initialActivity.id != null ? String(initialActivity.id) : '', initialActivity.name || '');
+        updateMetaForActivity(initialActivity, initialShareUrl);
+    }
+}
+
+function escapeForSelector(value) {
+    if (typeof value !== 'string') return value;
+    if (window.CSS && typeof window.CSS.escape === 'function') {
+        return window.CSS.escape(value);
+    }
+    return value.replace(/([ #;?%&,.+*~':"!^$[\]()=>|/@])/g, '\\$1');
+}
+
+function getDeepLinkSlugFromUrl(url) {
+    try {
+        const currentUrl = url ? new URL(url, window.location.origin) : new URL(window.location.href);
+        const pathMatch = currentUrl.pathname.match(/\/events\/([^/]+)/i);
+        if (pathMatch && pathMatch[1]) {
+            return decodeURIComponent(pathMatch[1]);
+        }
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
+function focusActivityBySlug(slug, attempt = 0) {
+    if (!slug) return;
+    const card = document.querySelector(`.activity-card[data-activity-slug="${escapeForSelector(slug)}"]`);
+    if (!card) {
+        if (attempt < 15) {
+            setTimeout(() => focusActivityBySlug(slug, attempt + 1), 200);
+        }
+        return;
+    }
+
+    const section = card.closest('.category-section');
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    const carousel = card.closest('.activities-carousel');
+    if (carousel) {
+        const offset = card.offsetLeft - 16;
+        carousel.scrollTo({ left: offset < 0 ? 0 : offset, behavior: 'smooth' });
+    }
+
+    card.classList.add('activity-card-highlight');
+    setTimeout(() => {
+        card.classList.remove('activity-card-highlight');
+    }, 4000);
+
+    const activity = activitySlugIndex.get(slug);
+    if (activity) {
+        const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
+        updateMetaForActivity(activity, shareUrl);
+    }
+}
+
+function handleDeepLinkNavigation() {
+    const slug = getDeepLinkSlugFromUrl();
+    if (!slug) {
+        resetMetaToDefault();
+        return;
+    }
+    focusActivityBySlug(slug);
+}
 function getCalendarInfo(activity) {
     if (!activity) return null;
     const parsed = parseActivityDateTime(activity);
@@ -736,7 +963,8 @@ function getCalendarInfo(activity) {
         ? parsed.end
         : new Date(parsed.start.getTime() + DEFAULT_EVENT_DURATION_MINUTES * 60 * 1000);
 
-    const shareUrl = buildActivityShareUrl(activity.id || '', activity.name || '');
+    const slug = getActivitySlug(activity);
+    const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
     const descriptionParts = [];
 
     if (activity.description) {
@@ -1110,11 +1338,11 @@ function renderActivities() {
                             <div class="${isStaticGrid ? 'activities-carousel no-scroll' : 'activities-carousel'}" id="${carouselId}">
                                 ${categories[category].map((activity, index) => {
                                     // Generate unique ID for this description overlay - MUST match between button aria-controls and overlay id
+                                    const slug = getActivitySlug(activity);
                                     const descId = `desc-${activity.id || categorySlug}-${index}`;
-                                    const cardId = activity.id != null ? `activity-${activity.id}` : `activity-${categorySlug}-${index}`;
+                                    const cardId = slug ? `activity-${slug}` : (activity.id != null ? `activity-${activity.id}` : `activity-${categorySlug}-${index}`);
                                     const activityIdAttr = activity.id != null ? activity.id : '';
-                                    const shareDescription = (activity.description || '').replace(/\s+/g, ' ').trim();
-                                    const shareUrl = activity.website || '';
+                                    const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
                                     const calendarInfo = getCalendarInfo(activity);
                                     const calendarAttributes = calendarInfo ? `
                                             data-calendar-start="${escapeAttribute(calendarInfo.start.toISOString())}"
@@ -1126,15 +1354,15 @@ function renderActivities() {
                                             data-calendar-activity-id="${escapeAttribute(calendarInfo.activityId)}"
                                         ` : '';
                                     return `
-                                    <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}" id="${escapeAttribute(cardId)}" data-activity-id="${escapeAttribute(activityIdAttr)}" data-title="${escapeAttribute(activity.name || '')}">
+                                    <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}" id="${escapeAttribute(cardId)}" data-activity-id="${escapeAttribute(activityIdAttr)}" data-activity-slug="${escapeAttribute(slug)}" data-title="${escapeAttribute(activity.name || '')}">
                                         <button type="button"
                                             class="activity-share-btn"
                                             onclick="shareActivity(event)"
                                             aria-label="Share ${escapeAttribute(activity.name || '')}"
                                             data-activity-id="${escapeAttribute(activityIdAttr)}"
                                             data-activity-name="${escapeAttribute(activity.name || '')}"
-                                            data-activity-description="${escapeAttribute(shareDescription)}"
-                                            data-activity-url="${escapeAttribute(shareUrl)}">
+                                            data-activity-url="${escapeAttribute(shareUrl)}"
+                                            data-activity-slug="${escapeAttribute(slug)}">
                                             <span class="icon-share" aria-hidden="true"></span>
                                             <span class="visually-hidden">Share ${escapeAttribute(activity.name || '')}</span>
                                         </button>
@@ -1421,10 +1649,11 @@ function expandCategory(category) {
     grid.innerHTML = categoryActivities.map((activity, index) => {
         // Generate unique ID for this description overlay - MUST match between button aria-controls and overlay id
         const descId = `desc-modal-${activity.id || index}`;
-        const cardId = activity.id != null ? `activity-${activity.id}` : `activity-${category.replace(/\s+/g, '-').toLowerCase()}-${index}`;
+        const modalCategorySlug = category.replace(/\s+/g, '-').toLowerCase();
+        const slug = getActivitySlug(activity);
+        const cardId = slug ? `activity-${slug}` : (activity.id != null ? `activity-${activity.id}` : `activity-${modalCategorySlug}-${index}`);
         const activityIdAttr = activity.id != null ? activity.id : '';
-        const shareDescription = (activity.description || '').replace(/\s+/g, ' ').trim();
-        const shareUrl = activity.website || '';
+        const shareUrl = buildActivityShareUrl(slug, activity.id != null ? String(activity.id) : '', activity.name || '');
         const calendarInfo = getCalendarInfo(activity);
         const calendarAttributes = calendarInfo ? `
             data-calendar-start="${escapeAttribute(calendarInfo.start.toISOString())}"
@@ -1436,15 +1665,15 @@ function expandCategory(category) {
             data-calendar-activity-id="${escapeAttribute(calendarInfo.activityId)}"
         ` : '';
         return `
-        <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}" id="${escapeAttribute(cardId)}" data-activity-id="${escapeAttribute(activityIdAttr)}" data-title="${escapeAttribute(activity.name || '')}">
+        <div class="activity-card ${activity.name === 'Winedown Wednesday' || activity.name === 'Sets in the City' ? 'activity-card-large' : ''}" id="${escapeAttribute(cardId)}" data-activity-id="${escapeAttribute(activityIdAttr)}" data-activity-slug="${escapeAttribute(slug)}" data-title="${escapeAttribute(activity.name || '')}">
             <button type="button"
                 class="activity-share-btn"
                 onclick="shareActivity(event)"
                 aria-label="Share ${escapeAttribute(activity.name || '')}"
                 data-activity-id="${escapeAttribute(activityIdAttr)}"
                 data-activity-name="${escapeAttribute(activity.name || '')}"
-                data-activity-description="${escapeAttribute(shareDescription)}"
-                data-activity-url="${escapeAttribute(shareUrl)}">
+                data-activity-url="${escapeAttribute(shareUrl)}"
+                data-activity-slug="${escapeAttribute(slug)}">
                 <span class="icon-share" aria-hidden="true"></span>
                 <span class="visually-hidden">Share ${escapeAttribute(activity.name || '')}</span>
             </button>
@@ -2501,6 +2730,12 @@ document.addEventListener('DOMContentLoaded', function() {
     setupActivityViewAnalytics();
     setupActivityClickAnalytics();
     setupCategoryArrowAnalytics();
+    handleDeepLinkNavigation();
+    if (!deepLinkListenersAttached) {
+        window.addEventListener('popstate', handleDeepLinkNavigation);
+        window.addEventListener('hashchange', handleDeepLinkNavigation);
+        deepLinkListenersAttached = true;
+    }
     
     // Setup install button if it exists
     const installBtn = document.getElementById('installBtn');
@@ -3120,12 +3355,11 @@ function shareActivity(event) {
     if (!button) return;
 
     const name = button.dataset.activityName || 'Nairobi Dates Activity';
-    const descriptionRaw = button.dataset.activityDescription || '';
-    const truncatedDescription = descriptionRaw.length > 160 ? `${descriptionRaw.slice(0, 157)}…` : descriptionRaw;
-    const shareText = truncatedDescription ? `${name} – ${truncatedDescription}` : name;
     const activityId = button.dataset.activityId || '';
+    const slug = button.dataset.activitySlug || '';
     const datasetUrl = button.dataset.activityUrl || '';
-    const shareUrl = datasetUrl || buildActivityShareUrl(activityId, name);
+    const shareUrl = datasetUrl || buildActivityShareUrl(slug, activityId, name);
+    const shareText = name;
 
     const sharePayload = {
         title: name,
@@ -3148,15 +3382,15 @@ function shareActivity(event) {
                     title: name,
                     message: error && error.message ? error.message : String(error || 'unknown')
                 });
-                fallbackCopy(shareUrl, name, activityId, truncatedDescription);
+                fallbackCopy(shareUrl, name, activityId);
             });
     } else {
-        fallbackCopy(shareUrl, name, activityId, truncatedDescription);
+        fallbackCopy(shareUrl, name, activityId);
     }
 }
 
-function fallbackCopy(shareUrl, name, activityId, description) {
-    const copyPayload = `${name}\n${shareUrl}${description ? `\n\n${description}` : ''}`;
+function fallbackCopy(shareUrl, name, activityId) {
+    const copyPayload = `${name}\n${shareUrl}`;
     if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
         navigator.clipboard.writeText(copyPayload).then(() => {
             showShareToast('Link copied to clipboard');
@@ -3174,20 +3408,12 @@ function promptShareLink(shareUrl, name, activityId) {
     trackEvent('activity_share_copy_prompt', { id: activityId, title: name });
 }
 
-function buildActivityShareUrl(activityId, name) {
-    try {
-        const baseUrl = `${window.location.origin}${window.location.pathname}`;
-        if (activityId) {
-            return `${baseUrl}#activity-${activityId}`;
-        }
-        const slug = (name || '')
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '');
-        return `${baseUrl}#${slug || 'nairobi-dates-activity'}`;
-    } catch (error) {
-        return window.location.href;
-    }
+function buildActivityShareUrl(slug, activityId, name) {
+    const base = SHARE_BASE_URL.replace(/\/$/, '');
+    if (slug) return `${base}/${slug}`;
+    if (activityId) return `${base}/activity-${activityId}`;
+    const fallback = slugify(name || '') || 'event';
+    return `${base}/${fallback}`;
 }
 
 function showShareToast(message) {

@@ -1761,6 +1761,12 @@ main {
     border-color: #C1666B;
 }
 
+.activity-card-highlight {
+    outline: 2px solid #C1666B;
+    box-shadow: 0 0 0 4px rgba(193, 102, 107, 0.25);
+    transition: box-shadow 0.3s ease, outline 0.3s ease;
+}
+
 
 .activity-card-image {
     width: 100%;
