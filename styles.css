@@ -1573,6 +1573,186 @@ main {
     box-sizing: border-box;
 }
 
+.activity-share-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(17, 24, 39, 0.78);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 12;
+}
+
+.activity-share-btn .icon-share {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.activity-share-btn:hover {
+    background: rgba(193, 102, 107, 0.95);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(193, 102, 107, 0.32);
+}
+
+.activity-share-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(193, 102, 107, 0.45);
+    background: rgba(193, 102, 107, 0.95);
+}
+
+.activity-share-btn:active {
+    transform: translateY(0);
+}
+
+.activity-calendar {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+}
+
+.activity-calendar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(193, 102, 107, 0.4);
+    background: #ffffff;
+    color: #C1666B;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.activity-calendar-btn .icon-calendar {
+    font-size: 16px;
+}
+
+.activity-calendar-btn:hover {
+    background: rgba(193, 102, 107, 0.12);
+    color: #8B4049;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(193, 102, 107, 0.2);
+}
+
+.activity-calendar-btn:focus-visible {
+    outline: 2px solid #C1666B;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(193, 102, 107, 0.25);
+}
+
+.activity-calendar-btn:active {
+    transform: translateY(0);
+}
+
+.activity-calendar-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    box-shadow: 0 12px 28px rgba(17, 24, 39, 0.18);
+    padding: 8px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 15;
+}
+
+.activity-calendar-menu[hidden] {
+    display: none !important;
+}
+
+.activity-calendar-option {
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    color: #111827;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.activity-calendar-option:hover {
+    background: rgba(193, 102, 107, 0.1);
+    color: #8B4049;
+}
+
+.activity-calendar-option:focus-visible {
+    outline: 2px solid #C1666B;
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    .activity-share-btn {
+        top: 10px;
+        right: 10px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .activity-card-distance {
+        right: 52px;
+    }
+
+    .activity-calendar {
+        justify-content: flex-start;
+    }
+
+    .activity-calendar-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .activity-calendar-menu {
+        right: auto;
+        left: 0;
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .activity-share-btn {
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .activity-card-distance {
+        right: 46px;
+    }
+
+    .activity-calendar {
+        margin-top: 12px;
+    }
+
+    .activity-calendar-btn {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+}
+
 /* Removed hover/focus states - cards are containers, not interactive elements */
 
 .activity-card.selected {
@@ -1695,7 +1875,7 @@ main {
 .activity-card-distance {
     position: absolute;
     top: 8px;
-    right: 8px;
+    right: 60px;
     background: #C1666B;
     color: #ffffff;
     border-radius: 9999px;
@@ -3812,14 +3992,86 @@ footer {
 .footer-container {
     max-width: 1400px;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    text-align: left;
+    flex-wrap: wrap;
 }
 
-.footer-container p {
+.footer-container p,
+.footer-primary {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 300;
     margin: 0;
     color: #fff;
+}
+
+.footer-primary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.footer-primary > * {
+    flex-shrink: 0;
+}
+
+.footer-copy {
+    white-space: nowrap;
+}
+
+.footer-privacy-link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-privacy-link:hover {
+    text-decoration: underline;
+}
+
+.footer-connect-label {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.footer-social {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 400;
+    text-align: right;
+    padding-left: 0;
+    width: min(200px, 100%);
+    margin-left: auto;
+}
+
+.footer-social-link:hover {
+    text-decoration: underline;
+}
+
+.footer-social-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
@@ -3828,8 +4080,54 @@ footer {
         margin-top: 40px;
     }
 
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        gap: 16px;
+    }
+
     .footer-container p {
         font-size: 13px;
+    }
+
+    .footer-social {
+        width: 100%;
+        align-items: flex-end;
+        text-align: right;
+        margin-left: 0;
+    }
+
+    .footer-social-link {
+        width: 100%;
+        justify-content: flex-end;
+        text-align: right;
+    }
+
+    .footer-primary {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .footer-copy,
+    .footer-privacy-link,
+    .footer-connect-label {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 540px) {
+    .footer-primary {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .footer-social-link {
+        width: 100%;
+        justify-content: flex-end;
+        text-align: right;
     }
 }
 
