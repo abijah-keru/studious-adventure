@@ -61,37 +61,6 @@ const activities = [
         website: "https://eatout.co.ke/restaurant/bamba/",
         linkTitle: "Reserve"
     },
-          {
-          id: 4,
-          name: "Nairobi Orchestra",
-          description: "Classical orchestral performances featuring local and international repertoire.",
-          location: "Sabis International School, Runda",
-          latitude: -1.2077902877071145,
-          longitude: 36.830101476868464,
-          schedule: "Sat Nov 15, 6:30 PM & Sun Nov 16, 3:00 PM",
-          category: "Events This Month",
-          tags: ["Classical", "Orchestra", "Live Music"],
-          image: "images/Nairobi-Orchestra.webp",
-          alt: "Poster announcing upcoming Nairobi Orchestra performance with event details",
-          website: "https://kenyabuzz.com/events/event/nairobi-orchestra-reverie-odyssey",
-          linkTitle: "Buy Ticket"
-      },
-      {
-        id: 44,
-        name: "Paint The Run",
-        description: "A colorful run event where participants get splashed with paint while running. Join the fun-filled paint run at Axa Sports Bar in Karen.",
-        location: "Axa Sports Bar, Karen",
-        latitude: -1.3526397558747048,
-        longitude: 36.75145120461415,
-        schedule: "Sat Nov 15, 9am–late",
-        category: "Events This Month",
-        tags: ["Run", "Paint", "Outdoor", "Event", "Active", "Fun"],
-        timeOfDay: "day",
-        image: "images/Paint-Run.jpg",
-        alt: "Paint The Run event with colorful paint splashes",
-        website: "https://tickets.painttherun.com/tickets/paint-the-run-2025/purchase/",
-        linkTitle: "Buy Tickets"
-    },
     {
         id: 9,
         name: "Beauty & the Beast",
@@ -100,9 +69,9 @@ const activities = [
         latitude: -1.2891353762889035,
         longitude: 36.75571346708775,
         schedule: "Fri 21 & 28 (7pm) • Sat 22 & 29 (5pm) • Sun 23 & 30 (3pm)",
-        category: "Events This Month",
+        category: "Events November 2025",
         tags: ["Theatre", "Performance", "Arts"],
-        price: "1000 KSh",
+        price: "Price: 1,000",
         image: "images/Braeburn-Theatre.jpg",
         alt: "Braeburn Theatre production of Romeo & Juliet with cast on stage",
         website: "https://www.theatres.braeburn.com/",
@@ -111,37 +80,71 @@ const activities = [
         calendarEnd: "2025-11-21T21:00:00+03:00"
     },
     {
-        id: 10,
-        name: "Romeo & Juliet",
-        description: "Premier venue for stage productions, plays, and cultural performances.",
-        location: "Kenya Cultural Centre",
+        id: 51,
+        name: "The ANGST & Freedom Concert",
+        description: "An intense theatrical experience exploring raw emotions and human experiences through powerful performances.",
+        location: "St Thomas Aquinas Seminary",
+        latitude: -1.348670507236337,
+        longitude: 36.75779481625516,
+        schedule: "Sat. Nov 22, 3:00 PM - 4:30 PM",
+        category: "Events November 2025",
+        tags: ["Theatre", "Performance", "Drama", "Arts"],
+        image: "images/Angst.jpg",
+        alt: "The ANGST & Freedom Concert performance poster",
+        website: "https://kenyabuzz.com/events/event/the-angst-freedom-concert",
+        linkTitle: "Buy Tickets",
+        price: "Adults: 2,000\nStudents: 1,500"
+    },
+    {
+        id: 53,
+        name: "End of Term Orchestra",
+        description: "A thought-provoking theatrical production that challenges perspectives and explores contemporary themes.",
+        location: "Braeburn Garden Estate Theatre",
+        latitude: -1.2183965649385513,
+        longitude: 36.85622343715253,
+        schedule: "Sun. Nov 23, 3:00 PM",
+        category: "Events November 2025",
+        tags: ["Theatre", "Performance", "Drama", "Arts"],
+        image: "images/Term.jpg",
+        alt: "End of Term Orchestra performance poster",
+        website: "https://kenyabuzz.com/events/event/end-of-term-concert",
+        linkTitle: "Buy Tickets",
+        price: "Advance: 800\nChildren (below 12yrs): 500\nGate: 1,000"
+    },
+    {
+        id: 52,
+        name: "Ghetto Classics Jazz Concert",
+        description: "A compelling theatrical production that tells powerful stories from the heart of urban life.",
+        location: "Sarakasi Dome",
+        latitude: -1.2765420490857295,
+        longitude: 36.82739607762955,
+        schedule: "Sun. Nov 23, 5:30 PM",
+        category: "Events November 2025",
+        tags: ["Theatre", "Performance", "Drama", "Arts"],
+        image: "images/Ghetto.jpg",
+        alt: "Ghetto Classics Jazz Concert performance poster",
+        website: "https://kenyabuzz.com/events/event/ghetto-classics-all-starts-jazz-concert",
+        linkTitle: "Buy Tickets",
+        price: "Children and students: 500\nAdults: 1,000"
+    },
+    {
+        id: 50,
+        name: "The Nut Cracker",
+        description: "A classic holiday ballet performance bringing the timeless tale to life with stunning choreography and live music.",
+        location: "Kenya National Theatre",
         latitude: -1.277520744372908,
         longitude: 36.81817363547025,
-        schedule: "Sat Nov 15, 2025",
-        category: "Events This Month",
-        tags: ["Theatre", "Cultural", "Performance"],
-        image: "images/Kenya-National-Theatre.jpg.png",
-        alt: "Audience seated in the Kenya National Theatre facing the stage",
-        website: "https://theatreke.com/events/68b8917f94fc8b8553a32a05",
+        schedule: "Nov 28th - 30th and Dec 6th - 7th",
+        category: "Events November 2025",
+        tags: ["Ballet", "Theatre", "Performance", "Arts"],
+        image: "images/NutCracker.jpg",
+        alt: "Nut Cracker ballet performance poster",
+        website: "https://kenyabuzz.com/events/event/the-nutcracker-2025",
         linkTitle: "Buy Tickets",
-        specialButton: true
+        price: "Early bird: 2,500\nFrom 24th Nov: 3,000\nGroup of 10: 20,000",
+        calendarStart: "2025-11-28T19:00:00+03:00",
+        calendarEnd: "2025-12-07T21:00:00+03:00"
     },
-          {
-          id: 28,
-          name: "The Comedy Criminals",
-          description: "Get ready for an unforgettable night of laughter as The Comedy Criminals take over the stage! Featuring the outrageously funny Jack Nanjero and the ever-entertaining Amadeus, Rock, Tim this show promises a high-energy mix of sharp wit, hilarious storytelling, and pure comedic brilliance.",
-          location: "Nairobi Laugh Bar",
-          latitude: -1.2932647766332508,
-          longitude: 36.76187245174493,
-          schedule: "Nov 15, 7:30 PM",
-          category: "Events This Month",
-          tags: ["Comedy", "Entertainment", "Nightlife"],
-          timeOfDay: "night",
-          image: "images/The-Comedy-Criminals.jpg",
-          alt: "Poster for The Comedy Criminals show featuring Jack Nanjero, Amadeus, Rock, and Tim",
-          website: "https://standupcollective.co.ke/buytickets?event=THE%20COMEDY%20CRIMINALS%20",
-          linkTitle: "Buy Ticket"
-      },
     {
         id: 48,
         name: "Bare Sessions Season 2 Finale",
@@ -150,12 +153,13 @@ const activities = [
         latitude: -1.2737054702885615,
         longitude: 36.81498289482472,
         schedule: "Fri Nov 29, 7:00 PM",
-        category: "Events This Month",
+        category: "Events November 2025",
         tags: ["Live Music", "Storytelling", "Event"],
         image: "images/Bare.jpg",
         alt: "Bare Sessions performers on stage at the National Museum amphitheatre",
         website: "https://kenyabuzz.com/events/event/bare-sessions-season-2-finale",
-        linkTitle: "Buy Tickets"
+        linkTitle: "Buy Tickets",
+        price: "Advance: 6,500\nGroup of 4: 25,000\nCouples ticket: 12,000"
     },
     {
         id: 18,
@@ -383,20 +387,6 @@ const activities = [
         alt: "Poster for outdoor cinema experience with event details and a pair of headphones pictured",
         website: "https://cinemainnature.com/",
         linkTitle: "Book Experience"
-    },
-    {
-        id: 45,
-        name: "Crochet & Open Mic",
-        description: "Join us for an afternoon of creativity and expression. Enjoy crochet crafting while listening to live performances at the open mic.",
-        location: "Creatives Garage",
-        latitude: -1.264295392825547,
-        longitude: 36.802942650638954,
-        schedule: "Sat Nov 15, 2pm",
-        category: "Events This Month",
-        tags: ["Crochet", "Open Mic", "Creative", "Arts", "Community", "Event"],
-        timeOfDay: "day",
-        image: "images/Crochet-Open-Mic.jpg",
-        alt: "Crochet & Open Mic event at Creatives Garage featuring crafting and live performances"
     },
     // Cultural Heritage Sites
     {
@@ -1126,7 +1116,7 @@ function renderActivities() {
     let html = '';
     
     // Sort categories in preferred order
-    // 1) Events This Month (first)
+    // 1) Events November 2025 (first)
     // 2) Orchestras & Musicals
     // 3) Theatre
         // 4) Weekly Live Music
@@ -1135,7 +1125,7 @@ function renderActivities() {
     // 7) Workshops & Creative Experiences
     // 8) Cultural Heritage Sites (last)
     const preferredOrder = [
-        'Events This Month',
+        'Events November 2025',
         'Orchestras & Musicals',
         'Theatre',
         'Weekly Live Music',
@@ -1232,6 +1222,12 @@ function renderActivities() {
                                                 <li>
                                                     <span class="icon-calendar"></span>
                                                     <p>${activity.schedule}</p>
+                                                </li>
+                                                ` : ''}
+                                                ${activity.price ? `
+                                                <li>
+                                                    <span class="icon-tag"></span>
+                                                    <p>${activity.price.replace(/\n/g, '<br>')}</p>
                                                 </li>
                                                 ` : ''}
                                                 ${activity.phone ? `
@@ -1509,6 +1505,12 @@ function expandCategory(category) {
                         <p>${activity.schedule}</p>
                     </li>
                     ` : ''}
+                    ${activity.price ? `
+                    <li>
+                        <span class="icon-tag"></span>
+                        <p>${activity.price.replace(/\n/g, '<br>')}</p>
+                    </li>
+                    ` : ''}
                     ${activity.phone ? `
                     <li>
                         <span class="icon-phone"></span>
@@ -1783,16 +1785,6 @@ function getBulletPoints(activity) {
       if (name === 'sax & violins' || name === 'sax and violins' || location.includes('nairobi street kitchen')) {
           return ['Restaurant', 'Free entry'];
       }
-    // Braeburn Theatre
-    if (
-        name === 'beauty & the beast' ||
-        name === 'braeburn theatre' ||
-        name === 'braeburn theater' ||
-        location.includes('braeburn')
-    ) {
-        return ['1000 KSh'];
-      }
-
       return [];
   }
 

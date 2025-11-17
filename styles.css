@@ -1785,7 +1785,7 @@ main {
     visibility: visible !important;
     opacity: 1 !important;
     font-size: 16px !important;
-    color: #737882 !important;
+    color: #C1666B !important;
     speak: none !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -1801,7 +1801,23 @@ main {
     visibility: visible !important;
     opacity: 1 !important;
     font-size: 16px !important;
-    color: #737882 !important;
+    color: #C1666B !important;
+    speak: none !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Icon content definitions - Tag icon for price */
+.icon-tag::before {
+    content: "\e055" !important;
+    font-family: 'simple-line-icons', 'Roboto', sans-serif !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 16px !important;
+    color: #C1666B !important;
     speak: none !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -1819,6 +1835,7 @@ main {
         display: inline-block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        color: #C1666B !important;
     }
     
     .icon-location-pin::before {
@@ -1829,6 +1846,18 @@ main {
         display: inline-block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        color: #C1666B !important;
+    }
+    
+    .icon-tag::before {
+        content: "🏷️" !important;
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif !important;
+        font-size: 16px !important;
+        line-height: 1 !important;
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #C1666B !important;
     }
 }
 
@@ -1840,7 +1869,16 @@ main {
     visibility: visible !important;
     opacity: 1 !important;
     font-size: 16px !important;
-    color: #737882 !important;
+    color: #C1666B !important;
+}
+
+.activity-card-info li .icon-tag {
+    font-family: 'simple-line-icons', 'Roboto', sans-serif !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 16px !important;
+    color: #C1666B !important;
     speak: none !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -1972,13 +2010,13 @@ main {
 }
 .activity-card-bullets li {
     display: inline;
-    color: #9fa9b9;
+    color: #C1666B;
     font-size: 15px;
 }
 .activity-card-bullets li:not(:last-child)::after {
     content: " \2022 ";
     padding: 0 10px;
-    color: #9fa9b9;
+    color: #C1666B;
 }
 
 .activity-card-description {
@@ -3221,7 +3259,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     .activity-card-info li span,
     .activity-card-info li .icon-phone,
     .activity-card-info li .icon-location-pin,
-    .activity-card-info li .icon-calendar {
+    .activity-card-info li .icon-calendar,
+    .activity-card-info li .icon-tag {
         display: inline-block !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -3240,6 +3279,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         opacity: 1 !important;
         font-size: 16px !important;
         line-height: 1 !important;
+        color: #C1666B !important;
     }
     
     .activity-card-info li .icon-location-pin::before {
@@ -3250,6 +3290,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         opacity: 1 !important;
         font-size: 16px !important;
         line-height: 1 !important;
+        color: #C1666B !important;
+    }
+    
+    .activity-card-info li .icon-tag::before {
+        content: "🏷️" !important;
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif !important;
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 16px !important;
+        line-height: 1 !important;
+        color: #C1666B !important;
     }
     
     .activity-special-button {
@@ -3696,7 +3748,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     .activity-card-info li span,
     .activity-card-info li .icon-phone,
     .activity-card-info li .icon-location-pin,
-    .activity-card-info li .icon-calendar {
+    .activity-card-info li .icon-calendar,
+    .activity-card-info li .icon-tag {
         display: inline-block !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -3715,6 +3768,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         opacity: 1 !important;
         font-size: 16px !important;
         line-height: 1 !important;
+        color: #C1666B !important;
     }
     
     .activity-card-info li .icon-location-pin::before {
@@ -3725,6 +3779,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         opacity: 1 !important;
         font-size: 16px !important;
         line-height: 1 !important;
+        color: #C1666B !important;
+    }
+    
+    .activity-card-info li .icon-tag::before {
+        content: "🏷️" !important;
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif !important;
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 16px !important;
+        line-height: 1 !important;
+        color: #C1666B !important;
     }
     
     .activity-special-button {

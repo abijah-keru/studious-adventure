@@ -1,6 +1,6 @@
 // Service Worker for Nairobi Dates PWA (auto-update enabled)
 
-const CACHE_NAME = 'nairobi-dates-v1';
+const CACHE_NAME = 'nairobi-dates-v3';
 
 const urlsToCache = [
   './',
