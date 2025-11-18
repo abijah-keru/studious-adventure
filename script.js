@@ -1,6 +1,52 @@
 const activities = [
     // Weekly Live Music
     {
+        id: 46,
+        name: "Sax & Violins",
+        description: "Experience an enchanting evening of live music featuring saxophone and violin performances in a vibrant atmosphere.",
+        location: "Nairobi Street Kitchen",
+        latitude: -1.265315769461578,
+        longitude: 36.80419213768535,
+        schedule: "Wednesdays, 7pm",
+        category: "Weekly Live Music",
+        tags: ["Saxophone", "Violin", "Live Music", "Wednesday", "Nightlife"],
+        timeOfDay: "night",
+        image: "images/sax-and-violins.jpg",
+        alt: "Sax & Violins live music performance at Nairobi Street Kitchen featuring saxophone and violin"
+    },
+    {
+        id: 55,
+        name: "Afro Thursdays",
+        description: "Live music and vibrant atmosphere every Thursday night.",
+        location: "Mama Ashanti",
+        latitude: -1.2879841683554756,
+        longitude: 36.76960504307641,
+        schedule: "Thursdays from 5:30 PM",
+        category: "Weekly Live Music",
+        tags: ["Live Music", "Dining", "Restaurant", "Thursday"],
+        timeOfDay: "night",
+        image: "images/Mama-Ashanti.jpg",
+        alt: "Afro Thursdays live music event at Mama Ashanti restaurant",
+        phone: "0777 222 324",
+        badge: "Restaurant  •  Free entry"
+    },
+    {
+        id: 18,
+        name: "Saxophone Fridays",
+        description: "When the sax speaks, the night listens. Live sax, golden jazz, and a room that glows. Signature cocktails, gourmet bites, refined company. An intimate evening—soulful, timeless, unforgettable.",
+        location: "Pax Manor, Muthaiga",
+        latitude: -1.2515882994966572,
+        longitude: 36.82558546652108,
+        schedule: "Fridays from 7:00pm",
+        category: "Weekly Live Music",
+        tags: ["Saxophone", "Live Music", "Friday", "Nightlife"],
+        timeOfDay: "night",
+        image: "images/Saxophone-Fridays.webp",
+        alt: "Mahogany-toned background with a saxophone in focus",
+        website: "https://eatapp.co/reserve/pax-manor-58-muthaiga-rd",
+        linkTitle: "Reserve"
+    },
+    {
         id: 1,
         name: "Jazz After Dark",
         description: "Enjoy live jazz performances in an intimate lounge setting.",
@@ -32,20 +78,6 @@ const activities = [
         phone: "0791214597"
     },
     {
-        id: 46,
-        name: "Sax & Violins",
-        description: "Experience an enchanting evening of live music featuring saxophone and violin performances in a vibrant atmosphere.",
-        location: "Nairobi Street Kitchen",
-        latitude: -1.265315769461578,
-        longitude: 36.80419213768535,
-        schedule: "Wednesdays, 7pm",
-        category: "Weekly Live Music",
-        tags: ["Saxophone", "Violin", "Live Music", "Wednesday", "Nightlife"],
-        timeOfDay: "night",
-        image: "images/sax-and-violins.jpg",
-        alt: "Sax & Violins live music performance at Nairobi Street Kitchen featuring saxophone and violin"
-    },
-    {
         id: 3,
         name: "Live Jazzy Sundays",
         description: "Relax with smooth jazz performances on Sunday evenings.",
@@ -59,7 +91,8 @@ const activities = [
         image: "images/Sunday-Sessions.webp",
         alt: "Close-up of a violin under soft lighting",
         website: "https://eatout.co.ke/restaurant/bamba/",
-        linkTitle: "Reserve"
+        linkTitle: "Reserve",
+        phone: "0112 88 96 74"
     },
     {
         id: 9,
@@ -78,6 +111,22 @@ const activities = [
         linkTitle: "Buy Tickets",
         calendarStart: "2025-11-21T19:00:00+03:00",
         calendarEnd: "2025-11-21T21:00:00+03:00"
+    },
+    {
+        id: 54,
+        name: "Cinema in Nature",
+        description: "Experience cinema under the stars in the beautiful natural setting of Karura Forest.",
+        location: "Karura Forest, Gate C",
+        latitude: -1.2379382931321083,
+        longitude: 36.84404896837251,
+        schedule: "Sat. Nov 22, 10:00 AM",
+        category: "Events November 2025",
+        tags: ["Cinema", "Outdoor", "Nature", "Event"],
+        image: "images/Cinema-In-nature.jpg",
+        alt: "Cinema in Nature event at Karura Forest",
+        website: "https://vabu.app/cinema-in-nature",
+        linkTitle: "Book Now",
+        price: "950 excl. Karura Fees"
     },
     {
         id: 51,
@@ -160,22 +209,6 @@ const activities = [
         website: "https://kenyabuzz.com/events/event/bare-sessions-season-2-finale",
         linkTitle: "Buy Tickets",
         price: "Advance: 6,500\nGroup of 4: 25,000\nCouples ticket: 12,000"
-    },
-    {
-        id: 18,
-        name: "Saxophone Fridays",
-        description: "When the sax speaks, the night listens. Live sax, golden jazz, and a room that glows. Signature cocktails, gourmet bites, refined company. An intimate evening—soulful, timeless, unforgettable.",
-        location: "Pax Manor, Muthaiga",
-        latitude: -1.2515882994966572,
-        longitude: 36.82558546652108,
-        schedule: "Fridays from 7:00pm",
-        category: "Weekly Live Music",
-        tags: ["Saxophone", "Live Music", "Friday", "Nightlife"],
-        timeOfDay: "night",
-        image: "images/Saxophone-Fridays.webp",
-        alt: "Mahogany-toned background with a saxophone in focus",
-        website: "https://eatapp.co/reserve/pax-manor-58-muthaiga-rd",
-        linkTitle: "Reserve"
     },
     // Weekly Comedy
     {
@@ -971,8 +1004,13 @@ function matchesFilters(activity) {
                     activity.description,
                     activity.location,
                     activity.category,
+                    activity.schedule,
+                    activity.price,
+                    activity.badge,
+                    activity.phone,
+                    activity.linkTitle,
                     ...(activity.tags || [])
-                ].join(' ').toLowerCase();
+                ].filter(Boolean).join(' ').toLowerCase();
                 
                 if (!searchableText.includes(searchTerm)) {
                     return false;
@@ -991,14 +1029,19 @@ function matchesFilters(activity) {
                     return false;
                 }
             } else {
-                // For other searches, search in all fields
+                // For other searches, search in all fields including price, schedule, badge, phone, etc.
                 const searchableText = [
                     activity.name,
                     activity.description,
                     activity.location,
                     activity.category,
+                    activity.schedule,
+                    activity.price,
+                    activity.badge,
+                    activity.phone,
+                    activity.linkTitle,
                     ...(activity.tags || [])
-                ].join(' ').toLowerCase();
+                ].filter(Boolean).join(' ').toLowerCase();
                 
                 if (!searchableText.includes(searchTerm)) {
                     return false;
@@ -1189,6 +1232,7 @@ function renderActivities() {
                                 <svg class="arrow-head" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M4 2 L10 6 L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
+                                <span class="see-all-text">See all</span>
                             </button>
                         </div>
                         <div class="carousel-container" tabindex="0" role="region" aria-label="${category} carousel" data-carousel-id="${carouselId}">
@@ -1211,6 +1255,7 @@ function renderActivities() {
                                             <div id="${descId}" class="activity-card-description-overlay" role="region" aria-live="polite">${activity.description}</div>
                                         </div>
                                         <div class="activity-card-content">
+                                            ${activity.badge ? `<div class="activity-card-badge">${activity.badge}</div>` : ''}
                                             ${(() => { const bullets = getBulletPoints(activity); return bullets.length ? `<ul class="activity-card-bullets">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : '' })()}
                                             <div class="activity-card-title">${activity.name}</div>
                                             <ul class="activity-card-info">
@@ -1492,6 +1537,7 @@ function expandCategory(category) {
                 <div id="${descId}" class="activity-card-description-overlay" role="region" aria-live="polite">${activity.description}</div>
             </div>
             <div class="activity-card-content">
+                ${activity.badge ? `<div class="activity-card-badge">${activity.badge}</div>` : ''}
                 <div class="activity-card-title">${activity.name}</div>
                 ${(() => { const bullets = getBulletPoints(activity); return bullets.length ? `<ul class="activity-card-bullets">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : '' })()}
                 <ul class="activity-card-info">

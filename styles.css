@@ -1302,6 +1302,7 @@ main {
     flex-shrink: 0;
     align-self: center;
     margin-top: 8px;
+    gap: 6px;
 }
 
 .category-arrow-btn .arrow-head {
@@ -1310,6 +1311,19 @@ main {
     color: #C1666B;
     display: block;
     transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.category-arrow-btn .see-all-text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #C1666B;
+    transition: all 0.3s ease;
+}
+
+.category-arrow-btn:hover .see-all-text {
+    color: #8B4049;
 }
 
 .category-arrow-btn:hover {
@@ -1713,7 +1727,7 @@ main {
 .activity-card-distance {
     position: absolute;
     top: 8px;
-    right: 60px;
+    right: 8px;
     background: #C1666B;
     color: #ffffff;
     border-radius: 9999px;
@@ -1724,6 +1738,18 @@ main {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     font-family: 'Roboto', sans-serif;
     white-space: nowrap;
+}
+
+.activity-card-badge {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #C1666B;
+    margin-bottom: 6px;
+    padding: 0;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+    word-spacing: 2px;
 }
 
 .activity-card-title {
@@ -1911,7 +1937,7 @@ main {
 .activity-card-info li .icon-phone {
     font-size: 16px;
     padding: 7px 8px 0 0;
-    color: #737882;
+    color: #C1666B;
     flex-shrink: 0;
     display: inline-block;
     font-family: 'simple-line-icons';
@@ -3941,6 +3967,9 @@ footer {
 .footer-connect-label {
     font-weight: 500;
     white-space: nowrap;
+    margin-bottom: 4px;
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .footer-social {
