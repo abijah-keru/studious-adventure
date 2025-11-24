@@ -147,22 +147,6 @@ const activities = [
         calendarEnd: "2025-11-29T13:00:00+03:00"
     },
     {
-        id: 52,
-        name: "Ghetto Classics Jazz Concert",
-        description: "A compelling theatrical production that tells powerful stories from the heart of urban life.",
-        location: "Sarakasi Dome",
-        latitude: -1.2765420490857295,
-        longitude: 36.82739607762955,
-        schedule: "Sun. Nov 23, 5:30 PM",
-        category: "Events November 2025",
-        tags: ["Theatre", "Performance", "Drama", "Arts"],
-        image: "images/Ghetto.jpg",
-        alt: "Ghetto Classics Jazz Concert performance poster",
-        website: "https://kenyabuzz.com/events/event/ghetto-classics-all-starts-jazz-concert",
-        linkTitle: "Buy Tickets",
-        price: "Children and students: 500\nAdults: 1,000"
-    },
-    {
         id: 57,
         name: "Too Many Words",
         description: "A thought-provoking art exhibition featuring contemporary works that explore communication and expression.",
@@ -1067,6 +1051,8 @@ function matchesFilters(activity) {
                 // Include all Fun & Games activities, continue to check other filters
             } else {
                 // Still search in other fields for other activities that might contain "play"
+                // Also include dynamically generated badges from getBulletPoints()
+                const dynamicBadges = getBulletPoints(activity) || [];
                 const searchableText = [
                     activity.name,
                     activity.description,
@@ -1077,7 +1063,8 @@ function matchesFilters(activity) {
                     activity.badge,
                     activity.phone,
                     activity.linkTitle,
-                    ...(activity.tags || [])
+                    ...(activity.tags || []),
+                    ...dynamicBadges
                 ].filter(Boolean).join(' ').toLowerCase();
                 
                 if (!searchableText.includes(searchTerm)) {
@@ -1098,6 +1085,8 @@ function matchesFilters(activity) {
                 }
             } else {
                 // For other searches, search in all fields including price, schedule, badge, phone, etc.
+                // Also include dynamically generated badges from getBulletPoints()
+                const dynamicBadges = getBulletPoints(activity) || [];
                 const searchableText = [
                     activity.name,
                     activity.description,
@@ -1108,7 +1097,8 @@ function matchesFilters(activity) {
                     activity.badge,
                     activity.phone,
                     activity.linkTitle,
-                    ...(activity.tags || [])
+                    ...(activity.tags || []),
+                    ...dynamicBadges
                 ].filter(Boolean).join(' ').toLowerCase();
                 
                 if (!searchableText.includes(searchTerm)) {
@@ -1863,6 +1853,11 @@ function getCategoryIcon(category) {
 function getBulletPoints(activity) {
     const name = (activity.name || '').toLowerCase();
     const location = (activity.location || '').toLowerCase();
+    
+    // Adult Spelling Bee should not have restaurant/free entry badges
+    if (name === 'adult spelling bee') {
+        return [];
+    }
 
     // Karel T (Jazz After Dark)
     if (name === 'jazz after dark' || location.includes('karel t')) {
