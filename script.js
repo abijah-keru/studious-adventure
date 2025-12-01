@@ -11,8 +11,24 @@ const activities = [
         category: "Weekly Live Music",
         tags: ["Saxophone", "Violin", "Live Music", "Wednesday", "Nightlife"],
         timeOfDay: "night",
-        image: "images/sax-and-violins.jpg",
+        image: "images/Nairobi-Street-Kitchen.webp",
         alt: "Sax & Violins live music performance at Nairobi Street Kitchen featuring saxophone and violin"
+    },
+    {
+        id: 63,
+        name: "Ankole Grill",
+        description: "Enjoy live music in a vibrant restaurant atmosphere.",
+        location: "Ankole Grill Kitusuru",
+        latitude: -1.2405538565765903,
+        longitude: 36.78743475302885,
+        schedule: "Wednesdays, 7:30 PM",
+        category: "Weekly Live Music",
+        tags: ["Live Music", "Restaurant", "Dining"],
+        timeOfDay: "night",
+        image: "images/Ankole.jpg",
+        alt: "Ankole Grill restaurant with live music",
+        badge: "Restaurant • Free Entry",
+        phone: "0710202020"
     },
     {
         id: 55,
@@ -41,7 +57,7 @@ const activities = [
         category: "Weekly Live Music",
         tags: ["Saxophone", "Live Music", "Friday", "Nightlife"],
         timeOfDay: "night",
-        image: "images/Saxophone-Fridays.webp",
+        image: "images/Pax-Manor.jpg",
         alt: "Mahogany-toned background with a saxophone in focus",
         website: "https://eatapp.co/reserve/pax-manor-58-muthaiga-rd",
         linkTitle: "Reserve"
@@ -88,29 +104,11 @@ const activities = [
         category: "Weekly Live Music",
         tags: ["Jazz", "Live Music", "Sunday"],
         timeOfDay: "night",
-        image: "images/Sunday-Sessions.webp",
+        image: "images/Bamba.jpg",
         alt: "Close-up of a violin under soft lighting",
         website: "https://eatout.co.ke/restaurant/bamba/",
         linkTitle: "Reserve",
         phone: "0112 88 96 74"
-    },
-    {
-        id: 9,
-        name: "Beauty & the Beast",
-        description: "Braeburn High School presents Shakespeare's legendary romance Romeo & Juliet with live music and ensemble performances.",
-        location: "Braeburn Theatre",
-        latitude: -1.2891353762889035,
-        longitude: 36.75571346708775,
-        schedule: "Fri 21 & 28 (7pm) • Sat 22 & 29 (5pm) • Sun 23 & 30 (3pm)",
-        category: "Events November 2025",
-        tags: ["Theatre", "Performance", "Arts"],
-        price: "Price: 1,000",
-        image: "images/Braeburn-Theatre.jpg",
-        alt: "Braeburn Theatre production of Romeo & Juliet with cast on stage",
-        website: "https://www.theatres.braeburn.com/",
-        linkTitle: "Buy Tickets",
-        calendarStart: "2025-11-21T19:00:00+03:00",
-        calendarEnd: "2025-11-21T21:00:00+03:00"
     },
     {
         id: 56,
@@ -120,31 +118,13 @@ const activities = [
         latitude: -1.296260696450057,
         longitude: 36.760084598793725,
         schedule: "Nov 19 - Jan 3, 2026",
-        category: "Events November 2025",
+        category: "Events December 2025",
         tags: ["Art", "Exhibition", "Gallery"],
         image: "images/Circle.jpg",
         alt: "We Belong to Time art exhibition at Circle Art Gallery",
         price: "Free Entry\nOpening Hours: Weekdays 10am – 5pm, Weekends 12pm – 5pm",
         calendarStart: "2025-11-19T10:00:00+03:00",
         calendarEnd: "2026-01-03T17:00:00+03:00"
-    },
-    {
-        id: 60,
-        name: "Coffee Cupping",
-        description: "Join us for an immersive coffee cupping experience where you'll learn to taste and evaluate different coffee varieties like a professional.",
-        location: "Coffee Lab Nairobi",
-        latitude: -1.2407076743949,
-        longitude: 36.76467622032663,
-        schedule: "Sat. Nov 29, 10:30 AM - 1:00 PM",
-        category: "Events November 2025",
-        tags: ["Coffee", "Workshop", "Tasting", "Event"],
-        image: "images/Coffee.jpg",
-        alt: "Coffee cupping session at Coffee Lab Nairobi",
-        website: "https://www.coffeelabnairobi.com/checkouts/cn/hWN5ci64jgsjBiVX5DWxej4d/en-ke?_r=AQABPe45YvYpYwY4Cfthaa0V0rX4HxTtx5_VfGlFHx27wzQ",
-        linkTitle: "Buy Tickets",
-        price: "3,000",
-        calendarStart: "2025-11-29T10:30:00+03:00",
-        calendarEnd: "2025-11-29T13:00:00+03:00"
     },
     {
         id: 57,
@@ -154,7 +134,7 @@ const activities = [
         latitude: -1.1762179547234022,
         longitude: 36.710795295356974,
         schedule: "Nov 23 - Jan 5, 2026",
-        category: "Events November 2025",
+        category: "Events December 2025",
         tags: ["Art", "Exhibition", "Gallery"],
         image: "images/RedHill.webp",
         alt: "Too Many Words art exhibition at Red Hill Art Gallery",
@@ -170,7 +150,7 @@ const activities = [
         latitude: -1.277520744372908,
         longitude: 36.81817363547025,
         schedule: "Nov 28th - 30th and Dec 6th - 7th",
-        category: "Events November 2025",
+        category: "Events December 2025",
         tags: ["Ballet", "Theatre", "Performance", "Arts"],
         image: "images/NutCracker.jpg",
         alt: "Nut Cracker ballet performance poster",
@@ -188,7 +168,7 @@ const activities = [
         latitude: -1.217239382418902,
         longitude: 36.791280998896106,
         schedule: "Nov 29 - Jan 18, 2026",
-        category: "Events November 2025",
+        category: "Events December 2025",
         tags: ["Art", "Exhibition", "Gallery"],
         image: "images/OneOff.jpg",
         alt: "Harmony art exhibition at One Off Contemporary Gallery",
@@ -204,7 +184,7 @@ const activities = [
         latitude: -1.217239382418902,
         longitude: 36.791280998896106,
         schedule: "Nov 29 - Jan 18, 2026",
-        category: "Events November 2025",
+        category: "Events December 2025",
         tags: ["Art", "Exhibition", "Gallery"],
         image: "images/OneOff2.jpg",
         alt: "Pirikania; Shades of Pain and Progress art exhibition at One Off Contemporary Gallery",
@@ -213,54 +193,46 @@ const activities = [
         calendarEnd: "2026-01-18T17:00:00+03:00"
     },
     {
-        id: 48,
-        name: "Bare Sessions Season 2 Finale",
-        description: "Bare returns with a powerful finale showcasing raw storytelling and soulful music under the stars.",
-        location: "National Museum of Kenya, Amphitheatre",
-        latitude: -1.2737054702885615,
-        longitude: 36.81498289482472,
-        schedule: "Fri Nov 29, 7:00 PM",
-        category: "Events November 2025",
-        tags: ["Live Music", "Storytelling", "Event"],
-        image: "images/Bare.jpg",
-        alt: "Bare Sessions performers on stage at the National Museum amphitheatre",
-        website: "https://kenyabuzz.com/events/event/bare-sessions-season-2-finale",
-        linkTitle: "Buy Tickets",
-        price: "Advance: 6,500\nGroup of 4: 25,000\nCouples ticket: 12,000"
+        id: 64,
+        name: "Usanii Mashariki Art Gallery",
+        description: "Contemporary art gallery showcasing East African art and culture in a beautiful waterfront setting.",
+        location: "Water Front, Karen",
+        latitude: -1.3299350800697427,
+        longitude: 36.715594785405216,
+        schedule: "Thu to Sun 10am - 7pm",
+        category: "Art Galleries",
+        tags: ["Art", "Gallery", "Exhibition"],
+        image: "images/Usanii.jpg",
+        alt: "Usanii Mashariki Art Gallery",
+        price: "Free Entry"
     },
     {
-        id: 62,
-        name: "Adult Spelling Bee",
-        description: "Test your spelling skills in a fun and competitive adult spelling bee event.",
-        location: "Two Grapes & Wine",
-        latitude: -1.296306007333743,
-        longitude: 36.793941921059165,
-        schedule: "Sun. Nov 30, 2:00 PM - 9:00 PM",
-        category: "Events November 2025",
-        tags: ["Competition", "Event", "Entertainment"],
-        image: "images/Spell.jpg",
-        alt: "Adult Spelling Bee event at Two Grapes & Wine",
-        price: "1,000",
-        calendarStart: "2025-11-30T14:00:00+03:00",
-        calendarEnd: "2025-11-30T21:00:00+03:00"
+        id: 65,
+        name: "Erika A Style Concept Store",
+        description: "A unique concept store combining art gallery and style, featuring contemporary works and design pieces.",
+        location: "Erika A.Style",
+        latitude: -1.3512404815977042,
+        longitude: 36.73694597948093,
+        schedule: "Tue to Sun 9am - 6:30pm",
+        category: "Art Galleries",
+        tags: ["Art", "Gallery", "Concept Store"],
+        image: "images/Erika.webp",
+        alt: "Erika A Style Concept Store",
+        price: "Free Entry"
     },
     {
-        id: 61,
-        name: "One King - A Christmas Musical",
-        description: "A festive Christmas musical performance celebrating the season with music, drama, and holiday spirit.",
-        location: "Nairobi Hospital Convention Centre",
-        latitude: -1.2969300812983937,
-        longitude: 36.8040660223416,
-        schedule: "Sun. Nov 30, 3:00 PM",
-        category: "Events November 2025",
-        tags: ["Musical", "Theatre", "Christmas", "Performance", "Event"],
-        image: "images/oneking.jpg",
-        alt: "One King - A Christmas Musical performance at Nairobi Hospital Convention Centre",
-        website: "https://www.kenyabuzz.com/events/event/one-king-a-christmas-musical-1",
-        linkTitle: "Buy Tickets",
-        price: "1,500",
-        calendarStart: "2025-11-30T15:00:00+03:00",
-        calendarEnd: "2025-11-30T17:00:00+03:00"
+        id: 66,
+        name: "Photizo Art Gallery",
+        description: "Contemporary art gallery dedicated to showcasing innovative photography and visual arts.",
+        location: "Meriada Gardens",
+        latitude: -1.2870051545093473,
+        longitude: 36.771259869691406,
+        schedule: "Tue to Sat 9am - 6pm",
+        category: "Art Galleries",
+        tags: ["Art", "Gallery", "Photography"],
+        image: "images/Photizo.webp",
+        alt: "Photizo Art Gallery",
+        price: "Free Entry"
     },
     // Weekly Comedy
     {
@@ -704,6 +676,19 @@ let activeFilters = {
 
 // Haversine formula to calculate distance between two coordinates (in kilometers)
 function calculateDistance(lat1, lon1, lat2, lon2) {
+    // Validate inputs
+    if (typeof lat1 !== 'number' || typeof lon1 !== 'number' || 
+        typeof lat2 !== 'number' || typeof lon2 !== 'number' ||
+        isNaN(lat1) || isNaN(lon1) || isNaN(lat2) || isNaN(lon2)) {
+        return Infinity;
+    }
+    
+    // Validate coordinate ranges
+    if (Math.abs(lat1) > 90 || Math.abs(lat2) > 90 || 
+        Math.abs(lon1) > 180 || Math.abs(lon2) > 180) {
+        return Infinity;
+    }
+    
     const R = 6371; // Earth's radius in kilometers
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
@@ -711,8 +696,14 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
+    
+    // Clamp 'a' to prevent precision errors (a should never exceed 1, but floating point can cause issues)
+    const clampedA = Math.min(Math.max(a, 0), 1);
+    const c = 2 * Math.atan2(Math.sqrt(clampedA), Math.sqrt(1 - clampedA));
+    const distance = R * c;
+    
+    // Return distance, ensuring it's a valid number
+    return isFinite(distance) && distance >= 0 ? distance : Infinity;
 }
 
 // Sets for location tagging
@@ -1217,16 +1208,18 @@ function renderActivities() {
     let html = '';
     
     // Sort categories in preferred order
-    // 1) Events November 2025 (first)
-    // 2) Orchestras & Musicals
-    // 3) Theatre
-        // 4) Weekly Live Music
-    // 5) Weekly Comedy
-    // 6) Fun & Games
-    // 7) Workshops & Creative Experiences
-    // 8) Cultural Heritage Sites (last)
+    // 1) Events December 2025 (first)
+    // 2) Art Galleries
+    // 3) Orchestras & Musicals
+    // 4) Theatre
+        // 5) Weekly Live Music
+    // 6) Weekly Comedy
+    // 7) Fun & Games
+    // 8) Workshops & Creative Experiences
+    // 9) Cultural Heritage Sites (last)
     const preferredOrder = [
-        'Events November 2025',
+        'Events December 2025',
+        'Art Galleries',
         'Orchestras & Musicals',
         'Theatre',
         'Weekly Live Music',
@@ -1280,18 +1273,19 @@ function renderActivities() {
                 const categorySlug = category.replace(/\s+/g, '-').toLowerCase();
                 const carouselId = `carousel-${categorySlug}`;
                 const isStaticGrid = (categories[category] && categories[category].length <= 4);
+                const showSeeAll = categories[category] && categories[category].length >= 4;
                 html += `
                     <div class="category-section">
                         <div class="category-header">
                             <h3 class="category-title">
                                 ${category}
                             </h3>
-                            <button class="category-arrow-btn" onclick="expandCategory('${category}')" aria-label="View all ${category}">
+                            ${showSeeAll ? `<button class="category-arrow-btn" onclick="expandCategory('${category}')" aria-label="View all ${category}">
                                 <svg class="arrow-head" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M4 2 L10 6 L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                                 <span class="see-all-text">See all</span>
-                            </button>
+                            </button>` : ''}
                         </div>
                         <div class="carousel-container" tabindex="0" role="region" aria-label="${category} carousel" data-carousel-id="${carouselId}">
                             <div class="${isStaticGrid ? 'activities-carousel no-scroll' : 'activities-carousel'}" id="${carouselId}">
@@ -1336,7 +1330,7 @@ function renderActivities() {
                                                 ${activity.phone ? `
                                                 <li>
                                                     <span class="icon-phone"></span>
-                                                    <p><a href="tel:${activity.phone}">${activity.phone}</a></p>
+                                                    <p>${activity.category === 'Weekly Live Music' ? `Reserve - <a href="tel:${activity.phone}">${activity.phone}</a>` : `<a href="tel:${activity.phone}">${activity.phone}</a>`}</p>
                                                 </li>
                                                 ` : ''}
                                             </ul>
@@ -1618,7 +1612,7 @@ function expandCategory(category) {
                     ${activity.phone ? `
                     <li>
                         <span class="icon-phone"></span>
-                        <p><a href="tel:${activity.phone}">${activity.phone}</a></p>
+                        <p>${activity.category === 'Weekly Live Music' ? `Reserve - <a href="tel:${activity.phone}">${activity.phone}</a>` : `<a href="tel:${activity.phone}">${activity.phone}</a>`}</p>
                     </li>
                     ` : ''}
                 </ul>
@@ -1840,6 +1834,7 @@ function getCategoryIcon(category) {
         'Orchestras & Musicals': '♪',
         'Weekly Comedy': '★',
         'Theatre': '🎭',
+        'Art Galleries': '🖼️',
         'Workshops & Creative Experiences': '◆',
         'Outdoor & Adventure': '▲',
         'Eat & Drink': '◇',
@@ -1873,7 +1868,7 @@ function getBulletPoints(activity) {
     }
     // Pax Manor (Saxophone Fridays)
     if (name === 'saxophone fridays' || location.includes('pax manor')) {
-        return ['Hotel & restaurant', 'Free entry'];
+        return ['Hotel & restaurant', '5,000 KSH cover charge'];
     }
     // Winedown Wednesday (Two Grapes)
     if (name === 'winedown wednesday' || location.includes('two grapes')) {
@@ -3074,9 +3069,23 @@ function handleNearMe() {
     navigator.geolocation.getCurrentPosition(
         function(position) {
             // Success callback
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const accuracy = position.coords.accuracy || null; // Accuracy in meters
+            
+            // Validate coordinates are valid numbers
+            if (typeof lat !== 'number' || typeof lon !== 'number' || 
+                isNaN(lat) || isNaN(lon) || 
+                Math.abs(lat) > 90 || Math.abs(lon) > 180) {
+                showLocationError('Invalid location data received. Please try again.');
+                setNearMeLoading(false);
+                return;
+            }
+            
             const userLocation = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
+                latitude: lat,
+                longitude: lon,
+                accuracy: accuracy,
                 timestamp: Date.now() // Store timestamp for cache validation
             };
             
@@ -3092,8 +3101,8 @@ function handleNearMe() {
             updateExploreUI();
             renderActivities();
             
-    // Scroll to activities section
-    document.querySelector('.activities-section').scrollIntoView({ behavior: 'smooth' });
+            // Scroll to activities section
+            document.querySelector('.activities-section').scrollIntoView({ behavior: 'smooth' });
             setNearMeLoading(false);
         },
         function(error) {
@@ -3120,8 +3129,8 @@ function handleNearMe() {
         },
         {
             enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 300000 // Cache location for 5 minutes
+            timeout: 15000, // Increased timeout for desktop
+            maximumAge: 0 // Don't use cached location - always get fresh location for accuracy
         }
     );
 }
